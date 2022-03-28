@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Login } from "./pages";
+import { Home, Login, Signup } from "./pages";
+import { Nav } from "./components";
 
 function App() {
   return (
-    <div className="App">
+    <>
+      <Nav />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
-    </div>
+    </>
   );
 }
 
