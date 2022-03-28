@@ -30,7 +30,6 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.2",
     "node-schedule": "^2.0.0",
-    "nodemon": "^2.0.14",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
@@ -43,6 +42,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
+    "sass": "^1.49.9",
     "save-dev": "^0.0.1-security",
     "styled-components": "^5.3.3",
     "tachyons": "^4.12.0",
@@ -56,7 +56,7 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "server": "nodemon ./server/server.js",
+    "server": "node ./server/server.js",
     "all": "concurrently \"npm run start\" \"npm run server\""
   },
   "eslintConfig": {
@@ -78,6 +78,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "nodemon": "^2.0.15"
   }
 }
