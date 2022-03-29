@@ -3,26 +3,25 @@
 //  -   Mailer configuration stored here
 // /////////////////////////////////////////////////////
 
-const nodemailer = require('nodemailer');
-const { NamedModulesPlugin } = require('webpack');
+const nodemailer = require("nodemailer");
+const { NamedModulesPlugin } = require("webpack");
 
 /*
     Configuring the SMTP Server details.
     STMP is mail server which is responsible for sending and recieving email.
 */
-var smtpTransport = nodemailer.createTransport(
-  {
-    host: 'secure.emailsrvr.com',
-    port: 465,
-    auth: {
-      user: 'jamie@ptptips.com.au',
-      pass: 'Grape394Panda'
-    },
-  });
+var smtpTransport = nodemailer.createTransport({
+  host: "secure.emailsrvr.com",
+  port: 465,
+  auth: {
+    user: "jamie@ptptips.com.au",
+    pass: "Grape394Panda",
+  },
+});
 
 // Mail templates
 
-const verificationForClient = link => `
+const verificationForClient = (link) => `
     Hello,<br/> <br/>
     Thank you for registering on our website.<br>
     Please click on the link below to verify your email address
@@ -35,7 +34,7 @@ const verificationForClient = link => `
      Smart Punting Team
     <br/>`;
 
-const contactUs = name => `
+const contactUs = (name) => `
     Dear '${name}',<br/> <br/>
     Your message has been received.<br>
     Please expect a response from us within 48 hours.<br>
@@ -71,17 +70,21 @@ const silverSelectionMessage = (selectionArray, coins, name) => `
         <th>Good selection</th>
         <th>Soft selection</th>
       </tr>
-      ${selectionArray.map((zone, i)=>{
-        if(i+1 <= coins){
-          return (`<tr>
+      ${selectionArray
+        .map((zone, i) => {
+          if (i + 1 <= coins) {
+            return `<tr>
                     <td>${zone.race_time}</td>
                     <td>${zone.race_venue}</td>
                     <td>${zone.race_no}</td>
                     <td>${zone.horse_no_good}</td>
                     <td>${zone.horse_no_soft}</td>
-                  </tr>`)
-        }else{null}
-      }).join('')}
+                  </tr>`;
+          } else {
+            null;
+          }
+        })
+        .join("")}
     </table>
     <b>Thank you for using Smart Punting System.</b>
     <br/>
@@ -102,15 +105,17 @@ const silverBuyMessage = (selectionArray, name) => `
         <th>Good selection</th>
         <th>Soft selection</th>
       </tr>
-      ${selectionArray.map((zone, i)=>{
-        return (`<tr>
+      ${selectionArray
+        .map((zone, i) => {
+          return `<tr>
                   <td>${zone.race_time}</td>
                   <td>${zone.race_venue}</td>
                   <td>${zone.race_no}</td>
                   <td>${zone.race_selection}</td>
                   <td>${zone.race_selection_soft}</td>
-                </tr>`)
-      }).join('')}
+                </tr>`;
+        })
+        .join("")}
     </table>
     <b>Thank you for using Smart Punting System.</b>
     <br/>
@@ -118,7 +123,6 @@ const silverBuyMessage = (selectionArray, name) => `
     <br/>
      Smart Punting Team
     <br/>`;
-
 
 module.exports = {
   smtpTransport,
@@ -128,5 +132,5 @@ module.exports = {
     contactUsTeam,
     silverSelectionMessage,
     silverBuyMessage,
-  }
+  },
 };

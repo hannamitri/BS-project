@@ -5,7 +5,8 @@ import { getAll } from "../../api/api";
 import { insertUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 export const Signup = () => {
-  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const [users, setUsers] = useState([]);
   useEffect(() => {
     if (user) {
@@ -16,9 +17,8 @@ export const Signup = () => {
       setUsers(users?.data);
     }
     test();
-  }, []);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const navigate = useNavigate();
   const name = useRef();
   const email = useRef();
   const password = useRef();
@@ -42,7 +42,7 @@ export const Signup = () => {
       insertUser(user)
         .then((th) => console.log(th))
         .catch((err) => console.log(err));
-      navigate("/");
+      navigate(-1);
     }
   };
   return (

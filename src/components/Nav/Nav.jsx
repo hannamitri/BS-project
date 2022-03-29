@@ -34,10 +34,10 @@ export const Nav = () => {
           {user?.name == null ? (
             <>
               <li className={nav.button}>
-                <Link to={`/signup`}>Sign up</Link>
+                <Link to="/signup">Sign up</Link>
               </li>
               <li className={nav.button}>
-                <Link to={`/signin`}>Sign in</Link>
+                <Link to="/signin">Sign in</Link>
               </li>
             </>
           ) : (
