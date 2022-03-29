@@ -15,7 +15,7 @@ export const Login = () => {
       setUsers(users?.data);
     }
     test();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const navigate = useNavigate();
   const email = useRef();
   const password = useRef();
