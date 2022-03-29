@@ -1,21 +1,13 @@
-import nav from "./Nav.module.scss";
+import nav from "./Landing.module.scss";
 import { Link } from "react-router-dom";
 
 import { FaPagelines } from "react-icons/fa";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 
-export const Nav = () => {
-  const { user, logout, loading } = useContext(UserContext);
-
-  if (loading) {
-    return (
-      <div>
-        <h1>loading shit</h1>
-      </div>
-    );
-  }
+export const Landing = () => {
+  const { user, setUser, logout, loading } = useContext(UserContext);
 
   return (
     <header>

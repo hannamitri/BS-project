@@ -1,0 +1,23 @@
+:root {
+  --font: "Garamond";
+}
+
+* {
+  font-family: var(--font);
+}
+
+.container {
+  width: 100%;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+}
+.container > div {
+  margin: 0 auto;
+}
+.container > div > a {
+  color: var(--primary);
+}

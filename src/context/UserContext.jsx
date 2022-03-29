@@ -7,18 +7,7 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storage = JSON.parse(localStorage.getItem("userthing"));
-    setUser(storage?.name ? storage : null);
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("userthing", JSON.stringify(user));
-
-    console.log(user);
-
-    if (user === null) {
-      localStorage.removeItem("userthing");
+    if (user) {
     }
   }, [user]);
 
