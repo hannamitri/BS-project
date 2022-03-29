@@ -18,10 +18,6 @@ export const Signup = () => {
     test();
   }, []);
 
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
-
   const navigate = useNavigate();
   const name = useRef();
   const email = useRef();
