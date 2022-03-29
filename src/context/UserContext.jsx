@@ -5,10 +5,17 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
-
+  useEffect(() => {
+    let check = localStorage.getItem("userStorage");
+    if (check !== null || check !== undefined) {
+      setUser(JSON.parse(check));
+    }
+  }, []);
   useEffect(() => {
     if (user) {
+      localStorage.setItem("userStorage", JSON.stringify(user));
     }
+    setLoading(false);
   }, [user]);
 
   const logout = () => {
