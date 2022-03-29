@@ -34,6 +34,22 @@ const insertUser = async (data) => {
     .catch((err) => err.response);
 };
 
+const insertDataCollected = async (data) => {
+  let url = `${baseUrl}/insertDataCollected`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+const getDataCollected = async () => {
+  let url = `${baseUrl}/getDataCollected`;
+  return await axios
+    .get(url)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
 const deleteUser = async (data) => {
   let url = `${baseUrl}/deleteUser`;
   return await axios
@@ -130,6 +146,14 @@ const insertResults = async (data) => {
     .catch((err) => err.response);
 };
 
+const getResults = async () => {
+  let url = `${baseUrl}/getResults`;
+  return await axios
+    .get(url)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
 const googlelogin = async (data) => {
   let url = `${baseUrl}/googlelogin'`;
   return await axios
@@ -142,6 +166,8 @@ export {
   getAll,
   update,
   insertUser,
+  insertDataCollected,
+  getDataCollected,
   deleteUser,
   getCountry,
   updateCountry,

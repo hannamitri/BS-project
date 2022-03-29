@@ -29,7 +29,7 @@ export const Nav = () => {
             <Link to={`/`}>Example</Link>
           </li>
           <li>
-            <Link to={`/`}>Example</Link>
+            <Link to={`/data-collected`}>Data upload</Link>
           </li>
           {user?.name == null ? (
             <>
