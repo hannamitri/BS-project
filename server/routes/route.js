@@ -16,6 +16,18 @@ router.post("/deleteUser", UsersController.deleteUser);
 router.post("/getUserByName", UsersController.getUserByName);
 router.get("/getAll", UsersController.getAll);
 
+
+router.post(
+  "/insertDataCollected",
+  DataCollectedController.insertDataCollected
+);
+
+router.get(
+  "/getDataCollected",
+  DataCollectedController.getDataCollected
+);
+
+
 /**
  * Tickets Routes
  */
@@ -44,5 +56,6 @@ router.post("/insertFlight", FlightsController.insertFlight);
  */
 router.post("/fetchOptions", SurveyController.fetchOptions);
 router.post("/insertResults", SurveyController.insertResults);
+
 
 module.exports = router;
