@@ -1,23 +1,12 @@
 import styles from "./Signup.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import { getAll } from "../../api/api";
 import { insertUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import supabase from "../../lib/supabase";
 export const Signup = () => {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-    async function test() {
-      const users = await getAll();
-      setUsers(users?.data);
-    }
-    test();
-  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { userobj } = useContext(UserContext);
 
   const name = useRef();
   const email = useRef();
@@ -27,23 +16,39 @@ export const Signup = () => {
   const phonenumber = useRef();
   const trySubmit = async (e) => {
     e.preventDefault();
-    const user = {
-      Name: name.current.value,
-      Email: email.current.value,
-      Password: password.current.value,
-      Location: location.current.value,
-      isProfessional: professional.current.options.selectedIndex,
-      pn: phonenumber.current.value,
-    };
-    const check = users?.find((u) => u.email === user.Email);
-    if (check) {
-      alert("Email already exists");
-    } else {
-      insertUser(user)
-        .then((th) => console.log(th))
-        .catch((err) => console.log(err));
-      navigate(-1);
+
+    let { user, error } = await supabase.auth.signUp({
+      email: email.current.value,
+      password: password.current.value,
+    });
+
+    if (error) {
+      throw error;
     }
+
+    console.log("NAME:");
+    console.log(e.target.name);
+    console.log(e.target.name.value);
+
+    const userOBJ = {
+      Name: e.target.name.value,
+      Email: e.target.email.value,
+      Password: e.target.password.value,
+      Location: e.target.location.value,
+      isProfessional: e.target.cars.selectedIndex,
+      pn: e.target.phonenum.value,
+    };
+
+    console.log(userOBJ);
+
+    if (error) {
+      throw new Error(error.code);
+    }
+
+    await insertUser(userOBJ)
+      .then((th) => console.log(th))
+      .catch((err) => console.log(err));
+    navigate(-1);
   };
   return (
     <main className={styles.container}>
@@ -53,30 +58,40 @@ export const Signup = () => {
           <fieldset>
             <div>
               <label htmlFor="name">Name</label>
-              <input type="text" ref={name} autoFocus />
+              <input id="name" name="name" type="text" ref={name} autoFocus />
             </div>
             <div>
-              <label htmlFor="name">Email</label>
-              <input type="email" ref={email} />
+              <label htmlFor="email">Email</label>
+              <input id="email" name="email" type="email" ref={email} />
             </div>
             <div>
-              <label htmlFor="name">Password</label>
-              <input type="password" ref={password} />
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                ref={password}
+              />
             </div>
             <div>
-              <label htmlFor="name">Location</label>
-              <input type="text" ref={location} />
+              <label htmlFor="location">Location</label>
+              <input id="location" name="location" type="text" ref={location} />
             </div>
             <div>
-              <label htmlFor="name">Are you professional?</label>
-              <select name="cars" ref={professional} id="">
+              <label htmlFor="cars">Are you professional?</label>
+              <select name="cars" id="cars" ref={professional}>
                 <option value="0">No</option>
                 <option value="1">Yes</option>
               </select>
             </div>
             <div>
-              <label htmlFor="name">Phone number</label>
-              <input type="phonenumber" ref={phonenumber} />
+              <label htmlFor="phonenum">Phone number</label>
+              <input
+                type="phonenumber"
+                name="phonenum"
+                id="phonenum"
+                ref={phonenumber}
+              />
             </div>
             <button>Sign up</button>
           </fieldset>

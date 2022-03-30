@@ -3,33 +3,35 @@ import { useContext, useRef, useState, useEffect } from "react";
 import { getAll } from "../../api/api";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import supabase from "../../lib/supabase";
 export const Login = () => {
-  const { user, setUser } = useContext(UserContext);
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    if (user) {
-      navigate("/");
+  const { user, loading } = useContext(UserContext);
+  const [userNotFound, setUserNotFound] = useState(false);
+
+  async function trySignin(event) {
+    event.preventDefault();
+
+    const [email, password] = [
+      event.target.email.value,
+      event.target.password.value,
+    ];
+
+    console.log(email, password);
+
+    let { user, error } = await supabase.auth.signIn({
+      email,
+      password,
+      isProfessional: false,
+    });
+
+    if (error) {
+      if (error.message !== "Invalid login credentials") {
+        throw new Error(error.message);
+      }
+      setUserNotFound(true);
     }
-    async function test() {
-      const users = await getAll();
-      setUsers(users?.data);
-    }
-    test();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  const navigate = useNavigate();
-  const email = useRef();
-  const password = useRef();
-  const trySignin = () => {
-    const user = {
-      email: email.current.value,
-      password: password.current.value,
-    };
-    const check = users.find((u) => u.email === user.email);
-    if (check.password === user.password) {
-      setUser(check);
-      navigate("/");
-    }
-  };
+  }
+
   return (
     <main className={home.container}>
       <div>
@@ -38,15 +40,16 @@ export const Login = () => {
           <fieldset>
             <div>
               <label htmlFor="name">Email</label>
-              <input type="email" ref={email} />
+              <input type="email" id="email" name="email" />
             </div>
             <div>
               <label htmlFor="name">Password</label>
-              <input type="password" ref={password} />
+              <input type="password" id="password" name="password" />
             </div>
 
             <button>Sign in</button>
           </fieldset>
+          {userNotFound && <p>User not found</p>}
         </form>
       </div>
     </main>
