@@ -9,7 +9,7 @@ let baseUrl = `http://localhost:3001`;
 const isHeProfessional = async (data) => {
   let url = `${baseUrl}/isProfessional`;
   return await axios
-    .get(url, data)
+    .post(url, data)
     .then((response) => response)
     .catch((err) => err.response);
 };

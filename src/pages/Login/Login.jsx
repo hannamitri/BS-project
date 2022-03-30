@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../lib/supabase";
 export const Login = () => {
-  const { user, loading } = useContext(UserContext);
+  const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
 
   async function trySignin(event) {
@@ -30,6 +30,7 @@ export const Login = () => {
       }
       setUserNotFound(true);
     }
+    setUser(user);
   }
 
   return (

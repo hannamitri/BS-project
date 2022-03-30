@@ -53,6 +53,6 @@ router.post("/googlelogin", GoogleAuthController.googlelogin);
 /**
  * Supabase Routes
  */
-router.get("/isProfessional", SupabaseController.isHeAuth);
+router.post("/isProfessional", SupabaseController.isHeAuth);
 
 module.exports = router;
