@@ -2,17 +2,16 @@ import nav from "./Nav.module.scss";
 import { Link } from "react-router-dom";
 
 import { FaPagelines } from "react-icons/fa";
-
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 
 export const Nav = () => {
-  const { user, logout, loading } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
   if (loading) {
     return (
       <div>
-        <h1>loading shit</h1>
+        <h1>Loading...</h1>
       </div>
     );
   }
@@ -31,7 +30,7 @@ export const Nav = () => {
           <li>
             <Link to={`/data-collected`}>Data upload</Link>
           </li>
-          {user?.name == null ? (
+          {user == null ? (
             <>
               <li className={nav.button}>
                 <Link to="/signup">Sign up</Link>
@@ -43,9 +42,7 @@ export const Nav = () => {
           ) : (
             <>
               <li className={nav.button}>
-                <Link to={`/`} onClick={logout}>
-                  Logout
-                </Link>
+                <Link to={`/signout`}>Logout</Link>
               </li>
             </>
           )}
