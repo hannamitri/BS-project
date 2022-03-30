@@ -38,10 +38,18 @@ const getUserByEmail = async (data) => {
 /*
  * Data Collected Apis
  */
+
 const getDataCollected = async () => {
   let url = `${baseUrl}/getDataCollected`
   return await axios.get(url).then(response => response).catch(err => err.response)
 }
+
+
+const insertDataCollected = async (data) => {
+  let url = `${baseUrl}/insertDataCollected`;
+  return await axios.post(url, data).then((response) => response).catch((err) => err.response);
+};
+
 
 const updateDataCollected = async (data) => {
   let url = `${baseUrl}/updateDataCollected`
@@ -53,14 +61,6 @@ const deleteDataCollected = async (data) => {
   let url = `${baseUrl}/deleteDataCollected`
   return await axios.post(url, data).then(response => response).catch(err => err.response)
 }
-
-const insertDataCollected = async (data) => {
-  let url = `${baseUrl}/insertDataCollected`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
 
 
 /*
@@ -104,10 +104,9 @@ export {
 
   //Data Collected
   getDataCollected,
-  insertDataCollected,
   updateDataCollected,
   deleteDataCollected,
-
+  insertDataCollected,
 
   //Projects 
   getAllProjects,

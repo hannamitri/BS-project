@@ -28,10 +28,8 @@ router.get('/getAll', UsersController.getAll)
 router.get('/getDataCollected', DataCollectedController.getDataCollected);
 router.post('/updateDataCollected', DataCollectedController.updateDataCollected);
 router.post('/deleteDataCollected', DataCollectedController.deleteDataCollected);
-router.post(
-    "/insertDataCollected",
-    DataCollectedController.insertDataCollected
-);
+router.post('/insertDataCollected', DataCollectedController.insertDataCollected);
+
 
 
 /*
