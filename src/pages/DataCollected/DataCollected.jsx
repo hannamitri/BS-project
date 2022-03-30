@@ -4,7 +4,10 @@ import { UserContext } from "../../context/UserContext";
 import { getDataCollected } from "../../api/api";
 import { insertDataCollected } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+
+
 export const DataCollected = () => {
+
   const { user, setUser } = useContext(UserContext);
   const [dataCollected, setDataCollected] = useState([]);
 
@@ -46,6 +49,7 @@ export const DataCollected = () => {
   const data_collected = useRef();
 
   const trySubmit = async (e) => {
+
     e.preventDefault();
     const dataCollected = {
       description: description.current.value,

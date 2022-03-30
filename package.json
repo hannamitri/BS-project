@@ -5,6 +5,7 @@
   "private": true,
   "homepage": "http://Nathaliesaab.github.io/TraveltoLebanon",
   "dependencies": {
+    "all": "^0.0.0",
     "axios": "^0.24.0",
     "concurrently": "^6.3.0",
     "cors": "^2.8.5",
@@ -12,6 +13,7 @@
     "express": "^4.17.1",
     "express-ip": "^1.0.4",
     "express-useragent": "^1.0.15",
+    "google-auth-library": "^7.14.1",
     "helmet": "^4.6.0",
     "import": "^0.0.6",
     "moment-timezone": "^0.5.33",

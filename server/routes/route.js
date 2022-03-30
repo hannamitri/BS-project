@@ -1,61 +1,50 @@
-var express = require("express");
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
-var UsersController = require("../controller/UsersController");
-var TicketsController = require("../controller/TicketsController");
-var CountryController = require("../controller/CountryController");
-var FlightsController = require("../controller/FlightsController");
-var SurveyController = require("../controller/SurveyController");
+var UsersController = require('../controller/UsersController')
+var ProjectController = require('../controller/ProjectsController')
+var DataCollectedController = require('../controller/DataCollectedController')
+var DataProjectsController = require('../controller/DataCollected_belongs_Projects_Controller')
+var UserDataController = require('../controller/Users_uploads_DataCollected_Controller')
+var UserProjectController = require('../controller/Users_manages_Projects_Controller')
+
+var GoogleAuthController = require('../controller/GoogleAuthController ')
+
 
 /**
- * User Routes
+* User Routes
+*/
+router.post('/updateUser', UsersController.updateUser)
+router.post('/insertUser', UsersController.insertUser)
+router.post('/deleteUser', UsersController.deleteUser)
+router.post('/getUserByEmail', UsersController.getUserByEmail)
+router.get('/getAll', UsersController.getAll)
+
+
+/*
+ * Data Collected Routes
  */
-router.post("/updateUser", UsersController.updateUser);
-router.post("/insertUser", UsersController.insertUser);
-router.post("/deleteUser", UsersController.deleteUser);
-router.post("/getUserByName", UsersController.getUserByName);
-router.get("/getAll", UsersController.getAll);
 
-
+router.get('/getDataCollected', DataCollectedController.getDataCollected);
+router.post('/updateDataCollected', DataCollectedController.updateDataCollected);
+router.post('/deleteDataCollected', DataCollectedController.deleteDataCollected);
 router.post(
-  "/insertDataCollected",
-  DataCollectedController.insertDataCollected
-);
-
-router.get(
-  "/getDataCollected",
-  DataCollectedController.getDataCollected
+    "/insertDataCollected",
+    DataCollectedController.insertDataCollected
 );
 
 
-/**
- * Tickets Routes
+/*
+ * Projects Routes
  */
+router.post('/insertProject', ProjectController.insertProject);
+router.get('/getAllProjects', ProjectController.getAll)
+router.post('/deleteProject', ProjectController.deleteProject)
 
-router.get("/getTickets", TicketsController.getTickets);
-router.post("/updateTickets", TicketsController.updateTicket);
-router.post("/deleteTickets", TicketsController.deleteTicket);
-router.post("/fetchRefData", TicketsController.fetchRefData);
-
-/**
- * Country Routes
- */
-
-router.get("/getCountry", CountryController.getCountry);
-router.post("/updateCountry", CountryController.updateCountry);
-router.post("/deleteCountry", CountryController.deleteCountry);
-router.post("/getCountrybyCategory", CountryController.getCountrybyCategory);
 
 /**
- * FlighstRoutes
+ * Google Routes
  */
-router.post("/insertFlight", FlightsController.insertFlight);
+router.post('/googlelogin', GoogleAuthController.googlelogin);
 
-/**
- * Survey Routes
- */
-router.post("/fetchOptions", SurveyController.fetchOptions);
-router.post("/insertResults", SurveyController.insertResults);
-
-
-module.exports = router;
+module.exports = router
