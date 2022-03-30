@@ -4,15 +4,13 @@ var moment = require("moment-timezone");
 // MYSQL DATABASE CONNECTION
 const connection = require("../config/database.config.js");
 
-exports.insertFlight = (req, res) => {
-  const { id, user_id, TicketNo } = req.body;
+exports.isHeAuth = (req, res) => {
+  let tableName = "users";
+  let body = req?.body;
+  let email = body[0]?.email;
+  console.log(body);
 
-  let saveSql = "";
-
-  saveSql = `INSERT INTO User_Ticket(user_id,TicketNo) VALUES\
-        ("${user_id}", "${TicketNo}")`;
-
-  console.log(saveSql);
+  let saveSql = `SELECT 1 FROM ${tableName} WHERE email="barry@gmail.com"`;
 
   connection.query(saveSql, (err, result) => {
     if (err) throw err;

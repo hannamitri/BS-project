@@ -13,7 +13,7 @@ exports.getAll = async (req, res) => {
   });
 };
 
-exports.getUserByName = async (req, res) => {
+exports.getUserByEmail = async (req, res) => {
   const { email } = req.body;
 
   let tableName = "Users";
@@ -58,23 +58,7 @@ exports.insertUser = (req, res) => {
   console.log(saveSql);
   connection.query(saveSql, (err, result) => {
     if (err) throw err;
-    res.status(200).send(result);
-  });
-};
-
-exports.insertDataCollected = (req, res) => {
-  const {
-    description,
-    location_collected,
-    time_collected,
-    date_collected,
-    image,
-  } = req.body;
-  let saveSql = `INSERT INTO datacollected(description, location_collected, time_collected ,date_collected, image) VALUES\
-    ("${description}","${location_collected}", "${time_collected}", "${date_collected}", "${image}")`;
-  console.log(saveSql);
-  connection.query(saveSql, (err, result) => {
-    if (err) throw err;
+    console.log(result);
     res.status(200).send(result);
   });
 };

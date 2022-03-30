@@ -1,69 +1,69 @@
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 var moment = require("moment-timezone");
 
 // MYSQL DATABASE CONNECTION
-const connection = require("../config/database.config.js");
+const connection = require('../config/database.config.js');
+
 
 exports.getDataCollected = async (req, res) => {
-  let tableName = "datacollected";
-  let sql = `SELECT * FROM ${tableName}`;
-  connection.query(sql, (error, result) => {
-    if (error) throw error;
-    res.status(200).send(result);
-  });
-};
+    let tableName = "DataCollected";
+    let sql = `SELECT * FROM ${tableName}`;
+    connection.query(sql, (error, result) => {
+        if (error) throw error;
+        res.status(200).send(result);
+    })
 
-// exports.getUserByName = async (req, res) => {
-//   const { email } = req.body;
+}
 
-//   let tableName = "Users";
 
-//   let sql = `SELECT * FROM ${tableName} where email= "${email}"`;
-//   console.log(sql);
-//   connection.query(sql, (error, result) => {
-//     if (error) throw error;
-//     res.status(200).send(result);
-//   });
-// };
+exports.deleteDataCollected = (req, res) => {
+    const { data_id } = req.body
+    let sql = `delete from DataCollected WHERE data_id=${data_id}`;
+    console.log(sql);
+    connection.query(sql, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result)
 
-// exports.deleteUser = (req, res) => {
-//   const { id } = req.body;
-//   let sql = `delete from users WHERE user_id = ${id} `;
-//   console.log(sql);
-//   connection.query(sql, (err, result) => {
-//     if (err) throw err;
-//     res.status(200).send(result);
-//   });
-// };
+    })
+}
 
-// exports.updateUser = (req, res) => {
-//   const { id, Name, Email, Password, Location, pn, isProfessional } = req.body;
 
-//   let updateSql = `UPDATE Users set user_name = "${Name}", password = "${Password}", \
-//     Location = "${Location}", email = "${Email}, phone_number ="${pn}, isProfessional ="${isProfessional}""\
-//         WHERE user_id = ${id} `;
+exports.updateDataCollected = (req, res) => {
 
-//   console.log(updateSql);
+    const { data_id, description, location_collected, time_collected, date_collected, image } = req.body;
 
-//   connection.query(updateSql, (err, result) => {
-//     if (err) throw err;
-//     res.status(200).send(result);
-//   });
-// };
+
+
+    if (data_id && data_id !== '') {
+        let saveSql = `UPDATE  DataCollected set description= "${description}", location_collected= "${location_collected}",\
+            time_collected = "${time_collected}",  date_collected  ="${date_collected} , image="${image}"\
+            WHERE data_id = ${data_id}`;
+    }
+    console.log(saveSql);
+
+    connection.query(saveSQL, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result)
+
+    })
+
+}
+
 
 exports.insertDataCollected = (req, res) => {
-  const {
-    description,
-    location_collected,
-    time_collected,
-    date_collected,
-    image,
-  } = req.body;
-  let saveSql = `INSERT INTO datacollected(description, location_collected, time_collected ,date_collected, image) VALUES\
+    const {
+        description,
+        location_collected,
+        time_collected,
+        date_collected,
+        image,
+    } = req.body;
+    let saveSql = `INSERT INTO datacollected(description, location_collected, time_collected ,date_collected, image) VALUES\
     ("${description}","${location_collected}", "${time_collected}", "${date_collected}", "${image}")`;
-  console.log(saveSql);
-  connection.query(saveSql, (err, result) => {
-    if (err) throw err;
-    res.status(200).send(result);
-  });
+    console.log(saveSql);
+    connection.query(saveSql, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+    });
 };

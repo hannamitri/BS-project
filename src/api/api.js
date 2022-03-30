@@ -2,6 +2,18 @@ import axios from "axios";
 
 let baseUrl = `http://localhost:3001`;
 
+/*
+ User Apis 
+*/
+
+const isHeProfessional = async (data) => {
+  let url = `${baseUrl}/isProfessional`;
+  return await axios
+    .get(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
 const getAll = async () => {
   let url = `${baseUrl}/getAll`;
   return await axios
@@ -10,15 +22,7 @@ const getAll = async () => {
     .catch((err) => err.response);
 };
 
-const fetchRefData = async (data) => {
-  let url = `${baseUrl}/fetchRefData`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const update = async (data) => {
+const updateUser = async (data) => {
   let url = `${baseUrl}/updateUser`;
   return await axios
     .post(url, data)
@@ -34,13 +38,25 @@ const insertUser = async (data) => {
     .catch((err) => err.response);
 };
 
-const insertDataCollected = async (data) => {
-  let url = `${baseUrl}/insertDataCollected`;
+const deleteUser = async (data) => {
+  let url = `${baseUrl}/deleteUser`;
   return await axios
     .post(url, data)
     .then((response) => response)
     .catch((err) => err.response);
 };
+
+const getUserByEmail = async (data) => {
+  let url = `${baseUrl}/getUserByEmail`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+/*
+ * Data Collected Apis
+ */
 
 const getDataCollected = async () => {
   let url = `${baseUrl}/getDataCollected`;
@@ -50,110 +66,61 @@ const getDataCollected = async () => {
     .catch((err) => err.response);
 };
 
-const deleteUser = async (data) => {
-  let url = `${baseUrl}/deleteUser`;
+const insertDataCollected = async (data) => {
+  let url = `${baseUrl}/insertDataCollected`;
   return await axios
     .post(url, data)
     .then((response) => response)
     .catch((err) => err.response);
 };
 
-const getTickets = async () => {
-  let url = `${baseUrl}/getTickets`;
+const updateDataCollected = async (data) => {
+  let url = `${baseUrl}/updateDataCollected`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+const deleteDataCollected = async (data) => {
+  let url = `${baseUrl}/deleteDataCollected`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+/*
+ * Projects Apis
+ */
+
+const getAllProjects = async () => {
+  let url = `${baseUrl}/getAllProjects`;
   return await axios
     .get(url)
     .then((response) => response)
     .catch((err) => err.response);
 };
 
-const getUserByName = async (data) => {
-  let url = `${baseUrl}/getUserByName`;
+const deleteProject = async (data) => {
+  let url = `${baseUrl}/deleteProject`;
   return await axios
     .post(url, data)
     .then((response) => response)
     .catch((err) => err.response);
 };
 
-const updateTickets = async (data) => {
-  let url = `${baseUrl}/updateTickets`;
+const insertProject = async (data) => {
+  let url = `${baseUrl}/insertProject`;
   return await axios
     .post(url, data)
     .then((response) => response)
     .catch((err) => err.response);
 };
 
-const deleteTickets = async (data) => {
-  let url = `${baseUrl}/deleteTickets`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const getCountry = async () => {
-  let url = `${baseUrl}/getCountry`;
-  return await axios
-    .get(url)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const updateCountry = async (data) => {
-  let url = `${baseUrl}/updateCountry`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const deleteCountry = async (data) => {
-  let url = `${baseUrl}/deleteCountry`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const getCountrybyCategory = async (data) => {
-  let url = `${baseUrl}/getCountrybyCategory`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const insertFlight = async (data) => {
-  let url = `${baseUrl}/insertFlight`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const fetchOptions = async (data) => {
-  let url = `${baseUrl}/fetchOptions`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const insertResults = async (data) => {
-  let url = `${baseUrl}/insertResults`;
-  return await axios
-    .post(url, data)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
-const getResults = async () => {
-  let url = `${baseUrl}/getResults`;
-  return await axios
-    .get(url)
-    .then((response) => response)
-    .catch((err) => err.response);
-};
-
+/*
+ * Google Api
+ */
 const googlelogin = async (data) => {
   let url = `${baseUrl}/googlelogin'`;
   return await axios
@@ -163,23 +130,22 @@ const googlelogin = async (data) => {
 };
 
 export {
+  //users
   getAll,
-  update,
+  updateUser,
   insertUser,
-  insertDataCollected,
-  getDataCollected,
   deleteUser,
-  getCountry,
-  updateCountry,
-  deleteCountry,
-  getTickets,
-  deleteTickets,
-  updateTickets,
-  getCountrybyCategory,
-  insertFlight,
-  fetchRefData,
-  fetchOptions,
-  insertResults,
-  getUserByName,
+  getUserByEmail,
+  isHeProfessional,
+  //Data Collected
+  getDataCollected,
+  updateDataCollected,
+  deleteDataCollected,
+  insertDataCollected,
+  //Projects
+  getAllProjects,
+  deleteProject,
+  insertProject,
+  //google api
   googlelogin,
 };

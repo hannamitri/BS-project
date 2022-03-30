@@ -71,20 +71,20 @@ const silverSelectionMessage = (selectionArray, coins, name) => `
         <th>Soft selection</th>
       </tr>
       ${selectionArray
-        .map((zone, i) => {
-          if (i + 1 <= coins) {
-            return `<tr>
+    .map((zone, i) => {
+      if (i + 1 <= coins) {
+        return `<tr>
                     <td>${zone.race_time}</td>
                     <td>${zone.race_venue}</td>
                     <td>${zone.race_no}</td>
                     <td>${zone.horse_no_good}</td>
                     <td>${zone.horse_no_soft}</td>
                   </tr>`;
-          } else {
-            null;
-          }
-        })
-        .join("")}
+      } else {
+        null;
+      }
+    })
+    .join("")}
     </table>
     <b>Thank you for using Smart Punting System.</b>
     <br/>
@@ -106,16 +106,16 @@ const silverBuyMessage = (selectionArray, name) => `
         <th>Soft selection</th>
       </tr>
       ${selectionArray
-        .map((zone, i) => {
-          return `<tr>
+    .map((zone, i) => {
+      return `<tr>
                   <td>${zone.race_time}</td>
                   <td>${zone.race_venue}</td>
                   <td>${zone.race_no}</td>
                   <td>${zone.race_selection}</td>
                   <td>${zone.race_selection_soft}</td>
                 </tr>`;
-        })
-        .join("")}
+    })
+    .join("")}
     </table>
     <b>Thank you for using Smart Punting System.</b>
     <br/>
