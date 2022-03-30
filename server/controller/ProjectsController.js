@@ -6,7 +6,7 @@ var moment = require("moment-timezone");
 const connection = require('../config/database.config.js');
 
 exports.getAll = async (req, res) => {
-    let tableName = "survey";
+    let tableName = "Projects";
     let sql = `SELECT * FROM ${tableName}`;
     connection.query(sql, (error, result) => {
         if (error) throw error;
@@ -15,12 +15,11 @@ exports.getAll = async (req, res) => {
 
 }
 
-exports.insertResults = (req, res) => {
+exports.insertProject = (req, res) => {
+    const { category } = req.body;
 
-    const { tableName, option, username, country } = req.body;
-
-    let saveSql = `INSERT INTO ${tableName}(option,username,country) VALUES\
-        ("${option}", "${username}", "${country}")`;
+    let saveSql = `INSERT INTO Projects(category) VALUES\
+        ("${category}")`;
 
     console.log(saveSql);
 
@@ -32,12 +31,13 @@ exports.insertResults = (req, res) => {
 
 }
 
-exports.fetchOptions = (req, res) => {
-    const { tableName, id, visitLebanon } = req.body;
-    let sql = `select ${id} as id, ${visitLebanon} as visitLebanon from ${tableName}`;
+exports.deleteProject = (req, res) => {
+    const { id } = req.body
+    let sql = `delete from Projects WHERE project_id = ${id} `;
     console.log(sql);
     connection.query(sql, (err, result) => {
-        if (err) throw err
-        res.status(200).send(result);
+        if (err) throw err;
+        res.status(200).send(result)
+
     })
 }

@@ -4,7 +4,10 @@ import { UserContext } from "../../context/UserContext";
 import { getDataCollected } from "../../api/api";
 import { insertDataCollected } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+
+
 export const DataCollected = () => {
+
   const { user, setUser } = useContext(UserContext);
   const [dataCollected, setDataCollected] = useState([]);
 
@@ -43,15 +46,16 @@ export const DataCollected = () => {
   const description = useRef();
   const location_collected = useRef();
   const time_collected = useRef();
-  const data_collected = useRef();
+  const date_collected = useRef();
 
   const trySubmit = async (e) => {
+
     e.preventDefault();
     const dataCollected = {
       description: description.current.value,
       location_collected: location_collected.current.value,
       time_collected: time_collected.current.value,
-      data_collected: data_collected.current.value,
+      date_collected: date_collected.current.value,
       image: dataImage,
     };
 
@@ -68,19 +72,27 @@ export const DataCollected = () => {
           <fieldset>
             <div>
               <label htmlFor="name">Name</label>
-              <input type="text" ref={description} autoFocus />
+              <input type="text" autoFocus />
             </div>
             <div>
               <label htmlFor="name">Email</label>
-              <input type="email" ref={location_collected} />
+              <input type="email" />
             </div>
             <div>
-              <label htmlFor="name">Password</label>
+              <label htmlFor="name">Time Collected</label>
               <input type="password" ref={time_collected} />
             </div>
             <div>
+              <label htmlFor="name">Date Collected</label>
+              <input type="text" ref={date_collected} />
+            </div>
+            <div>
+              <label htmlFor="name">Description</label>
+              <input type="text" ref={description} autoFocus />
+            </div>
+            <div>
               <label htmlFor="name">Location</label>
-              <input type="text" ref={data_collected} />
+              <input type="text" ref={location_collected} />
             </div>
             <div>
               <label>Upload image</label>
@@ -95,7 +107,7 @@ export const DataCollected = () => {
             <h2>{data.description}</h2>
             <h2>{data.location_collected}</h2>
             <h2>{data.time_collected}</h2>
-            <h2>{data.data_collected}</h2>
+            <h2>{data.date_collected}</h2>
             <img src={data.image} alt="data collected" />
             <br />
             <br />
