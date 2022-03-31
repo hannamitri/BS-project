@@ -4,46 +4,56 @@ import { UserContext } from "../../context/UserContext";
 import supabase from "../../lib/supabase";
 import {
   TextInput,
-  Checkbox,
+  Notification,
   Button,
   Group,
   Box,
   PasswordInput,
+  Loader,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { Lock } from "tabler-icons-react";
+import { useForm, zodResolver } from "@mantine/form";
+import { Lock, X } from "tabler-icons-react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
+import { z } from "zod";
 
 // import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
 import LoginIllustration from "../../images/Login/wfh_1.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
+  const [loadingState, setLoadingState] = useState(false);
+  const navigate = useNavigate();
 
-  async function trySignin(event) {
-    event.preventDefault();
+  const schema = z.object({
+    email: z.string().email({ message: "Invalid email" }),
+    password: z
+      .string()
+      .min(6, { message: "Your password is at least 6 characters" }),
+  });
 
-    const [email, password] = [
-      event.target.email.value,
-      event.target.password.value,
-    ];
-
-    console.log(email, password);
+  async function trySignin({ email, password }) {
+    setUserNotFound(false);
+    setLoadingState(true);
 
     let { user, error } = await supabase.auth.signIn({
       email,
       password,
-      isProfessional: false,
     });
 
     if (error) {
+      setLoadingState(false);
       if (error.message !== "Invalid login credentials") {
         throw new Error(error.message);
       }
       setUserNotFound(true);
     }
-    setUser(user);
+    setLoadingState(false);
+    if (user) {
+      setUser(user);
+      navigate("/");
+    }
   }
 
   const form = useForm({
@@ -52,50 +62,77 @@ export const Login = () => {
       password: "",
     },
 
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) => (value ? null : "Password is required"),
-    },
+    schema: zodResolver(schema),
   });
 
   return (
-    <main className={styles.container}>
-      <section className={styles.view}>
-        <div className={styles.mainContent}>
-          <article className={styles.leftview}>
-            <img src={LoginIllustration} alt="Illustration" width={500} />
-            <a href="#">Create an account</a>
-          </article>
-          <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
-            <h1>Log in</h1>
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
-              <TextInput
-                required
-                icon={<HiOutlineAtSymbol size={16} />}
-                label="Email"
-                placeholder="your@email.com"
-                type="email"
-                {...form.getInputProps("email")}
-              />
-              <PasswordInput
-                required
-                label="Password"
-                placeholder="your password"
-                type="password"
-                icon={<Lock size={16} />}
-                {...form.getInputProps("password")}
-              />
+    <>
+      <main className={styles.container}>
+        {userNotFound && (
+          <Notification
+            icon={<X size={18} />}
+            color="red"
+            title="Signin failed"
+            styles={{
+              root: {
+                backgroundColor: "#FB5D64",
+                position: "absolute",
+                zIndex: 3,
+                opacity: 0.95,
+                top: 90,
+              },
+              title: { color: "228BE6", fontWeight: "bold" },
+              description: { color: "white" },
+              icon: { color: "white" },
+              closeButton: { color: "white", ":hover": { color: "black" } },
+            }}
+            onClose={() => setUserNotFound(false)}
+          >
+            A user was not found!
+          </Notification>
+        )}
+        <section className={styles.view}>
+          <div className={styles.mainContent}>
+            <article className={styles.leftview}>
+              <img src={LoginIllustration} alt="Illustration" width={500} />
+              <Link to="/signup">Create an account</Link>
+            </article>
+            <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
+              <h1>Log in</h1>
+              <form onSubmit={form.onSubmit(trySignin)}>
+                <TextInput
+                  required
+                  icon={<HiOutlineAtSymbol size={16} />}
+                  label="Email"
+                  placeholder="your@email.com"
+                  {...form.getInputProps("email")}
+                  type="text"
+                />
+                <PasswordInput
+                  required
+                  label="Password"
+                  placeholder="your password"
+                  icon={<Lock size={16} />}
+                  {...form.getInputProps("password")}
+                />
 
-              <Group position="left" mt="md">
-                <Button type="submit">Login</Button>
-              </Group>
-            </form>
-          </Box>
-        </div>
-        <div className={styles.alternatives}>
-          <div className={styles.leftalt}></div>
-        </div>
-      </section>
-    </main>
+                <Group position="left" mt="md" style={{ position: "relative" }}>
+                  {loadingState ? (
+                    <span className={styles.loading}>
+                      <Loader />
+                    </span>
+                  ) : (
+                    <Button type="submit">Login</Button>
+                  )}
+                </Group>
+              </form>
+            </Box>
+          </div>
+          <div className={styles.alternatives}>
+            <div className={styles.leftalt}></div>
+          </div>
+        </section>
+      </main>
+    </>
   );
 };

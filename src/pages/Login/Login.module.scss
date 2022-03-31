@@ -3,7 +3,25 @@
 :root {
   --font: "Poppins";
 }
-
+.loading {
+  display: grid;
+  place-items: center;
+  background-color: white;
+  left: 50%;
+  transform: translateX(50%);
+}
+.loading svg {
+  height: 75%;
+}
+.thiny {
+  display: none;
+  font-size: 12px;
+  text-decoration: underline;
+  margin-top: 4px;
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}
 * {
   font-family: var(--font);
 }

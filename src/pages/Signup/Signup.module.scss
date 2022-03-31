@@ -19,8 +19,27 @@
   justify-content: center;
   max-height: calc(100vh - 64px);
   height: calc(100vh - 64px);
+  position: relative;
 }
-
+.thiny {
+  display: none;
+  font-size: 12px;
+  text-decoration: underline;
+  margin-top: 4px;
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}
+.loading {
+  display: grid;
+  place-items: center;
+  background-color: white;
+  left: 50%;
+  transform: translateX(50%);
+}
+.loading svg {
+  height: 75%;
+}
 .mainContent {
   display: flex;
   align-items: center;
@@ -58,7 +77,10 @@
 }
 
 .leftview {
-  display: none;
+  @media (max-width: 768px) {
+    display: none;
+  }
+  display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -66,9 +88,6 @@
   > a {
     font-size: 12px;
     text-decoration: underline;
-  }
-  @media (min-width: 880px) {
-    display: flex;
   }
 }
 
