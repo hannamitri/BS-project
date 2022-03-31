@@ -1,14 +1,8 @@
-* {
-  font-family: var(--bodoni);
-}
-
 header {
   height: 64px;
   width: 100%;
-}
-
-svg {
-  color: var(--primary);
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 h1 {
@@ -17,6 +11,10 @@ h1 {
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+input {
+  font-family: Poppins;
 }
 
 li {
