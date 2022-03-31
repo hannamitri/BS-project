@@ -1,12 +1,15 @@
-import home from "./Login.module.scss";
+import styles from "./Login.module.scss";
 import { useContext, useRef, useState, useEffect } from "react";
-import { getAll } from "../../api/api";
 import { UserContext } from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
 import supabase from "../../lib/supabase";
+import { useForm } from '@mantine/form';
+// import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
+import login_bg from '../../images/Login/login_image.jpg';
+
 export const Login = () => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
+
 
   async function trySignin(event) {
     event.preventDefault();
@@ -34,25 +37,36 @@ export const Login = () => {
   }
 
   return (
-    <main className={home.container}>
-      <div>
-        <h1>Signup here...</h1>
-        <form onSubmit={trySignin}>
-          <fieldset>
-            <div>
-              <label htmlFor="name">Email</label>
-              <input type="email" id="email" name="email" />
-            </div>
-            <div>
-              <label htmlFor="name">Password</label>
-              <input type="password" id="password" name="password" />
-            </div>
+    <div className={styles.container}>
 
-            <button>Sign in</button>
-          </fieldset>
-          {userNotFound && <p>User not found</p>}
-        </form>
+      <div className={styles.login_wrapper}>
+
+
+        <div className={styles.form}>
+          <h2>Citizen Science</h2>
+          <h1>Web Portal</h1>
+          <form onSubmit={trySignin}>
+            <fieldset>
+              <div>
+                <label htmlFor="name">Email</label>
+                <input type="email" id="email" name="email" />
+              </div>
+              <div>
+                <label htmlFor="name">Password</label>
+                <input type="password" id="password" name="password" />
+              </div>
+
+              <button>Sign in</button>
+            </fieldset>
+            {userNotFound && <p>User not found</p>}
+          </form>
+        </div>
+
+        <div className={styles.image}>
+          <img src={login_bg} alt="" />
+        </div>
+
       </div>
-    </main>
+    </div>
   );
 };
