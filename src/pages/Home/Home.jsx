@@ -1,6 +1,7 @@
 import home from "./Home.module.scss";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import Projects from "../../components/Projects/Projects";
 export const Home = () => {
   const { user, loading } = useContext(UserContext);
   if (user) {
@@ -14,6 +15,7 @@ export const Home = () => {
         </div>
       )}
       <h1>hi</h1>
+      <Projects />
     </main>
   );
 };
