@@ -2,70 +2,137 @@ import styles from "./Login.module.scss";
 import { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import supabase from "../../lib/supabase";
-import { useForm } from '@mantine/form';
+import {
+  TextInput,
+  Notification,
+  Button,
+  Group,
+  Box,
+  PasswordInput,
+  Loader,
+} from "@mantine/core";
+import { useForm, zodResolver } from "@mantine/form";
+import { Lock, X } from "tabler-icons-react";
+import { HiOutlineAtSymbol } from "react-icons/hi";
+import { z } from "zod";
+
 // import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
-import login_bg from '../../images/Login/login_image.jpg';
+import LoginIllustration from "../../images/Login/wfh_1.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const { user, loading } = useContext(UserContext);
+  const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
+  const [loadingState, setLoadingState] = useState(false);
+  const navigate = useNavigate();
 
+  const schema = z.object({
+    email: z.string().email({ message: "Invalid email" }),
+    password: z
+      .string()
+      .min(6, { message: "Your password is at least 6 characters" }),
+  });
 
-  async function trySignin(event) {
-    event.preventDefault();
-
-    const [email, password] = [
-      event.target.email.value,
-      event.target.password.value,
-    ];
-
-    console.log(email, password);
+  async function trySignin({ email, password }) {
+    setUserNotFound(false);
+    setLoadingState(true);
 
     let { user, error } = await supabase.auth.signIn({
       email,
       password,
-      isProfessional: false,
     });
 
     if (error) {
+      setLoadingState(false);
       if (error.message !== "Invalid login credentials") {
         throw new Error(error.message);
       }
       setUserNotFound(true);
     }
+    setLoadingState(false);
+    if (user) {
+      setUser(user);
+      navigate("/");
+    }
   }
 
+  const form = useForm({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+
+    schema: zodResolver(schema),
+  });
+
   return (
-    <div className={styles.container}>
+    <>
+      <main className={styles.container}>
+        {userNotFound && (
+          <Notification
+            icon={<X size={18} />}
+            color="red"
+            title="Signin failed"
+            styles={{
+              root: {
+                backgroundColor: "#FB5D64",
+                position: "absolute",
+                zIndex: 3,
+                opacity: 0.95,
+                top: 90,
+              },
+              title: { color: "228BE6", fontWeight: "bold" },
+              description: { color: "white" },
+              icon: { color: "white" },
+              closeButton: { color: "white", ":hover": { color: "black" } },
+            }}
+            onClose={() => setUserNotFound(false)}
+          >
+            A user was not found!
+          </Notification>
+        )}
+        <section className={styles.view}>
+          <div className={styles.mainContent}>
+            <article className={styles.leftview}>
+              <img src={LoginIllustration} alt="Illustration" width={500} />
+              <Link to="/signup">Create an account</Link>
+            </article>
+            <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
+              <h1>Log in</h1>
+              <form onSubmit={form.onSubmit(trySignin)}>
+                <TextInput
+                  required
+                  icon={<HiOutlineAtSymbol size={16} />}
+                  label="Email"
+                  placeholder="your@email.com"
+                  {...form.getInputProps("email")}
+                  type="text"
+                />
+                <PasswordInput
+                  required
+                  label="Password"
+                  placeholder="your password"
+                  icon={<Lock size={16} />}
+                  {...form.getInputProps("password")}
+                />
 
-      <div className={styles.login_wrapper}>
-
-
-        <div className={styles.form}>
-          <h2>Citizen Science</h2>
-          <h1>Web Portal</h1>
-          <form onSubmit={trySignin}>
-            <fieldset>
-              <div>
-                <label htmlFor="name">Email</label>
-                <input type="email" id="email" name="email" />
-              </div>
-              <div>
-                <label htmlFor="name">Password</label>
-                <input type="password" id="password" name="password" />
-              </div>
-
-              <button>Sign in</button>
-            </fieldset>
-            {userNotFound && <p>User not found</p>}
-          </form>
-        </div>
-
-        <div className={styles.image}>
-          <img src={login_bg} alt="" />
-        </div>
-
-      </div>
-    </div>
+                <Group position="left" mt="md" style={{ position: "relative" }}>
+                  {loadingState ? (
+                    <span className={styles.loading}>
+                      <Loader />
+                    </span>
+                  ) : (
+                    <Button type="submit">Login</Button>
+                  )}
+                </Group>
+              </form>
+            </Box>
+          </div>
+          <div className={styles.alternatives}>
+            <div className={styles.leftalt}></div>
+          </div>
+        </section>
+      </main>
+    </>
   );
 };
