@@ -40,11 +40,12 @@ export const UserProvider = ({ children }) => {
       console.log(data);
     }
     checkIfPro();
-  }, []);
+  }, [user]);
 
   let properties = {
     user,
     loading,
+    setUser,
   };
 
   return (
