@@ -2,14 +2,24 @@ import styles from "./Login.module.scss";
 import { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import supabase from "../../lib/supabase";
-import { useForm } from '@mantine/form';
+import {
+  TextInput,
+  Checkbox,
+  Button,
+  Group,
+  Box,
+  PasswordInput,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { Lock } from "tabler-icons-react";
+import { HiOutlineAtSymbol } from "react-icons/hi";
+
 // import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
-import login_bg from '../../images/Login/login_image.jpg';
+import LoginIllustration from "../../images/Login/wfh_1.svg";
 
 export const Login = () => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
-
 
   async function trySignin(event) {
     event.preventDefault();
@@ -36,37 +46,63 @@ export const Login = () => {
     setUser(user);
   }
 
+  const form = useForm({
+    initialValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    },
+
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      password: (value) => (value ? null : "Password is required"),
+    },
+  });
+
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
+      <section className={styles.view}>
+        <div className={styles.mainContent}>
+          <article className={styles.leftview}>
+            <img src={LoginIllustration} alt="Illustration" width={500} />
+            <a href="#">Create an account</a>
+          </article>
+          <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
+            <h1>Log in</h1>
+            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+              <TextInput
+                required
+                icon={<HiOutlineAtSymbol size={16} />}
+                label="Email"
+                placeholder="your@email.com"
+                type="email"
+                {...form.getInputProps("email")}
+              />
+              <PasswordInput
+                required
+                label="Password"
+                placeholder="your password"
+                type="password"
+                icon={<Lock size={16} />}
+                {...form.getInputProps("password")}
+              />
 
-      <div className={styles.login_wrapper}>
+              <Checkbox
+                mt="md"
+                label="Remember me"
+                {...form.getInputProps("rememberMe", { type: "checkbox" })}
+              />
 
-
-        <div className={styles.form}>
-          <h2>Citizen Science</h2>
-          <h1>Web Portal</h1>
-          <form onSubmit={trySignin}>
-            <fieldset>
-              <div>
-                <label htmlFor="name">Email</label>
-                <input type="email" id="email" name="email" />
-              </div>
-              <div>
-                <label htmlFor="name">Password</label>
-                <input type="password" id="password" name="password" />
-              </div>
-
-              <button>Sign in</button>
-            </fieldset>
-            {userNotFound && <p>User not found</p>}
-          </form>
+              <Group position="left" mt="md">
+                <Button type="submit">Login</Button>
+              </Group>
+            </form>
+          </Box>
         </div>
-
-        <div className={styles.image}>
-          <img src={login_bg} alt="" />
+        <div className={styles.alternatives}>
+          <div className={styles.leftalt}></div>
         </div>
-
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };

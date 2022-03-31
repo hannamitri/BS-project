@@ -1,44 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 :root {
-  --font: "Garamond";
+  --font: "Poppins";
+}
+
+* {
+  font-family: var(--font);
+}
+
+.mantine-ActionIcon-root > svg {
+  color: black;
 }
 
 .container {
-
-}
-
-* {    
-  margin: 0;
-  padding: 0;
-}
-
-
-.login_wrapper{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr 1.5fr);
-    align-items: center;
-    justify-content: center;
-    max-width: 1200px;
-    box-shadow: 0 16px 32px #e4e4e48f;
-    background-color: #fff;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%);
-}
-.image{
-  // height: 100%;
-}
-
-.image img{
-   max-width: 100%;
-    height: auto;
-    background: linear-gradient(180deg,#000,#00070f00);
-}
-.form{
-    width: 83%;
-    margin: 0 auto;
-}
-
-.form>h1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  max-height: calc(100vh - 64px);
+  height: calc(100vh - 64px);
+}
+
+.mainContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  > * {
+    flex: 1;
+  }
+
+  svg {
+    color: #228be6;
+  }
+}
+
+.view {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.alternatives {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.rightalt {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.leftview {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  > a {
+    font-size: 12px;
+    text-decoration: underline;
+  }
+  @media (min-width: 880px) {
+    display: flex;
+  }
+}
+
+.leftalt {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.rightalt > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+
+  > svg {
+    width: 50%;
+  }
+  &:nth-child(2) {
+    background-color: rgb(0, 74, 143);
+  }
+  &:nth-child(3) {
+    background-color: rgb(56, 56, 255);
+  }
+  &:nth-child(4) {
+    background-color: rgb(88, 1, 92);
+  }
 }

@@ -1,11 +1,3 @@
-:root {
-  --font: "Garamond";
-}
-
-* {
-  font-family: var(--font);
-}
-
 .container {
   width: 100%;
   min-height: calc(100vh - 64px);
