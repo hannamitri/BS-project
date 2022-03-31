@@ -50,7 +50,6 @@ export const Signup = () => {
     initialValues: {
       email: "",
       password: "",
-      rememberMe: false,
     },
 
     validate: {
@@ -85,12 +84,6 @@ export const Signup = () => {
                 type="password"
                 icon={<Lock size={16} />}
                 {...form.getInputProps("password")}
-              />
-
-              <Checkbox
-                mt="md"
-                label="Remember me"
-                {...form.getInputProps("rememberMe", { type: "checkbox" })}
               />
 
               <Group position="left" mt="md">
