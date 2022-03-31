@@ -5,6 +5,7 @@
   "private": true,
   "homepage": "http://Nathaliesaab.github.io/TraveltoLebanon",
   "dependencies": {
+    "@mantine/form": "^4.1.0",
     "@supabase/supabase-js": "^1.33.2",
     "all": "^0.0.0",
     "axios": "^0.24.0",
