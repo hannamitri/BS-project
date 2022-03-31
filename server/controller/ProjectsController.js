@@ -15,9 +15,10 @@ exports.getAll = async (req, res) => {
 
 }
 
-exports.insertProject = (req, res) => {
-    const { category } = req.body;
 
+exports.insertProject = (req, res) => {
+
+    const { category } = req.body;
     let saveSql = `INSERT INTO Projects(category) VALUES\
         ("${category}")`;
 

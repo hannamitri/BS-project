@@ -22,7 +22,7 @@ exports.get_Users_Projects = async (req, res) => {
 exports.insert_Users_Projects = (req, res) => {
     const { user_id, project_id } = req.body;
     let saveSql = `INSERT INTO Users_manages_Projects(user_id,project_id) VALUES\
-    ("${user_id}","${project_id}"")`;
+    ("${user_id}","${project_id}")`;
     console.log(saveSql);
     connection.query(saveSql, (err, result) => {
         if (err) throw err;

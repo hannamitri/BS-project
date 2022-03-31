@@ -129,7 +129,21 @@ const googlelogin = async (data) => {
     .catch((err) => err.response);
 };
 
+/**
+ * User-manages-projects
+*/
+const insertUsersProjects = async (data) => {
+  let url = `${baseUrl}/insertUsersProjects`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+
+
 export {
+
   //users
   getAll,
   updateUser,
@@ -137,15 +151,23 @@ export {
   deleteUser,
   getUserByEmail,
   isHeProfessional,
+
   //Data Collected
   getDataCollected,
   updateDataCollected,
   deleteDataCollected,
   insertDataCollected,
+
   //Projects
   getAllProjects,
   deleteProject,
   insertProject,
+
+  //user_manages_projects api 
+  insertUsersProjects,
+
   //google api
   googlelogin,
+
+
 };
