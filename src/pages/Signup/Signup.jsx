@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import supabase from "../../lib/supabase";
 export const Signup = () => {
   const navigate = useNavigate();
+
   const { userobj } = useContext(UserContext);
 
   const name = useRef();
@@ -14,6 +15,9 @@ export const Signup = () => {
   const location = useRef();
   const professional = useRef();
   const phonenumber = useRef();
+
+
+
   const trySubmit = async (e) => {
     e.preventDefault();
 
@@ -39,17 +43,12 @@ export const Signup = () => {
       pn: e.target.phonenum.value,
     };
 
-    console.log(userOBJ);
-
-    if (error) {
-      throw new Error(error.code);
-    }
-
     await insertUser(userOBJ)
       .then((th) => console.log(th))
       .catch((err) => console.log(err));
     navigate(-1);
   };
+
   return (
     <main className={styles.container}>
       <div>
