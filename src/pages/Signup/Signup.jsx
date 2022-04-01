@@ -78,7 +78,7 @@ export const Signup = () => {
       Email,
       Password,
       pn,
-      isProfessional: false,
+      isProfessional: 0,
       Location,
     };
 

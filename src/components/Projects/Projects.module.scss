@@ -1,0 +1,17 @@
+.container {
+  .projects_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+
+    > div {
+      background-color: bisque;
+      width: 100%;
+      
+      > img {
+        width: 100%;
+      }
+    }
+  }
+}
