@@ -1,0 +1,25 @@
+.header_wrapper {
+  background-color: white;
+  padding: 20px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_content_wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: end;
+    background-color: bisque;
+    gap: 20px;
+    padding: 15px;
+    border-radius: 4px;
+  }
+}
