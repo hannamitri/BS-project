@@ -6,3 +6,11 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+:root {
+  --font: "Poppins";
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
