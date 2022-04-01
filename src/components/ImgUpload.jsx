@@ -2,22 +2,8 @@ import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "@mantine/core";
 
-export default function MyDropzone() {
-  const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.forEach((file) => {
-      const reader = new FileReader();
-
-      reader.onabort = () => console.log("file reading was aborted");
-      reader.onerror = () => console.log("file reading has failed");
-      reader.onload = () => {
-        // Do whatever you want with the file contents
-        const binaryStr = reader.result;
-        console.log("Works");
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+export default function MyDropzone({ uplImage }) {
+  const { getRootProps, getInputProps } = useDropzone();
 
   return (
     <Button
@@ -26,7 +12,15 @@ export default function MyDropzone() {
       fullWidth
       style={{ marginTop: 28 }}
     >
-      <input {...getInputProps()} />
+      <input
+        aria-label=""
+        onChange={(event) => {
+          console.log("hi");
+          console.log(event);
+          uplImage(event);
+        }}
+        type="file"
+      />
       <p>Input files here</p>
     </Button>
   );

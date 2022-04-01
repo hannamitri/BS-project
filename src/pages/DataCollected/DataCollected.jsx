@@ -68,7 +68,9 @@ export const DataCollected = () => {
   }, []);
 
   const uploadImage = async (event) => {
+    console.log("TEST");
     const file = event.target.files[0];
+    console.log(event.target.files);
     const base64 = await convertBase64(file);
     setDataImage(base64);
   };
@@ -78,20 +80,20 @@ export const DataCollected = () => {
   const time_collected = useRef();
   const date_collected = useRef();
 
-  const trySubmit = async (e) => {
-    e.preventDefault();
-    const dataCollected = {
-      description: description.current.value,
-      location_collected: location_collected.current.value,
-      time_collected: time_collected.current.value,
-      date_collected: date_collected.current.value,
-      image: dataImage,
-    };
-    try {
-      insertDataCollected(dataCollected);
-    } catch (err) {
-      console.log(err);
-    }
+  const trySubmit = async (values) => {
+    console.table(dataImage);
+    // const dataCollected = {
+    //   description: values.description,
+    //   location_collected: values.location_collected,
+    //   time_collected: values.time_collected,
+    //   date_collected: values.date_collected,
+    //   image: dataImage,
+    // };
+    // try {
+    //   insertDataCollected(dataCollected);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   const form = useForm({
@@ -103,8 +105,6 @@ export const DataCollected = () => {
       image: "",
       project_id: "",
     },
-
-    schema: zodResolver(schema),
   });
 
   return (
@@ -180,7 +180,7 @@ export const DataCollected = () => {
                     },
                   }}
                 />
-                <Basic />
+                <Basic uplImage={uploadImage} />
 
                 <Group position="left" mt="md" style={{ position: "relative" }}>
                   {loadingState ? (
