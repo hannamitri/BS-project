@@ -4,15 +4,11 @@ h1 {
   font-family: var(--bodoni);
 }
 
-main {
-  max-width: 100vw;
-  font-size: var(--h4);
+.container {
+  display: flex;
+  min-height: calc(100vh - 60px);
 
-  > div {
-    max-width: 1200px;
-    margin: 0 auto;
-    > h1 {
-      font-size: var(--h3);
-    }
+  .content_wrapper {
+    padding: 0 50px;
   }
 }
