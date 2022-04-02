@@ -20,7 +20,6 @@ import { HiOutlineAtSymbol } from "react-icons/hi";
 import { z } from "zod";
 import LoginIllustration from "../../images/Login/data.svg";
 import { Link } from "react-router-dom";
-import Basic from "../../components/ImgUpload";
 import { MdOutlineDescription } from "react-icons/md";
 import { IoDocumentsOutline } from "react-icons/io5";
 import { FiDatabase } from "react-icons/fi";
@@ -180,7 +179,7 @@ export const DataCollected = () => {
                     },
                   }}
                 />
-                <Basic uplImage={uploadImage} />
+                <input type="file" onChange={uploadImage} />
 
                 <Group position="left" mt="md" style={{ position: "relative" }}>
                   {loadingState ? (

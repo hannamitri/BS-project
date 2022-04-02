@@ -4,14 +4,7 @@ import { Link } from "react-router-dom";
 import { FaPagelines } from "react-icons/fa";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
-import {
-  Group,
-  Avatar,
-  Text,
-  Menu,
-  UnstyledButton,
-  UnstyledButtonProps,
-} from "@mantine/core";
+import { Group, Avatar, Text, Menu, Button } from "@mantine/core";
 import AvatarImage from "../../images/Login/login_image.jpg";
 import { ExternalLink } from "tabler-icons-react";
 
