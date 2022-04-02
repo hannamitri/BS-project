@@ -74,11 +74,6 @@ export const DataCollected = () => {
     setDataImage(base64);
   };
 
-  const description = useRef();
-  const location_collected = useRef();
-  const time_collected = useRef();
-  const date_collected = useRef();
-
   const trySubmit = async (values) => {
     console.table(dataImage);
     const dataCollected = {
