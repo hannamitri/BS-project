@@ -15,8 +15,6 @@ import { useForm, zodResolver } from "@mantine/form";
 import { Lock, X } from "tabler-icons-react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
 import { z } from "zod";
-
-// import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
 import LoginIllustration from "../../images/Login/wfh_1.svg";
 import { Link, useNavigate } from "react-router-dom";
 
