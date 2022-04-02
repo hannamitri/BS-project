@@ -81,18 +81,18 @@ export const DataCollected = () => {
 
   const trySubmit = async (values) => {
     console.table(dataImage);
-    // const dataCollected = {
-    //   description: values.description,
-    //   location_collected: values.location_collected,
-    //   time_collected: values.time_collected,
-    //   date_collected: values.date_collected,
-    //   image: dataImage,
-    // };
-    // try {
-    //   insertDataCollected(dataCollected);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    const dataCollected = {
+      description: values.description,
+      location_collected: values.location_collected,
+      time_collected: values.time_collected,
+      date_collected: values.date_collected,
+      image: dataImage,
+    };
+    try {
+      insertDataCollected(dataCollected);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const form = useForm({
