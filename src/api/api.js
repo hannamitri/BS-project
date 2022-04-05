@@ -5,8 +5,7 @@ let baseUrl = `http://localhost:3001`;
 /*
  User Apis 
 */
-
-const isHeProfessional = async (data) => {
+const isProfessional = async (data) => {
   let url = `${baseUrl}/isProfessional`;
   return await axios
     .post(url, data)
@@ -140,6 +139,13 @@ const insertUsersProjects = async (data) => {
     .catch((err) => err.response);
 };
 
+const getUsersbyProject = async (data) => {
+  let url = `${baseUrl}/getUsersbyProject`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
 
 
 export {
@@ -150,7 +156,7 @@ export {
   insertUser,
   deleteUser,
   getUserByEmail,
-  isHeProfessional,
+  isProfessional,
 
   //Data Collected
   getDataCollected,
@@ -165,6 +171,7 @@ export {
 
   //user_manages_projects api 
   insertUsersProjects,
+  getUsersbyProject,
 
   //google api
   googlelogin,
