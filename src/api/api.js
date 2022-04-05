@@ -147,6 +147,17 @@ const getUsersbyProject = async (data) => {
     .catch((err) => err.response);
 };
 
+/**
+ * DataProjects Apis 
+ */
+
+const getProjectData = async (data) => {
+  let url = `${baseUrl}/getProjectData`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
 
 export {
 
@@ -173,8 +184,14 @@ export {
   insertUsersProjects,
   getUsersbyProject,
 
+
+  //getProjectData
+  getProjectData,
+
   //google api
   googlelogin,
+
+
 
 
 };
