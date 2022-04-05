@@ -7,7 +7,6 @@ const connection = require('../config/database.config.js');
 
 
 exports.get_Users_Projects = async (req, res) => {
-
     let tableName = "Users_manages_Projects";
     let sql = `SELECT * FROM ${tableName}`;
     connection.query(sql, (error, result) => {
@@ -27,8 +26,17 @@ exports.insert_Users_Projects = (req, res) => {
     connection.query(saveSql, (err, result) => {
         if (err) throw err;
         res.status(200).send(result)
-
     })
 
 }
 
+exports.getUsersbyProject = (req, res) => {
+    const { project_id } = req.body;
+    let tableName = "Users_manages_Projects";
+    let sql = `SELECT * FROM ${tableName} where project_id="${project_id}"`;
+    console.log(sql);
+    connection.query(sql, (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result)
+    })
+}
