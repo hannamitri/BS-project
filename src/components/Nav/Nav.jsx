@@ -1,6 +1,5 @@
 import nav from "./Nav.module.scss";
 import { Link } from "react-router-dom";
-
 import { FaPagelines } from "react-icons/fa";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
@@ -32,6 +31,9 @@ export const Nav = () => {
         <li>
           <Link to={`/data-collected`}>Data upload</Link>
         </li>
+        <li>
+          <Link to="/contact">Contact Us</Link>
+        </li>
         {user == null ? (
           <>
             <li className={nav.button}>
@@ -40,6 +42,7 @@ export const Nav = () => {
             <li className={nav.button}>
               <Link to="/signin">Sign in</Link>
             </li>
+
           </>
         ) : (
           <>

@@ -55,4 +55,11 @@ router.post("/googlelogin", GoogleAuthController.googlelogin);
  */
 router.post("/isProfessional", SupabaseController.isHeAuth);
 
+
+/**
+ * User-manages-projects
+*/
+router.post("/insertUsersProjects", UserProjectController.insert_Users_Projects);
+router.post("/getUsersbyProject", UserProjectController.getUsersbyProject);
+
 module.exports = router;

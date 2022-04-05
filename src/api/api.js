@@ -5,8 +5,7 @@ let baseUrl = `http://localhost:3001`;
 /*
  User Apis 
 */
-
-const isHeProfessional = async (data) => {
+const isProfessional = async (data) => {
   let url = `${baseUrl}/isProfessional`;
   return await axios
     .post(url, data)
@@ -129,23 +128,53 @@ const googlelogin = async (data) => {
     .catch((err) => err.response);
 };
 
+/**
+ * User-manages-projects
+*/
+const insertUsersProjects = async (data) => {
+  let url = `${baseUrl}/insertUsersProjects`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+const getUsersbyProject = async (data) => {
+  let url = `${baseUrl}/getUsersbyProject`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+
 export {
+
   //users
   getAll,
   updateUser,
   insertUser,
   deleteUser,
   getUserByEmail,
-  isHeProfessional,
+  isProfessional,
+
   //Data Collected
   getDataCollected,
   updateDataCollected,
   deleteDataCollected,
   insertDataCollected,
+
   //Projects
   getAllProjects,
   deleteProject,
   insertProject,
+
+  //user_manages_projects api 
+  insertUsersProjects,
+  getUsersbyProject,
+
   //google api
   googlelogin,
+
+
 };

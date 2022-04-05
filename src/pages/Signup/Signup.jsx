@@ -3,7 +3,6 @@ import { useContext, useState, useMemo, useEffect, useRef } from "react";
 import { UserContext } from "../../context/UserContext";
 import supabase from "../../lib/supabase";
 import { FaGlobeEurope, FaUserAlt } from "react-icons/fa";
-
 import {
   TextInput,
   Loader,
@@ -26,6 +25,8 @@ import { Link } from "react-router-dom";
 import countryList from "react-select-country-list";
 
 export const Signup = () => {
+
+
   const { user, loading, setUser } = useContext(UserContext);
   const [userExists, setUserExists] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
