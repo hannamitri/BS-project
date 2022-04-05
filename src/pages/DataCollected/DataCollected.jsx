@@ -14,6 +14,7 @@ import {
   Loader,
   Textarea,
 } from "@mantine/core";
+import { DatePicker, TimeInput } from '@mantine/dates';
 import { useForm, zodResolver } from "@mantine/form";
 import { Lock, X } from "tabler-icons-react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
@@ -120,7 +121,7 @@ export const DataCollected = () => {
       description: "",
       location_collected: "",
       time_collected: "",
-      data_collected: "",
+      date_collected: "",
       image: "",
       project_id: "",
     },
@@ -162,20 +163,8 @@ export const DataCollected = () => {
             </article>
             <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
               <h1>Upload data</h1>
-              {/* description: "",
-              location_collected: "",
-              time_collected: "",
-              data_collected: "",
-              image: "",
-              project_id: "", */}
               <form onSubmit={form.onSubmit(trySubmit)}>
-                <TextInput
-                  required
-                  icon={<MdOutlineDescription size={16} />}
-                  label="Description"
-                  placeholder="description"
-                  {...form.getInputProps("description")}
-                />
+
                 <TextInput
                   required
                   label="Project"
@@ -183,15 +172,32 @@ export const DataCollected = () => {
                   icon={<IoDocumentsOutline size={16} />}
                   {...form.getInputProps("project_id")}
                 />
+                <TextInput
+                  required
+                  label="Location Collected"
+                  placeholder="Location"
+                  {...form.getInputProps("location_collected")}
+                />
+                <DatePicker
+                  placeholder="Pick date"
+                  label="Date Collected"
+                  required
+                  {...form.getInputProps("date_collected")}
+                />
+                <TimeInput
+                  label="Time Collected"
+                  format="12"
+                  defaultValue={new Date()} required
+                  {...form.getInputProps("time_collected")} />
                 <Textarea
                   required
-                  label="Data"
+                  label="Description"
                   placeholder="your data"
                   icon={<FiDatabase size={16} />}
                   minRows={3}
                   autosize
                   maxRows={10}
-                  {...form.getInputProps("data_collected")}
+                  {...form.getInputProps("description")}
                   styles={{
                     icon: {
                       alignItems: "flex-start",
