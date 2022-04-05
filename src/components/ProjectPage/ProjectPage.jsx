@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { getAllProjects, getUsersbyProject } from "../../api/api";
-import Project from "../UI/Project/Project";
-import projects from "./Projects.module.scss";
+import projectPage from "./ProjectPage.module.scss";
 
-const Projects = () => {
+const ProjectPage = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [users, setUsers] = useState([]);
 
@@ -30,20 +30,22 @@ const Projects = () => {
     );
   }, []);
 
+  const id = useParams().id;
+
+  const project = allProjects.data?.find(
+    (project) => project.name.replace(/ /g, "-").toLowerCase() === id
+  );
+
+  console.log(allProjects);
+  console.log(project);
+
   return (
-    <div className={projects.container}>
-      <div className={projects.projects_wrapper}>
-        {allProjects.data?.map((project, index) => (
-          <Project
-            key={index}
-            name={project.name}
-            category={project.category}
-            date_created={project.date_created}
-          />
-        ))}
-      </div>
+    <div>
+      <div>{project?.name}</div>
+      <div>{project?.category}</div>
+      <div>{project?.date_created}</div>
     </div>
   );
 };
 
-export default Projects;
+export default ProjectPage;

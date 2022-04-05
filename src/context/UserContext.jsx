@@ -37,7 +37,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     async function checkIfPro() {
       var data = await isProfessional(user);
-      console.log(data);
+      // console.log(data);
     }
     checkIfPro();
   }, [user]);
