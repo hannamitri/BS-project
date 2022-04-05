@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getAllProjects, getUsersbyProject } from "../../api/api";
+import {
+  getAllProjects,
+  getProjectData,
+  getUsersbyProject,
+} from "../../api/api";
 import projectPage from "./ProjectPage.module.scss";
 
 const ProjectPage = () => {
   const [allProjects, setAllProjects] = useState([]);
+  const [projectData, setProjectData] = useState([]);
   const [users, setUsers] = useState([]);
 
   const getProjects = async () => {
@@ -22,8 +27,18 @@ const ProjectPage = () => {
       .catch((err) => console.log(err));
   };
 
+  const getDataByProject = async () => {
+    let project = {
+      project_id: 1,
+    };
+
+    const data = await getProjectData(project);
+    setProjectData(data);
+  };
+
   useEffect(() => {
     getProjects();
+    getDataByProject();
     console.log(
       `USER BY PROJECT ID:"
         ${getUsersByProjectID()}`
@@ -36,8 +51,7 @@ const ProjectPage = () => {
     (project) => project.name.replace(/ /g, "-").toLowerCase() === id
   );
 
-  console.log(allProjects);
-  console.log(project);
+  console.log(projectData);
 
   return (
     <div>
