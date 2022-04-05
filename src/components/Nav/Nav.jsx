@@ -26,10 +26,10 @@ export const Nav = () => {
       </h1>
       <ul>
         <li>
-          <Link to={`/`}>Example</Link>
+          <Link to={`/`}>Projects</Link>
         </li>
         <li>
-          <Link to={`/data-collected`}>Data upload</Link>
+          <Link to={`/data-collected`}>Upload Data</Link>
         </li>
         <li>
           <Link to="/contact">Contact Us</Link>

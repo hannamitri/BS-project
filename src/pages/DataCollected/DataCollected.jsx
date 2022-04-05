@@ -1,5 +1,5 @@
 import styles from "./DataCollected.module.scss";
-import { getDataCollected } from "../../api/api";
+import { getDataCollected, userUploadsData } from "../../api/api";
 import { insertDataCollected } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
@@ -25,9 +25,32 @@ import { IoDocumentsOutline } from "react-icons/io5";
 import { FiDatabase } from "react-icons/fi";
 
 export const DataCollected = () => {
+
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
+
+  /*
+  ******* FOR TESTING PURPOSES DYNAMIC VALUES
+  */
+  // const userUploads = async (values) => {
+
+  //   const USER_DATA = {
+  //     user_id: 4,
+  //     data_id: 3,
+  //   };
+
+
+  //   try {
+  //     userUploadsData(USER_DATA);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+
+
+
   const navigate = useNavigate();
 
   const schema = z.object({
@@ -38,6 +61,7 @@ export const DataCollected = () => {
     image: z.string().min(1),
     project_id: z.string().min(1),
   });
+
   const [dataCollected, setDataCollected] = useState([]);
 
   const [dataImage, setDataImage] = useState("");
@@ -64,6 +88,7 @@ export const DataCollected = () => {
 
   useEffect(() => {
     getCollectedResults();
+    // userUploads();
   }, []);
 
   const uploadImage = async (event) => {
@@ -186,13 +211,13 @@ export const DataCollected = () => {
                   )}
                 </Group>
               </form>
-            </Box>
-          </div>
+            </Box >
+          </div >
           <div className={styles.alternatives}>
             <div className={styles.leftalt}></div>
           </div>
-        </section>
-      </main>
+        </section >
+      </main >
     </>
   );
 };

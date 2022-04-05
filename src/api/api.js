@@ -45,8 +45,8 @@ const deleteUser = async (data) => {
     .catch((err) => err.response);
 };
 
-const getUserByEmail = async (data) => {
-  let url = `${baseUrl}/getUserByEmail`;
+const getUserById = async (data) => {
+  let url = `${baseUrl}/getUserById`;
   return await axios
     .post(url, data)
     .then((response) => response)
@@ -159,6 +159,24 @@ const getProjectData = async (data) => {
     .catch((err) => err.response);
 };
 
+
+/**
+ * UserDataController Apis 
+ */
+
+const userUploadsData = async (data) => {
+  let url = `${baseUrl}/userUploadsData`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+
+
+
+
+
 export {
 
   //users
@@ -166,7 +184,7 @@ export {
   updateUser,
   insertUser,
   deleteUser,
-  getUserByEmail,
+  getUserById,
   isProfessional,
 
   //Data Collected
@@ -187,6 +205,11 @@ export {
 
   //getProjectData
   getProjectData,
+
+
+  //UserDataController
+  userUploadsData,
+
 
   //google api
   googlelogin,
