@@ -7,6 +7,7 @@ import {
   DataCollected,
   Signout,
   Contact,
+  ProjectForm,
 } from "./pages";
 import { Nav } from "./components";
 import ProjectPage from "./components/ProjectPage/ProjectPage";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/Signout" element={<Signout />} />
         <Route path="/Contact" element={<Contact />} />
+        <Route path="/addProject" element={<ProjectForm />} />
         <Route path="/:id" element={<ProjectPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
