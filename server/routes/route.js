@@ -17,7 +17,7 @@ var GoogleAuthController = require("../controller/GoogleAuthController ");
 router.post("/updateUser", UsersController.updateUser);
 router.post("/insertUser", UsersController.insertUser);
 router.post("/deleteUser", UsersController.deleteUser);
-router.post("/getUserByEmail", UsersController.getUserByEmail);
+router.post("/getUserById", UsersController.getUserById);
 router.get("/getAll", UsersController.getAll);
 
 /*
@@ -67,5 +67,10 @@ router.post("/getUsersbyProject", UserProjectController.getUsersbyProject);
  * DataProjectsController
 */
 router.post("/getProjectData", DataProjectsController.getProjectData);
+
+/**
+ *UserDataController 
+*/
+router.post("/userUploadsData", UserDataController.insert_Users_DataCollected);
 
 module.exports = router;

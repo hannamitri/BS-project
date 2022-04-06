@@ -16,7 +16,7 @@ exports.get_Users_DataCollected = async (req, res) => {
 exports.insert_Users_DataCollected = (req, res) => {
   const { user_id, data_id } = req.body;
   let saveSql = `INSERT INTO Users_uploads_DataCollected(user_id,data_id) VALUES\
-    ("${user_id}","${data_id}"")`;
+    ("${user_id}","${data_id}")`;
   console.log(saveSql);
   connection.query(saveSql, (err, result) => {
     if (err) throw err;

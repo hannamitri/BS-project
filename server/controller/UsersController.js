@@ -13,12 +13,13 @@ exports.getAll = async (req, res) => {
   });
 };
 
-exports.getUserByEmail = async (req, res) => {
-  const { email } = req.body;
+exports.getUserById = async (req, res) => {
+
+  const { user_id } = req.body;
 
   let tableName = "Users";
 
-  let sql = `SELECT * FROM ${tableName} where email= "${email}"`;
+  let sql = `SELECT * FROM ${tableName} where user_id= "${user_id}"`;
   console.log(sql);
   connection.query(sql, (error, result) => {
     if (error) throw error;
