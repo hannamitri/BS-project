@@ -4,8 +4,6 @@ import Project from "../UI/Project/Project";
 import projects from "./Projects.module.scss";
 
 const Projects = () => {
-
-
   const [allProjects, setAllProjects] = useState([]);
 
   const getProjects = async () => {

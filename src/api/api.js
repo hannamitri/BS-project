@@ -130,7 +130,7 @@ const googlelogin = async (data) => {
 
 /**
  * User-manages-projects
-*/
+ */
 const insertUsersProjects = async (data) => {
   let url = `${baseUrl}/insertUsersProjects`;
   return await axios
@@ -147,8 +147,16 @@ const getUsersbyProject = async (data) => {
     .catch((err) => err.response);
 };
 
+const getUsersProjects = async (data) => {
+  let url = `${baseUrl}/getUsersProjects`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
 /**
- * DataProjects Apis 
+ * DataProjects Apis
  */
 
 const getProjectData = async (data) => {
@@ -159,9 +167,8 @@ const getProjectData = async (data) => {
     .catch((err) => err.response);
 };
 
-
 /**
- * UserDataController Apis 
+ * UserDataController Apis
  */
 
 const userUploadsData = async (data) => {
@@ -172,13 +179,7 @@ const userUploadsData = async (data) => {
     .catch((err) => err.response);
 };
 
-
-
-
-
-
 export {
-
   //users
   getAll,
   updateUser,
@@ -186,35 +187,23 @@ export {
   deleteUser,
   getUserById,
   isProfessional,
-
   //Data Collected
   getDataCollected,
   updateDataCollected,
   deleteDataCollected,
   insertDataCollected,
-
   //Projects
   getAllProjects,
   deleteProject,
   insertProject,
-
-  //user_manages_projects api 
+  //user_manages_projects api
   insertUsersProjects,
   getUsersbyProject,
-
-
+  getUsersProjects,
   //getProjectData
   getProjectData,
-
-
   //UserDataController
   userUploadsData,
-
-
   //google api
   googlelogin,
-
-
-
-
 };

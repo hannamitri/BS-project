@@ -13,8 +13,9 @@ import {
   Box,
   Loader,
   Textarea,
+  Select,
 } from "@mantine/core";
-import { DatePicker, TimeInput } from '@mantine/dates';
+import { DatePicker, TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
 import { Lock, X } from "tabler-icons-react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
@@ -26,14 +27,13 @@ import { IoDocumentsOutline } from "react-icons/io5";
 import { FiDatabase } from "react-icons/fi";
 
 export const DataCollected = () => {
-
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
 
   /*
-  ******* FOR TESTING PURPOSES DYNAMIC VALUES
-  */
+   ******* FOR TESTING PURPOSES DYNAMIC VALUES
+   */
   // const userUploads = async (values) => {
 
   //   const USER_DATA = {
@@ -41,16 +41,12 @@ export const DataCollected = () => {
   //     data_id: 3,
   //   };
 
-
   //   try {
   //     userUploadsData(USER_DATA);
   //   } catch (err) {
   //     console.log(err);
   //   }
   // };
-
-
-
 
   const navigate = useNavigate();
 
@@ -164,7 +160,6 @@ export const DataCollected = () => {
             <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
               <h1>Upload data</h1>
               <form onSubmit={form.onSubmit(trySubmit)}>
-
                 <TextInput
                   required
                   label="Project"
@@ -187,8 +182,26 @@ export const DataCollected = () => {
                 <TimeInput
                   label="Time Collected"
                   format="12"
-                  defaultValue={new Date()} required
-                  {...form.getInputProps("time_collected")} />
+                  defaultValue={new Date()}
+                  required
+                  {...form.getInputProps("time_collected")}
+                />
+                <Select
+                  data={[
+                    {
+                      id: "1",
+                      label: "1",
+                    },
+                    {
+                      id: "2",
+                      label: "2",
+                    },
+                  ]}
+                  label="Projects"
+                  required
+                  placeholder={"Select a Project"}
+                  {...form.getInputProps("Location")}
+                />
                 <Textarea
                   required
                   label="Description"
@@ -217,13 +230,13 @@ export const DataCollected = () => {
                   )}
                 </Group>
               </form>
-            </Box >
-          </div >
+            </Box>
+          </div>
           <div className={styles.alternatives}>
             <div className={styles.leftalt}></div>
           </div>
-        </section >
-      </main >
+        </section>
+      </main>
     </>
   );
 };
