@@ -61,6 +61,7 @@ router.post("/isProfessional", SupabaseController.isHeAuth);
 */
 router.post("/insertUsersProjects", UserProjectController.insert_Users_Projects);
 router.post("/getUsersbyProject", UserProjectController.getUsersbyProject);
+router.post("/getUsersProjects", UserProjectController.get_Users_Projects);
 
 
 /**

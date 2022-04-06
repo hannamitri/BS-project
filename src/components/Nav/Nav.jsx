@@ -1,22 +1,37 @@
 import nav from "./Nav.module.scss";
 import { Link } from "react-router-dom";
 import { FaPagelines } from "react-icons/fa";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Group, Avatar, Text, Menu, Button } from "@mantine/core";
 import AvatarImage from "../../images/Login/login_image.jpg";
 import { ExternalLink } from "tabler-icons-react";
+import { getAll } from "../../api/api";
 
 export const Nav = () => {
+  const [users, setUsers] = useState([]);
   const { user, loading } = useContext(UserContext);
 
-  if (loading) {
-    return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
+  const getUsers = async () => {
+    const data = await getAll();
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    getUsers();
+
+    if (loading) {
+      return (
+        <div>
+          <h1>Loading...</h1>
+        </div>
+      );
+    }
+  }, []);
+
+  console.log(users.data);
+
+  // const userLoggedIn = 
 
   return (
     <nav className={nav.container}>
@@ -34,7 +49,7 @@ export const Nav = () => {
         <li>
           <Link to="/contact">Contact Us</Link>
         </li>
-        {user == null ? (
+        {!user ? (
           <>
             <li className={nav.button}>
               <Link to="/signup">Sign up</Link>
@@ -42,7 +57,6 @@ export const Nav = () => {
             <li className={nav.button}>
               <Link to="/signin">Sign in</Link>
             </li>
-
           </>
         ) : (
           <>
