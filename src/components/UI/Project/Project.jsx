@@ -2,15 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import project from "./Project.module.scss";
 
-const Project = ({ name, description, date, image }) => {
+const Project = ({ name, category, date_created, id }) => {
   return (
     <div>
-      <div>name: {name}</div>
-      <div>desc: {description}</div>
-      <img src={image} alt="" />
-      <div>date: {date}</div>
+      <div>ID: {id}</div>
+      <div>date_created: {date_created}</div>
+      <div>category: {category}</div>
       <div className={project.project_button}>
-        <Link to="">View Project</Link>
+        <Link to={`/${name.replace(/ /g, "-").toLowerCase()}`}>name</Link>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import supabase from "../lib/supabase";
-import { isHeProfessional } from "../api/api";
+import { isProfessional } from "../api/api";
 import { useNavigate } from "react-router-dom";
 export const UserContext = createContext();
 
@@ -36,8 +36,8 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     async function checkIfPro() {
-      var data = await isHeProfessional(user);
-      console.log(data);
+      var data = await isProfessional(user);
+      // console.log(data);
     }
     checkIfPro();
   }, [user]);

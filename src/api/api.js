@@ -5,8 +5,7 @@ let baseUrl = `http://localhost:3001`;
 /*
  User Apis 
 */
-
-const isHeProfessional = async (data) => {
+const isProfessional = async (data) => {
   let url = `${baseUrl}/isProfessional`;
   return await axios
     .post(url, data)
@@ -46,8 +45,8 @@ const deleteUser = async (data) => {
     .catch((err) => err.response);
 };
 
-const getUserByEmail = async (data) => {
-  let url = `${baseUrl}/getUserByEmail`;
+const getUserById = async (data) => {
+  let url = `${baseUrl}/getUserById`;
   return await axios
     .post(url, data)
     .then((response) => response)
@@ -129,23 +128,93 @@ const googlelogin = async (data) => {
     .catch((err) => err.response);
 };
 
+/**
+ * User-manages-projects
+*/
+const insertUsersProjects = async (data) => {
+  let url = `${baseUrl}/insertUsersProjects`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+const getUsersbyProject = async (data) => {
+  let url = `${baseUrl}/getUsersbyProject`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+/**
+ * DataProjects Apis 
+ */
+
+const getProjectData = async (data) => {
+  let url = `${baseUrl}/getProjectData`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+
+/**
+ * UserDataController Apis 
+ */
+
+const userUploadsData = async (data) => {
+  let url = `${baseUrl}/userUploadsData`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+
+
+
+
+
 export {
+
   //users
   getAll,
   updateUser,
   insertUser,
   deleteUser,
-  getUserByEmail,
-  isHeProfessional,
+  getUserById,
+  isProfessional,
+
   //Data Collected
   getDataCollected,
   updateDataCollected,
   deleteDataCollected,
   insertDataCollected,
+
   //Projects
   getAllProjects,
   deleteProject,
   insertProject,
+
+  //user_manages_projects api 
+  insertUsersProjects,
+  getUsersbyProject,
+
+
+  //getProjectData
+  getProjectData,
+
+
+  //UserDataController
+  userUploadsData,
+
+
   //google api
   googlelogin,
+
+
+
+
 };

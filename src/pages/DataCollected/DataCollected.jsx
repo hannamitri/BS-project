@@ -1,5 +1,5 @@
 import styles from "./DataCollected.module.scss";
-import { getDataCollected } from "../../api/api";
+import { getDataCollected, userUploadsData } from "../../api/api";
 import { insertDataCollected } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
@@ -14,6 +14,7 @@ import {
   Loader,
   Textarea,
 } from "@mantine/core";
+import { DatePicker, TimeInput } from '@mantine/dates';
 import { useForm, zodResolver } from "@mantine/form";
 import { Lock, X } from "tabler-icons-react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
@@ -25,9 +26,32 @@ import { IoDocumentsOutline } from "react-icons/io5";
 import { FiDatabase } from "react-icons/fi";
 
 export const DataCollected = () => {
+
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
+
+  /*
+  ******* FOR TESTING PURPOSES DYNAMIC VALUES
+  */
+  // const userUploads = async (values) => {
+
+  //   const USER_DATA = {
+  //     user_id: 4,
+  //     data_id: 3,
+  //   };
+
+
+  //   try {
+  //     userUploadsData(USER_DATA);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+
+
+
   const navigate = useNavigate();
 
   const schema = z.object({
@@ -38,6 +62,7 @@ export const DataCollected = () => {
     image: z.string().min(1),
     project_id: z.string().min(1),
   });
+
   const [dataCollected, setDataCollected] = useState([]);
 
   const [dataImage, setDataImage] = useState("");
@@ -64,6 +89,7 @@ export const DataCollected = () => {
 
   useEffect(() => {
     getCollectedResults();
+    // userUploads();
   }, []);
 
   const uploadImage = async (event) => {
@@ -95,7 +121,7 @@ export const DataCollected = () => {
       description: "",
       location_collected: "",
       time_collected: "",
-      data_collected: "",
+      date_collected: "",
       image: "",
       project_id: "",
     },
@@ -137,20 +163,8 @@ export const DataCollected = () => {
             </article>
             <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
               <h1>Upload data</h1>
-              {/* description: "",
-              location_collected: "",
-              time_collected: "",
-              data_collected: "",
-              image: "",
-              project_id: "", */}
               <form onSubmit={form.onSubmit(trySubmit)}>
-                <TextInput
-                  required
-                  icon={<MdOutlineDescription size={16} />}
-                  label="Description"
-                  placeholder="description"
-                  {...form.getInputProps("description")}
-                />
+
                 <TextInput
                   required
                   label="Project"
@@ -158,15 +172,32 @@ export const DataCollected = () => {
                   icon={<IoDocumentsOutline size={16} />}
                   {...form.getInputProps("project_id")}
                 />
+                <TextInput
+                  required
+                  label="Location Collected"
+                  placeholder="Location"
+                  {...form.getInputProps("location_collected")}
+                />
+                <DatePicker
+                  placeholder="Pick date"
+                  label="Date Collected"
+                  required
+                  {...form.getInputProps("date_collected")}
+                />
+                <TimeInput
+                  label="Time Collected"
+                  format="12"
+                  defaultValue={new Date()} required
+                  {...form.getInputProps("time_collected")} />
                 <Textarea
                   required
-                  label="Data"
+                  label="Description"
                   placeholder="your data"
                   icon={<FiDatabase size={16} />}
                   minRows={3}
                   autosize
                   maxRows={10}
-                  {...form.getInputProps("data_collected")}
+                  {...form.getInputProps("description")}
                   styles={{
                     icon: {
                       alignItems: "flex-start",
@@ -186,13 +217,13 @@ export const DataCollected = () => {
                   )}
                 </Group>
               </form>
-            </Box>
-          </div>
+            </Box >
+          </div >
           <div className={styles.alternatives}>
             <div className={styles.leftalt}></div>
           </div>
-        </section>
-      </main>
+        </section >
+      </main >
     </>
   );
 };

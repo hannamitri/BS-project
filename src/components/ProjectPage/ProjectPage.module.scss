@@ -1,0 +1,18 @@
+.container {
+    .projects_wrapper {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        justify-items: center;
+
+        >div {
+            background-color: bisque;
+            border-radius: 8px;
+            padding: 10px;
+
+            >img {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -1,6 +1,5 @@
 import nav from "./Nav.module.scss";
 import { Link } from "react-router-dom";
-
 import { FaPagelines } from "react-icons/fa";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
@@ -27,10 +26,13 @@ export const Nav = () => {
       </h1>
       <ul>
         <li>
-          <Link to={`/`}>Example</Link>
+          <Link to={`/`}>Projects</Link>
         </li>
         <li>
-          <Link to={`/data-collected`}>Data upload</Link>
+          <Link to={`/data-collected`}>Upload Data</Link>
+        </li>
+        <li>
+          <Link to="/contact">Contact Us</Link>
         </li>
         {user == null ? (
           <>
@@ -40,6 +42,7 @@ export const Nav = () => {
             <li className={nav.button}>
               <Link to="/signin">Sign in</Link>
             </li>
+
           </>
         ) : (
           <>

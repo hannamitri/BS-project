@@ -1,6 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, Login, Signup, NotFound, DataCollected, Signout } from "./pages";
+import {
+  Home,
+  Login,
+  Signup,
+  NotFound,
+  DataCollected,
+  Signout,
+  Contact,
+} from "./pages";
 import { Nav } from "./components";
+import ProjectPage from "./components/ProjectPage/ProjectPage";
 
 function App() {
   return (
@@ -12,6 +21,8 @@ function App() {
         <Route path="/data-collected" element={<DataCollected />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/Signout" element={<Signout />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="/:id" element={<ProjectPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
