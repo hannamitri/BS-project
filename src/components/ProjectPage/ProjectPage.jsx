@@ -7,53 +7,20 @@ import {
   getUsersbyProject,
 } from "../../api/api";
 
-
 import styles from "./ProjectPage.module.scss";
 
 const ProjectPage = () => {
-
-
   const [allProjects, setAllProjects] = useState([]);
   const [projectData, setProjectData] = useState([]);
+  const [userInformation, setUserInformation] = useState([]);
   const [users, setUsers] = useState([]);
-
-
-  useEffect(() => {
-    getProjects();
-    getDataByProjectId();
-    getUsersByProjectID();
-    getUserInformation();
-
-
-  }, []);
 
   const getProjects = async () => {
     const data = await getAllProjects();
     setAllProjects(data);
   };
 
-
-  const getUsersByProjectID = async () => {
-
-    let project = {
-      project_id: 1,
-    };
-
-    const projectUsers = await getUsersbyProject(project);
-
-    (projectUsers.data).forEach(element => {
-
-      const info = getUserInformation(element.user_id)
-      console.log(info);
-
-    });
-
-    setUsers(projectUsers)
-
-  };
-
   const getDataByProjectId = async () => {
-
     let project = {
       project_id: 1,
     };
@@ -61,22 +28,44 @@ const ProjectPage = () => {
     setProjectData(data_projects);
   };
 
-
   const getUserInformation = async (user_ID) => {
-
     let user = {
       user_id: user_ID,
-    }
+    };
     const user_information = await getUserById(user);
 
+    setUserInformation(user_information);
+  };
 
-  }
+  const getUsersByProjectID = async () => {
+    let project = {
+      project_id: 1,
+    };
+
+    const projectUsers = await getUsersbyProject(project);
+
+    projectUsers.data.forEach((element) => {
+      getUserInformation(element.user_id);
+    });
+
+    setUsers(projectUsers);
+  };
+
+  console.log(userInformation?.data);
 
   const id = useParams().id;
-  const original_project = allProjects.data?.find(
+  const original_project = allProjects?.data?.find(
     (project) => project.name.replace(/ /g, "-").toLowerCase() === id
   );
 
+  console.log(original_project?.project_id)
+
+  useEffect(() => {
+    getProjects();
+    getDataByProjectId();
+    getUsersByProjectID();
+    getUserInformation();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -95,9 +84,7 @@ const ProjectPage = () => {
       <div>
         <h1>LIST OF USERS BELONGS TO PROJECT: {original_project?.name}</h1>
         {users.data?.map((usersData, index) => (
-          <div key={index}>
-            {usersData.user_id}
-          </div>
+          <div key={index}>{usersData.user_id}</div>
         ))}
       </div>
     </div>
