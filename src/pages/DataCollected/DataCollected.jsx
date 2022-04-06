@@ -199,7 +199,7 @@ export const DataCollected = () => {
                   ]}
                   label="Projects"
                   required
-                  placeholder={"Select a country"}
+                  placeholder={"Select a Project"}
                   {...form.getInputProps("Location")}
                 />
                 <Textarea

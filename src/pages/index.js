@@ -5,3 +5,4 @@ export { NotFound } from "./NotFound/NotFound";
 export { DataCollected } from "./DataCollected/DataCollected.jsx";
 export { Signout } from "./Signout/Signout";
 export { Contact } from "./Contact/Contact";
+export { ProjectForm } from "./ProjectForm/ProjectForm";
