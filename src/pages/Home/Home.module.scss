@@ -1,9 +1,5 @@
 @use "./../../styles/fonts.scss";
 
-h1 {
-  font-family: var(--bodoni);
-}
-
 .container {
   display: flex;
   min-height: calc(100vh - 60px);
