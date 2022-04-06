@@ -17,6 +17,10 @@ export const Nav = () => {
     setUsers(data);
   };
 
+  const userLoggedIn = users?.data?.find(
+    (item) => item?.email === user?.user?.email
+  );
+
   useEffect(() => {
     getUsers();
 
@@ -28,10 +32,7 @@ export const Nav = () => {
       );
     }
   }, []);
-
-  console.log(users.data);
-
-  // const userLoggedIn = 
+  console.log(userLoggedIn?.isProfessional);
 
   return (
     <nav className={nav.container}>
@@ -43,12 +44,21 @@ export const Nav = () => {
         <li>
           <Link to={`/`}>Projects</Link>
         </li>
-        <li>
-          <Link to={`/data-collected`}>Upload Data</Link>
-        </li>
+        {user && (
+          <li>
+            <Link to={`/data-collected`}>Upload Data</Link>
+          </li>
+        )}
+
         <li>
           <Link to="/contact">Contact Us</Link>
         </li>
+        {userLoggedIn?.isProfessional ? (
+          <li>
+            <Link to="/add-user">Add User</Link>
+          </li>
+        ) : null}
+
         {!user ? (
           <>
             <li className={nav.button}>
@@ -66,7 +76,7 @@ export const Nav = () => {
           </>
         )}
       </ul>
-      <div></div>
+      <div>EMAIL: {userLoggedIn?.email}</div>
 
       <div className={nav.user_account}>
         <Group>
