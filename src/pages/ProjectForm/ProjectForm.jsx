@@ -7,20 +7,26 @@ import {
 } from "@mantine/core";
 
 import { useForm, zodResolver } from "@mantine/form";
-import { getAllProjects } from "../../api/api";
+import { getAll, getAllProjects } from "../../api/api";
 
 export const ProjectForm = () => {
 
     const [allProjects, setAllProjects] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
+
 
     const getProjects = async () => {
         const data = await getAllProjects();
-        console.log(data);
         setAllProjects(data);
+    };
+    const getUsers = async () => {
+        const users_data = await getAll();
+        setAllUsers(users_data);
     };
 
     useEffect(() => {
         getProjects();
+        getUsers();
     }, []);
 
 
@@ -32,6 +38,7 @@ export const ProjectForm = () => {
     });
 
 
+
     return (
         <div className={styles.container}>
 
@@ -39,15 +46,25 @@ export const ProjectForm = () => {
                 <form action="">
 
 
-                    <Select
-                        data={allProjects.data.project_id}
+                    {/* <Select
+
+                        data={getData()}
                         label="Projects"
                         required
                         placeholder={"Select a Project"}
                         {...form.getInputProps("project")}
-                    />
-
-                    < Select
+                    /> */}
+                    <select className="form-control">
+                        {allProjects.data?.map((project, index) => (
+                            <option value={project.project_id} selected={project.project_id}>{project.name}</option>
+                        ))}
+                    </select>
+                    <select className="form-control">
+                        {allUsers.data?.map((user, index) => (
+                            <option value={user.user_id} selected={user.user_id}>{user.user_name}</option>
+                        ))}
+                    </select>
+                    {/* < Select
                         data={
                             [
                                 {
@@ -63,10 +80,10 @@ export const ProjectForm = () => {
                         required
                         placeholder={"Select A User"}
                         {...form.getInputProps("user")}
-                    />
+                    /> */}
                 </form>
             </Box>
-        </div>
+        </div >
     );
 }
 
