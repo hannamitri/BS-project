@@ -11,6 +11,7 @@ import {
 } from "./pages";
 import { Nav } from "./components";
 import ProjectPage from "./components/ProjectPage/ProjectPage";
+import AddProject from "./pages/AddProject/AddProject";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Signout" element={<Signout />} />
         <Route path="/Contact" element={<Contact />} />
         <Route path="/addProject" element={<ProjectForm />} />
+        <Route path="/add-project" element={<AddProject />} />
         <Route path="/:id" element={<ProjectPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
