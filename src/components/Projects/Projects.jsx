@@ -24,6 +24,7 @@ const Projects = () => {
             name={project.name}
             category={project.category}
             date_created={project.date_created}
+            image={project.image}
             id={project.project_id}
           />
         ))}
