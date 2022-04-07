@@ -19,7 +19,7 @@ import { DatePicker, TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
 import { Lock, X } from "tabler-icons-react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
-import { z } from "zod";
+import { array, z } from "zod";
 import LoginIllustration from "../../images/Login/data.svg";
 import { Link } from "react-router-dom";
 import { MdOutlineDescription } from "react-icons/md";
@@ -133,25 +133,25 @@ export const DataCollected = () => {
   });
 
 
-  const formatData = () => {
-    allProjects.data?.map((project, index) => (
-      setProjectsData([
-        {
-          id: project.project_id,
-          label: project.name,
-        }
-      ])
-    ))
 
-  }
+  const data = [
+    { value: 'react', label: 'React' },
+    { value: 'ng', label: 'Angular' },
+    { value: 'svelte', label: 'Svelte' },
+    { value: 'vue', label: 'Vue' },
+  ];
+
 
   useEffect(() => {
     getCollectedResults();
     getProjectsofUser();
-    formatData();
+
   }, []);
 
-  console.log(projectsdata)
+
+
+
+
   return (
     <>
       <main className={styles.container}>
@@ -220,7 +220,7 @@ export const DataCollected = () => {
                   label="Projects"
                   required
                   placeholder={"Select a Project"}
-                  {...form.getInputProps("Location")}
+                  {...form.getInputProps("project")}
                 />
                 <select className="form-control">
                   {allProjects.data?.map((project, index) => (
@@ -230,11 +230,15 @@ export const DataCollected = () => {
                   ))}
                 </select>
 
-
+                <Select
+                  label="Your favorite framework/library"
+                  placeholder="Pick one"
+                  data={projectsdata}
+                />
                 <Textarea
                   required
                   label="Description"
-                  placeholder="your data"
+                  placeholder="Description here"
                   icon={<FiDatabase size={16} />}
                   minRows={3}
                   autosize
