@@ -26,8 +26,8 @@ exports.insert_Users_Projects = (req, res) => {
 
 exports.getUsersbyProject = (req, res) => {
   const { project_id } = req.body;
-  let tableName = "Users_manages_Projects";
-  let sql = `SELECT * FROM ${tableName} where project_id="${project_id}"`;
+  let sql = `Select * from users where user_id in 
+      (Select user_id from users_manages_projects where project_id = "${project_id}")`;
   console.log(sql);
   connection.query(sql, (err, result) => {
     if (err) throw err;

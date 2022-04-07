@@ -12,7 +12,6 @@ import styles from "./ProjectPage.module.scss";
 const ProjectPage = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [projectData, setProjectData] = useState([]);
-  const [userInformation, setUserInformation] = useState([]);
   const [users, setUsers] = useState([]);
 
   const getProjects = async () => {
@@ -28,14 +27,7 @@ const ProjectPage = () => {
     setProjectData(data_projects);
   };
 
-  const getUserInformation = async (user_ID) => {
-    let user = {
-      user_id: user_ID,
-    };
-    const user_information = await getUserById(user);
 
-    setUserInformation(user_information);
-  };
 
   const getUsersByProjectID = async () => {
     let project = {
@@ -44,14 +36,9 @@ const ProjectPage = () => {
 
     const projectUsers = await getUsersbyProject(project);
 
-    projectUsers.data.forEach((element) => {
-      getUserInformation(element.user_id);
-    });
-
     setUsers(projectUsers);
   };
 
-  console.log(userInformation?.data);
 
   const id = useParams().id;
   const original_project = allProjects?.data?.find(
@@ -64,7 +51,6 @@ const ProjectPage = () => {
     getProjects();
     getDataByProjectId();
     getUsersByProjectID();
-    getUserInformation();
   }, []);
 
   return (
@@ -84,7 +70,16 @@ const ProjectPage = () => {
       <div>
         <h1>LIST OF USERS BELONGS TO PROJECT: {original_project?.name}</h1>
         {users.data?.map((usersData, index) => (
-          <div key={index}>{usersData.user_id}</div>
+          <div key={index}>
+            <div>{usersData.user_id}</div>
+            <div>{usersData.user_name}</div>
+            <div>{usersData.Location}</div>
+            <div>{usersData.email}</div>
+            <div>{usersData.isProfessional}</div>
+            <div>{usersData.phone_number}</div>
+            <br />
+            <br />
+          </div>
         ))}
       </div>
     </div>
