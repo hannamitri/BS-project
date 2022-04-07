@@ -26,7 +26,7 @@ const ProjectPage = () => {
 
   const getDataByProjectId = async () => {
     let project = {
-      project_id: 1,
+      project_id: original_project?.project_id,
     };
     const data_projects = await getProjectData(project);
     setProjectData(data_projects);
@@ -52,9 +52,9 @@ const ProjectPage = () => {
   return (
     <div className={styles.container}>
       <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1>
-      {projectData.data ? (
+      {projectData?.data ? (
         <div className={styles.projects_wrapper}>
-          {projectData.data?.map((projectdata, index) => (
+          {projectData?.data?.map((projectdata, index) => (
             <div key={index}>
               <img src={projectdata.image} alt="" />
               <div>date_created: {projectdata.date_collected}</div>
@@ -78,16 +78,15 @@ const ProjectPage = () => {
 
       <div>
         <h1>LIST OF USERS BELONGS TO PROJECT: {original_project?.name}</h1>
-        {users.data ? (
+        {users?.data ? (
           <div>
-            {users.data?.map((usersData, index) => (
+            {users?.data?.map((usersData, index) => (
               <div key={index}>
                 <div>{usersData.user_id}</div>
                 <div>{usersData.user_name}</div>
                 <div>{usersData.Location}</div>
                 <div>{usersData.email}</div>
-                <div>{
-                }</div>
+                <div>{}</div>
                 <div>{usersData.phone_number}</div>
                 <br />
                 <br />
