@@ -4,15 +4,6 @@ var moment = require("moment-timezone");
 // MYSQL DATABASE CONNECTION
 const connection = require("../config/database.config.js");
 
-exports.get_Users_Projects = async (req, res) => {
-  let tableName = "Users_manages_Projects";
-  let sql = `SELECT * FROM ${tableName}`;
-  connection.query(sql, (error, result) => {
-    if (error) throw error;
-    res.status(200).send(result);
-  });
-};
-
 exports.insert_Users_Projects = (req, res) => {
   const { user_id, project_id } = req.body;
   let saveSql = `INSERT INTO Users_manages_Projects(user_id,project_id) VALUES\
@@ -34,3 +25,17 @@ exports.getUsersbyProject = (req, res) => {
     res.status(200).send(result);
   });
 };
+
+
+exports.getProjectsByUser = (req, res) => {
+
+  const { user_id } = req.body;
+
+  let sql = `Select * from Projects where project_id in(Select project_id from Users_manages_Projects where user_id="${user_id}");`;
+  console.log(sql);
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send(result);
+  });
+};
+

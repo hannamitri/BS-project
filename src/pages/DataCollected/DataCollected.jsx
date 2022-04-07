@@ -1,6 +1,6 @@
 import styles from "./DataCollected.module.scss";
 import { getDataCollected, userUploadsData } from "../../api/api";
-import { insertDataCollected } from "../../api/api";
+import { insertDataCollected, getProjectsByUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
@@ -27,10 +27,13 @@ import { IoDocumentsOutline } from "react-icons/io5";
 import { FiDatabase } from "react-icons/fi";
 
 export const DataCollected = () => {
+
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
 
+  const [allProjects, setAllProjects] = useState([]);
+  const [projectsdata, setProjectsData] = useState([]);
   /*
    ******* FOR TESTING PURPOSES DYNAMIC VALUES
    */
@@ -47,6 +50,15 @@ export const DataCollected = () => {
   //     console.log(err);
   //   }
   // };
+
+  const getProjectsofUser = async () => {
+    let user = {
+      user_id: 4,
+    };
+    const data = await getProjectsByUser(user);
+    setAllProjects(data);
+
+  };
 
   const navigate = useNavigate();
 
@@ -83,10 +95,7 @@ export const DataCollected = () => {
     setDataCollected(data);
   };
 
-  useEffect(() => {
-    getCollectedResults();
-    // userUploads();
-  }, []);
+
 
   const uploadImage = async (event) => {
     console.log("TEST");
@@ -123,6 +132,26 @@ export const DataCollected = () => {
     },
   });
 
+
+  const formatData = () => {
+    allProjects.data?.map((project, index) => (
+      setProjectsData([
+        {
+          id: project.project_id,
+          label: project.name,
+        }
+      ])
+    ))
+
+  }
+
+  useEffect(() => {
+    getCollectedResults();
+    getProjectsofUser();
+    formatData();
+  }, []);
+
+  console.log(projectsdata)
   return (
     <>
       <main className={styles.container}>
@@ -187,21 +216,21 @@ export const DataCollected = () => {
                   {...form.getInputProps("time_collected")}
                 />
                 <Select
-                  data={[
-                    {
-                      id: "1",
-                      label: "1",
-                    },
-                    {
-                      id: "2",
-                      label: "2",
-                    },
-                  ]}
+                  data={projectsdata}
                   label="Projects"
                   required
                   placeholder={"Select a Project"}
                   {...form.getInputProps("Location")}
                 />
+                <select className="form-control">
+                  {allProjects.data?.map((project, index) => (
+                    <option value={project.project_id} >
+                      {project.name}
+                    </option>
+                  ))}
+                </select>
+
+
                 <Textarea
                   required
                   label="Description"
