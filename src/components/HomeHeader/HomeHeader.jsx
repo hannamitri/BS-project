@@ -35,7 +35,7 @@ const HomeHeader = () => {
             <FaLayerGroup />
           </div>
           <div>
-            <div>{dataCollected.data?.length}</div>
+            <div>{dataCollected?.data?.length}</div>
             <div>Projects</div>
           </div>
         </div>
@@ -45,7 +45,7 @@ const HomeHeader = () => {
             <GrGroup />
           </div>
           <div>
-            <div>{users.data?.length}</div>
+            <div>{users?.data?.length}</div>
             <div>Users Contributed</div>
           </div>
         </div>
