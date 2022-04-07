@@ -35,13 +35,13 @@ export const ProjectForm = () => {
     <div className={styles.container}>
       <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
         <form action="">
-          <Select
+          {/* <Select
             data={getData()}
             label="Projects"
             required
             placeholder={"Select a Project"}
             {...form.getInputProps("project")}
-          />
+          /> */}
           <select className="form-control">
             {allProjects.data?.map((project, index) => (
               <option value={project.project_id} selected={project.project_id}>
@@ -56,7 +56,7 @@ export const ProjectForm = () => {
               </option>
             ))}
           </select>
-          <Select
+          {/* <Select
             data={[
               {
                 id: "1",
@@ -71,7 +71,7 @@ export const ProjectForm = () => {
             required
             placeholder={"Select A User"}
             {...form.getInputProps("user")}
-          />
+          /> */}
         </form>
       </Box>
     </div>

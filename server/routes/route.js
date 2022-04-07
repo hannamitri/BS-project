@@ -22,8 +22,7 @@ router.get("/getAll", UsersController.getAll);
 
 /*
  * Data Collected Routes
- */
-
+*/
 router.get("/getDataCollected", DataCollectedController.getDataCollected);
 router.post(
   "/updateDataCollected",
@@ -38,6 +37,7 @@ router.post(
   DataCollectedController.insertDataCollected,
 );
 
+
 /*
  * Projects Routes
  */
@@ -45,10 +45,12 @@ router.post("/insertProject", ProjectController.insertProject);
 router.get("/getAllProjects", ProjectController.getAll);
 router.post("/deleteProject", ProjectController.deleteProject);
 
+
 /**
  * Google Routes
  */
 router.post("/googlelogin", GoogleAuthController.googlelogin);
+
 
 /**
  * Supabase Routes
@@ -61,7 +63,7 @@ router.post("/isProfessional", SupabaseController.isHeAuth);
 */
 router.post("/insertUsersProjects", UserProjectController.insert_Users_Projects);
 router.post("/getUsersbyProject", UserProjectController.getUsersbyProject);
-router.post("/getUsersProjects", UserProjectController.get_Users_Projects);
+router.post("/getProjectsByUser", UserProjectController.getProjectsByUser)
 
 
 /**
