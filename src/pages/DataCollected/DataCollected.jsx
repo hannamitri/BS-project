@@ -19,7 +19,7 @@ import { DatePicker, TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
 import { Lock, X } from "tabler-icons-react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
-import { array, z } from "zod";
+import { z } from "zod";
 import LoginIllustration from "../../images/Login/data.svg";
 import { Link } from "react-router-dom";
 import { MdOutlineDescription } from "react-icons/md";
@@ -27,7 +27,6 @@ import { IoDocumentsOutline } from "react-icons/io5";
 import { FiDatabase } from "react-icons/fi";
 
 export const DataCollected = () => {
-
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
@@ -57,7 +56,6 @@ export const DataCollected = () => {
     };
     const data = await getProjectsByUser(user);
     setAllProjects(data);
-
   };
 
   const navigate = useNavigate();
@@ -95,10 +93,7 @@ export const DataCollected = () => {
     setDataCollected(data);
   };
 
-
-
   const uploadImage = async (event) => {
-    console.log("TEST");
     const file = event.target.files[0];
     console.log(event.target.files);
     const base64 = await convertBase64(file);
@@ -132,26 +127,37 @@ export const DataCollected = () => {
     },
   });
 
+  const newArray = [];
+  // setTimeout(() => {
+  //   for (let i = 0; i < 2; i++) {
+  //     newArray.push({
+  //       value: allProjects?.data[i]?.name,
+  //       label: allProjects?.data[i]?.name,
+  //     });
+  //   }
+  // }, 500);
+  setTimeout(() => {
+    allProjects?.data.forEach((item) => {
+      newArray.push({
+        value: item.name,
+        label: item.name,
+      });
+    });
+  }, 500);
 
-
-  const data = [
-    { value: 'react', label: 'React' },
-    { value: 'ng', label: 'Angular' },
-    { value: 'svelte', label: 'Svelte' },
-    { value: 'vue', label: 'Vue' },
-  ];
-
+  let words = ["one", "two", "three", "four"];
+  words.forEach((word) => {
+    console.log(word);
+  });
 
   useEffect(() => {
     getCollectedResults();
     getProjectsofUser();
+  }, [newArray.value]);
 
-  }, []);
-
-
-
-
-
+  setTimeout(() => {
+    console.log(newArray);
+  }, 1000);
   return (
     <>
       <main className={styles.container}>
@@ -180,6 +186,7 @@ export const DataCollected = () => {
             A user was not found!
           </Notification>
         )}
+
         <section className={styles.view}>
           <div className={styles.mainContent}>
             <article className={styles.leftview}>
@@ -216,29 +223,36 @@ export const DataCollected = () => {
                   {...form.getInputProps("time_collected")}
                 />
                 <Select
-                  data={projectsdata}
+                  data={newArray}
+                  // data={[
+                  //   { value: "React", label: "React" },
+                  //   { value: "Angular", label: "Angular" },
+                  //   { value: "Svelte", label: "Svelte" },
+                  //   { value: "Vue", label: "Vue" },
+                  // ]}
                   label="Projects"
                   required
                   placeholder={"Select a Project"}
-                  {...form.getInputProps("project")}
+                  {...form.getInputProps("Location")}
                 />
                 <select className="form-control">
                   {allProjects.data?.map((project, index) => (
-                    <option value={project.project_id} >
-                      {project.name}
-                    </option>
+                    <option value={project.project_id}>{project.name}</option>
                   ))}
                 </select>
+                {/* {allProjects?.data?.map((project, index) =>
+                  console.log([
+                    {
+                      value: project.name,
+                      label: project.name,
+                    },
+                  ])
+                )} */}
 
-                <Select
-                  label="Your favorite framework/library"
-                  placeholder="Pick one"
-                  data={projectsdata}
-                />
                 <Textarea
                   required
                   label="Description"
-                  placeholder="Description here"
+                  placeholder="your data"
                   icon={<FiDatabase size={16} />}
                   minRows={3}
                   autosize
