@@ -14,12 +14,10 @@ exports.getAll = async (req, res) => {
 };
 
 exports.insertProject = (req, res) => {
-  const { category } = req.body;
-  let saveSql = `INSERT INTO Projects(category) VALUES\
-        ("${category}")`;
-
+  const { category, name, image, date_created } = req.body;
+  let saveSql = `INSERT INTO Projects(category,name,date_created,image) VALUES\
+        ("${category}","${name}","${date_created}","${image}")`;
   console.log(saveSql);
-
   connection.query(saveSql, (err, result) => {
     if (err) throw err;
     res.status(200).send(result);
