@@ -18,7 +18,7 @@ const Projects = () => {
   return (
     <div className={projects.container}>
       <div className={projects.projects_wrapper}>
-        {allProjects.data?.map((project, index) => (
+        {allProjects?.data?.map((project, index) => (
           <Project
             key={index}
             name={project.name}
