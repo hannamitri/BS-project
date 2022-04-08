@@ -108,9 +108,11 @@ export const DataCollected = () => {
       time_collected: values.time_collected,
       date_collected: values.date_collected,
       image: dataImage,
+      project_name: values.project_name,
     };
     try {
-      insertDataCollected(dataCollected);
+      // insertDataCollected(dataCollected);
+      console.log(dataCollected);
     } catch (err) {
       console.log(err);
     }
@@ -123,41 +125,24 @@ export const DataCollected = () => {
       time_collected: "",
       date_collected: "",
       image: "",
-      project_id: "",
+      project_name: "",
     },
   });
 
-  const newArray = [];
-  // setTimeout(() => {
-  //   for (let i = 0; i < 2; i++) {
-  //     newArray.push({
-  //       value: allProjects?.data[i]?.name,
-  //       label: allProjects?.data[i]?.name,
-  //     });
-  //   }
-  // }, 500);
-  setTimeout(() => {
-    allProjects?.data.forEach((item) => {
-      newArray.push({
-        value: item.name,
-        label: item.name,
-      });
-    });
-  }, 500);
-
-  let words = ["one", "two", "three", "four"];
-  words.forEach((word) => {
-    console.log(word);
-  });
+  const formatDataProjects = () => {
+    let newProjects = [];
+    allProjects?.data?.map((project, index) => {
+      newProjects.push(project.name)
+    })
+    return newProjects;
+  }
 
   useEffect(() => {
     getCollectedResults();
-    getProjectsofUser();
-  }, [newArray.value]);
+    getProjectsofUser(); 34
+  }, []);
 
-  setTimeout(() => {
-    console.log(newArray);
-  }, 1000);
+
   return (
     <>
       <main className={styles.container}>
@@ -222,33 +207,16 @@ export const DataCollected = () => {
                   required
                   {...form.getInputProps("time_collected")}
                 />
+
                 <Select
-                  data={newArray}
-                  // data={[
-                  //   { value: "React", label: "React" },
-                  //   { value: "Angular", label: "Angular" },
-                  //   { value: "Svelte", label: "Svelte" },
-                  //   { value: "Vue", label: "Vue" },
-                  // ]}
+                  data={formatDataProjects()}
                   label="Projects"
                   required
+                  searchable
+                  clearable
                   placeholder={"Select a Project"}
-                  {...form.getInputProps("Location")}
+                  {...form.getInputProps("project_name")}
                 />
-                <select className="form-control">
-                  {allProjects.data?.map((project, index) => (
-                    <option value={project.project_id}>{project.name}</option>
-                  ))}
-                </select>
-                {/* {allProjects?.data?.map((project, index) =>
-                  console.log([
-                    {
-                      value: project.name,
-                      label: project.name,
-                    },
-                  ])
-                )} */}
-
                 <Textarea
                   required
                   label="Description"
