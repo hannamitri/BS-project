@@ -1,7 +1,7 @@
 import styles from "./ProjectForm.module.scss";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Select, Box } from "@mantine/core";
+import { Select, Box, MultiSelect } from "@mantine/core";
 
 import { useForm, zodResolver } from "@mantine/form";
 import { getAll, getAllProjects } from "../../api/api";
@@ -56,6 +56,56 @@ export const ProjectForm = () => {
               </option>
             ))}
           </select>
+          <MultiSelect
+            data={[
+              "React",
+              "Angular",
+              "Svelte",
+              "Vue",
+              "Riot",
+              "Next.js",
+              "Blitz.js",
+              "React",
+              "Angular",
+              "Svelte",
+              "Vue",
+              "Riot",
+              "Next.js",
+              "Blitz.js",
+              "React",
+              "Angular",
+              "Svelte",
+              "Vue",
+              "Riot",
+              "Next.js",
+              "Blitz.js",
+              "React",
+              "Angular",
+              "Svelte",
+              "Vue",
+              "Riot",
+              "Next.js",
+              "Blitz.js",
+              "React",
+              "Angular",
+              "Svelte",
+              "Vue",
+              "Riot",
+              "Next.js",
+              "Blitz.js",
+              "React",
+              "Angular",
+              "Svelte",
+              "Vue",
+              "Riot",
+              "Next.js",
+              "Blitz.js",
+            ]}
+            label="Your favorite frameworks/libraries"
+            placeholder="Pick all that you like"
+            searchable
+            nothingFound="Nothing found"
+          />
           {/* <Select
             data={[
               {
