@@ -25,8 +25,6 @@ import { Link } from "react-router-dom";
 import countryList from "react-select-country-list";
 
 export const Signup = () => {
-
-
   const { user, loading, setUser } = useContext(UserContext);
   const [userExists, setUserExists] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
@@ -63,17 +61,6 @@ export const Signup = () => {
       password: Password,
     });
 
-    if (error) {
-      if (error.message === "User already registered") {
-        setUserExists(true);
-        setLoadingState(false);
-      } else {
-        setLoadingState(false);
-        throw new Error(error.message);
-      }
-    }
-    setDisabled(true);
-
     let userOBJ = {
       Name,
       Email,
@@ -83,14 +70,33 @@ export const Signup = () => {
       Location,
     };
 
-    await insertUser(userOBJ)
-      .then((th) => console.log(th))
-      .catch((err) => console.log(err));
-    if (user) {
-      setUser(user);
-      navigate("/");
+    if (error) {
+      if (error.message === "User already registered") {
+        setUserExists(true);
+        setLoadingState(false);
+      } else {
+        // await insertUser(userOBJ)
+        //   .then((th) => console.log(th))
+        //   .catch((err) => console.log(err));
+        // if (user) {
+        //   setUser(user);
+        //   navigate("/");
+        // }
+        setLoadingState(false);
+        throw new Error(error.message);
+      }
+    } else {
+      setDisabled(true);
+
+      await insertUser(userOBJ)
+        .then((th) => console.log(th))
+        .catch((err) => console.log(err));
+      if (user) {
+        setUser(user);
+        navigate("/");
+      }
+      setLoadingState(false);
     }
-    setLoadingState(false);
   };
 
   const form = useForm({
@@ -110,7 +116,7 @@ export const Signup = () => {
     let changed = [];
     data.forEach(
       (thing) =>
-        (changed = [...changed, { value: thing.label, label: thing.label }]),
+        (changed = [...changed, { value: thing.label, label: thing.label }])
     );
     return changed;
   }, []);
