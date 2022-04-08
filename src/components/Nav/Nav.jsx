@@ -17,9 +17,7 @@ export const Nav = () => {
     setUsers(data);
   };
 
-  const userLoggedIn = users?.data?.find(
-    (item) => item?.email === user?.user?.email
-  );
+  const userLoggedIn = users?.data?.find((item) => item?.email === user?.email);
 
   useEffect(() => {
     getUsers();
@@ -41,24 +39,6 @@ export const Nav = () => {
         <p>Final Project</p>
       </h1>
       <ul>
-        <li>
-          <Link to={`/`}>Projects</Link>
-        </li>
-        {user && (
-          <li>
-            <Link to={`/data-collected`}>Upload Data</Link>
-          </li>
-        )}
-
-        <li>
-          <Link to="/contact">Contact Us</Link>
-        </li>
-        {userLoggedIn?.isProfessional ? (
-          <li>
-            <Link to="/add-user">Add User</Link>
-          </li>
-        ) : null}
-
         {!user ? (
           <>
             <li className={nav.button}>
@@ -80,22 +60,23 @@ export const Nav = () => {
 
       <div className={nav.user_account}>
         <Group>
-          <Avatar src={AvatarImage} radius="xl" />
-
+          <div className={nav.profile_letter}>
+            {userLoggedIn?.user_name[0].toUpperCase()}
+          </div>
           <div style={{ flex: 1 }}>
             <Text size="sm" weight={500}>
-              Hanna
+              {userLoggedIn?.user_name}
             </Text>
 
             <Text color="dimmed" size="xs">
-              hannamitri@gmail.com
+              {userLoggedIn?.email}
             </Text>
           </div>
 
-          {/* {icon || <ChevronRight size={16} />} */}
+          {/* <Avatar src={AvatarImage} radius="xl" /> */}
         </Group>
 
-        <Group position="center">
+        {/* <Group position="center">
           <Menu withArrow placement="center">
             <Menu.Item component="a" href="https://mantine.dev">
               Mantine website
@@ -110,7 +91,7 @@ export const Nav = () => {
               External link
             </Menu.Item>
           </Menu>
-        </Group>
+        </Group> */}
       </div>
     </nav>
   );
