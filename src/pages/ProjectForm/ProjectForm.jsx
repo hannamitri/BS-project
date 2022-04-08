@@ -1,10 +1,15 @@
 import styles from "./ProjectForm.module.scss";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Select, Box, MultiSelect } from "@mantine/core";
-
-import { useForm, zodResolver } from "@mantine/form";
+import {
+  MultiSelect,
+  Box,
+  Button,
+  Group,
+  Loader,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { getAll, getAllProjects } from "../../api/api";
+import LoginIllustration from "../../images/Login/data.svg";
 
 export const ProjectForm = () => {
   const [allProjects, setAllProjects] = useState([]);
@@ -19,10 +24,47 @@ export const ProjectForm = () => {
     setAllUsers(users_data);
   };
 
+  const formatDataUsers = () => {
+    let newUsers = [];
+    allUsers?.data?.map((user, index) => {
+      newUsers.push(user.email)
+    })
+
+    return newUsers;
+  }
+
+  const formatDataProjects = () => {
+    let newProjects = [];
+    allProjects?.data?.map((project, index) => {
+      newProjects.push(project.name)
+    })
+    return newProjects;
+  }
+
+
+  const trySubmit = async (values) => {
+    const user_projects = {
+      project: values.project,
+      user: values.user,
+    };
+    try {
+      // insertDataCollected(dataCollected);
+      console.log(user_projects);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   useEffect(() => {
     getProjects();
     getUsers();
+    formatDataUsers();
+    formatDataProjects();
   }, []);
+
+
+
 
   const form = useForm({
     initialValues: {
@@ -33,97 +75,39 @@ export const ProjectForm = () => {
 
   return (
     <div className={styles.container}>
-      <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
-        <form action="">
-          {/* <Select
-            data={getData()}
-            label="Projects"
-            required
-            placeholder={"Select a Project"}
-            {...form.getInputProps("project")}
-          /> */}
-          <select className="form-control">
-            {allProjects.data?.map((project, index) => (
-              <option value={project.project_id} selected={project.project_id}>
-                {project.name}
-              </option>
-            ))}
-          </select>
-          <select className="form-control">
-            {allUsers.data?.map((user, index) => (
-              <option value={user.user_id} selected={user.user_id}>
-                {user.user_name}
-              </option>
-            ))}
-          </select>
-          <MultiSelect
-            data={[
-              "React",
-              "Angular",
-              "Svelte",
-              "Vue",
-              "Riot",
-              "Next.js",
-              "Blitz.js",
-              "React",
-              "Angular",
-              "Svelte",
-              "Vue",
-              "Riot",
-              "Next.js",
-              "Blitz.js",
-              "React",
-              "Angular",
-              "Svelte",
-              "Vue",
-              "Riot",
-              "Next.js",
-              "Blitz.js",
-              "React",
-              "Angular",
-              "Svelte",
-              "Vue",
-              "Riot",
-              "Next.js",
-              "Blitz.js",
-              "React",
-              "Angular",
-              "Svelte",
-              "Vue",
-              "Riot",
-              "Next.js",
-              "Blitz.js",
-              "React",
-              "Angular",
-              "Svelte",
-              "Vue",
-              "Riot",
-              "Next.js",
-              "Blitz.js",
-            ]}
-            label="Your favorite frameworks/libraries"
-            placeholder="Pick all that you like"
-            searchable
-            nothingFound="Nothing found"
-          />
-          {/* <Select
-            data={[
-              {
-                id: "1",
-                label: "1",
-              },
-              {
-                id: "2",
-                label: "2",
-              },
-            ]}
-            label="Users"
-            required
-            placeholder={"Select A User"}
-            {...form.getInputProps("user")}
-          /> */}
-        </form>
-      </Box>
+      <div className={styles.mainContent}>
+        <article className={styles.leftview}>
+          <img src={LoginIllustration} alt="Illustration" width={500} />
+        </article>
+        <Box sx={{ maxWidth: 400 }} mx="auto" className={styles.rightview}>
+          <h1>Add Users to Projects</h1>
+          <form onSubmit={form.onSubmit(trySubmit)}>
+
+            <MultiSelect
+              data={formatDataUsers()}
+              label="Users"
+              required
+              searchable
+              clearable
+              placeholder={"Select user/users"}
+              {...form.getInputProps("user")}
+            />
+
+            <MultiSelect
+              data={formatDataProjects()}
+              label="Projects"
+              required
+              searchable
+              clearable
+              placeholder={"Select project/projects"}
+              {...form.getInputProps("project")}
+            />
+            <Group position="left" mt="md" style={{ position: "relative" }}>
+              <Button type="submit">Submit data</Button>
+            </Group>
+          </form>
+        </Box>
+      </div>
     </div>
   );
 };
