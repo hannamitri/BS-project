@@ -77,13 +77,14 @@ li {
 }
 
 .profile_letter {
-  background-color: purple;
+  background-color: var(--primary);
   color: white;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   font-size: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  cursor: pointer;
 }

@@ -20,7 +20,7 @@ const Sidebar = () => {
   };
 
   const userLoggedIn = users?.data?.find(
-    (item) => item?.email === user?.email
+    (item) => item?.email === user?.user?.email
   );
 
   useEffect(() => {
