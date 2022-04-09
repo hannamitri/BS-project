@@ -7,7 +7,7 @@ import {
   getUsersbyProject,
 } from "../../api/api";
 
-import styles from "./ProjectPage.module.scss";
+import "./ProjectPage.scss";
 
 const ProjectPage = () => {
   const [allProjects, setAllProjects] = useState([]);
@@ -50,10 +50,10 @@ const ProjectPage = () => {
   }, [original_project?.project_id]);
 
   return (
-    <div className={styles.container}>
+    <div className="project__detail--wrapper">
       <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1>
       {projectData?.data ? (
-        <div className={styles.projects_wrapper}>
+        <div className="projects__detail">
           {projectData?.data?.map((projectdata, index) => (
             <div key={index}>
               <img src={projectdata.image} alt="" />
@@ -67,12 +67,12 @@ const ProjectPage = () => {
       ) : (
         <div>
           <div
-            className={styles.skeleton_box}
+            className="skeleton__box"
             style={{ width: "300px", height: "300px" }}
           ></div>
-          <div className={styles.skeleton_box} style={{ width: "200px" }}></div>
-          <div className={styles.skeleton_box} style={{ width: "250px" }}></div>
-          <div className={styles.skeleton_box} style={{ width: "150px" }}></div>
+          <div className="skeleton__box" style={{ width: "200px" }}></div>
+          <div className="skeleton__box" style={{ width: "250px" }}></div>
+          <div className="skeleton__box" style={{ width: "150px" }}></div>
         </div>
       )}
 
@@ -96,23 +96,23 @@ const ProjectPage = () => {
         ) : (
           <div>
             <div
-              className={styles.skeleton_box}
+              className="skeleton__box"
               style={{ width: "200px" }}
             ></div>
             <div
-              className={styles.skeleton_box}
+              className="skeleton__box"
               style={{ width: "250px" }}
             ></div>
             <div
-              className={styles.skeleton_box}
+              className="skeleton__box"
               style={{ width: "150px" }}
             ></div>
             <div
-              className={styles.skeleton_box}
+              className="skeleton__box"
               style={{ width: "100px" }}
             ></div>
             <div
-              className={styles.skeleton_box}
+              className="skeleton__box"
               style={{ width: "150px" }}
             ></div>
           </div>
