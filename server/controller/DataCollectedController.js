@@ -53,10 +53,14 @@ exports.insertDataCollected = (req, res) => {
     time_collected,
     date_collected,
     image,
+    project_id,
+    user_id,
   } = req.body;
-  let saveSql = `INSERT INTO datacollected(description, location_collected, time_collected ,date_collected, image) VALUES\
-    ("${description}","${location_collected}", "${time_collected}", "${date_collected}", "${image}")`;
+  let saveSql = `INSERT INTO datacollected(description, location_collected, time_collected ,date_collected, image, project_id, user_id) VALUES\
+    ("${description}","${location_collected}", "${time_collected}", "${date_collected}", "${image}", ${project_id} , ${user_id})`;
+
   console.log(saveSql);
+
   connection.query(saveSql, (err, result) => {
     if (err) throw err;
     res.status(200).send(result);

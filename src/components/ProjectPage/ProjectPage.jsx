@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import {
   getAllProjects,
   getProjectData,
-  getUserById,
   getUsersbyProject,
 } from "../../api/api";
 

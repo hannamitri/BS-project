@@ -30,7 +30,6 @@ exports.getUsersbyProject = (req, res) => {
 exports.getProjectsByUser = (req, res) => {
 
   const { user_id } = req.body;
-
   let sql = `Select * from Projects where project_id in(Select project_id from Users_manages_Projects where user_id="${user_id}");`;
   console.log(sql);
   connection.query(sql, (err, result) => {

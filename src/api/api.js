@@ -45,8 +45,8 @@ const deleteUser = async (data) => {
     .catch((err) => err.response);
 };
 
-const getUserById = async (data) => {
-  let url = `${baseUrl}/getUserById`;
+const getUserByEmail = async (data) => {
+  let url = `${baseUrl}/getUserByEmail`;
   return await axios
     .post(url, data)
     .then((response) => response)
@@ -109,6 +109,14 @@ const deleteProject = async (data) => {
     .catch((err) => err.response);
 };
 
+const getProjectId = async (data) => {
+  let url = `${baseUrl}/getProjectId`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
 const insertProject = async (data) => {
   let url = `${baseUrl}/insertProject`;
   return await axios
@@ -116,6 +124,9 @@ const insertProject = async (data) => {
     .then((response) => response)
     .catch((err) => err.response);
 };
+
+
+
 
 /*
  * Google Api
@@ -156,6 +167,16 @@ const getProjectsByUser = async (data) => {
     .catch((err) => err.response);
 };
 
+
+const insertUsersProjects = async (data) => {
+  let url = `${baseUrl}/insertUsersProjects`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+
 /**
  * DataProjects Apis
  */
@@ -172,8 +193,8 @@ const getProjectData = async (data) => {
  * UserDataController Apis
  */
 
-const userUploadsData = async (data) => {
-  let url = `${baseUrl}/userUploadsData`;
+const getDataCollectedbyUsers = async (data) => {
+  let url = `${baseUrl}/getDataCollectedbyUsers`;
   return await axios
     .post(url, data)
     .then((response) => response)
@@ -187,7 +208,7 @@ export {
   updateUser,
   insertUser,
   deleteUser,
-  getUserById,
+  getUserByEmail,
   isProfessional,
 
   //Data Collected
@@ -200,18 +221,20 @@ export {
   getAllProjects,
   deleteProject,
   insertProject,
+  getProjectId,
 
 
   //user_manages_projects api
   getUsersbyProject,
   getUsersProjects,
   getProjectsByUser,
+  insertUsersProjects,
 
   //getProjectData
   getProjectData,
 
   //UserDataController
-  userUploadsData,
+  getDataCollectedbyUsers,
 
   //google api
   googlelogin,
