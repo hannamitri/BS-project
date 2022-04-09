@@ -5,13 +5,15 @@ import {
   Box,
   Button,
   Group,
+  Select,
   Loader,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { getAll, getAllProjects } from "../../api/api";
+import { getAll, getAllProjects, getProjectId, insertUsersProjects } from "../../api/api";
 import LoginIllustration from "../../images/Login/data.svg";
 
 export const ProjectForm = () => {
+
   const [allProjects, setAllProjects] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
@@ -43,16 +45,40 @@ export const ProjectForm = () => {
 
 
   const trySubmit = async (values) => {
-    const user_projects = {
-      project: values.project,
-      user: values.user,
-    };
-    try {
-      // insertDataCollected(dataCollected);
-      console.log(user_projects);
-    } catch (err) {
-      console.log(err);
+
+    const project = {
+      name: values.project,
     }
+
+    const selected_project_id = allProjects?.data?.find(
+      (item) => item?.name === project.name
+    );
+
+
+
+    for (const user of values.user) {
+
+      let user_obj = {
+        email: user,
+      }
+
+      const userLoggedIn = allUsers?.data?.find(
+        (item) => item?.email === user_obj?.email
+      );
+
+      console.log(userLoggedIn?.user_id);
+
+      const user_projects = {
+        project_id: selected_project_id?.project_id,
+        user_id: userLoggedIn?.user_id,
+      };
+
+      try {
+        insertUsersProjects(user_projects);
+      } catch (err) {
+        console.log(err);
+      }
+    };
   };
 
 
@@ -93,7 +119,7 @@ export const ProjectForm = () => {
               {...form.getInputProps("user")}
             />
 
-            <MultiSelect
+            <Select
               data={formatDataProjects()}
               label="Projects"
               required

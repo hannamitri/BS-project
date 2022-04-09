@@ -24,6 +24,22 @@ exports.insertProject = (req, res) => {
   });
 };
 
+
+exports.getProjectId = (req, res) => {
+
+  const { name } = req.body;
+
+  let saveSql = `Select project_id from projects where name ="${name}"; `;
+
+  console.log(saveSql);
+
+  connection.query(saveSql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send(result);
+  });
+
+};
+
 exports.deleteProject = (req, res) => {
   const { id } = req.body;
   let sql = `delete from Projects WHERE project_id = ${id} `;
@@ -33,3 +49,5 @@ exports.deleteProject = (req, res) => {
     res.status(200).send(result);
   });
 };
+
+
