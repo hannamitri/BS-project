@@ -1,19 +1,16 @@
 import styles from "./ProjectForm.module.scss";
 import React, { useEffect, useState } from "react";
-import {
-  MultiSelect,
-  Box,
-  Button,
-  Group,
-  Select,
-  Loader,
-} from "@mantine/core";
+import { MultiSelect, Box, Button, Group, Select, Loader } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { getAll, getAllProjects, getProjectId, insertUsersProjects } from "../../api/api";
+import {
+  getAll,
+  getAllProjects,
+  getProjectId,
+  insertUsersProjects,
+} from "../../api/api";
 import LoginIllustration from "../../images/Login/data.svg";
 
-export const ProjectForm = () => {
-
+export const ProjectForm = ({ userLoggedIn }) => {
   const [allProjects, setAllProjects] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
@@ -29,38 +26,33 @@ export const ProjectForm = () => {
   const formatDataUsers = () => {
     let newUsers = [];
     allUsers?.data?.map((user, index) => {
-      newUsers.push(user.email)
-    })
+      newUsers.push(user.email);
+    });
 
     return newUsers;
-  }
+  };
 
   const formatDataProjects = () => {
     let newProjects = [];
     allProjects?.data?.map((project, index) => {
-      newProjects.push(project.name)
-    })
+      newProjects.push(project.name);
+    });
     return newProjects;
-  }
-
+  };
 
   const trySubmit = async (values) => {
-
     const project = {
       name: values.project,
-    }
+    };
 
     const selected_project_id = allProjects?.data?.find(
       (item) => item?.name === project.name
     );
 
-
-
     for (const user of values.user) {
-
       let user_obj = {
         email: user,
-      }
+      };
 
       const userLoggedIn = allUsers?.data?.find(
         (item) => item?.email === user_obj?.email
@@ -78,9 +70,8 @@ export const ProjectForm = () => {
       } catch (err) {
         console.log(err);
       }
-    };
+    }
   };
-
 
   useEffect(() => {
     getProjects();
@@ -88,9 +79,6 @@ export const ProjectForm = () => {
     formatDataUsers();
     formatDataProjects();
   }, []);
-
-
-
 
   const form = useForm({
     initialValues: {
@@ -108,7 +96,6 @@ export const ProjectForm = () => {
         <Box sx={{ maxWidth: 400 }} mx="auto" className={styles.rightview}>
           <h1>Add Users to Projects</h1>
           <form onSubmit={form.onSubmit(trySubmit)}>
-
             <MultiSelect
               data={formatDataUsers()}
               label="Users"
