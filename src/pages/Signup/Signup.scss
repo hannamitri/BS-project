@@ -2,7 +2,7 @@
   color: black;
 }
 
-.container {
+.sign-up__wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,7 +11,8 @@
   height: calc(100vh - 64px);
   position: relative;
 }
-.thiny {
+
+.sign-up__already--registered {
   display: none;
   font-size: 12px;
   text-decoration: underline;
@@ -20,17 +21,20 @@
     display: flex;
   }
 }
-.loading {
+
+.sign-up__loading {
   display: grid;
   place-items: center;
   background-color: white;
   left: 50%;
   transform: translateX(50%);
 }
-.loading svg {
+
+.sign-up__loading svg {
   height: 75%;
 }
-.mainContent {
+
+.sign-up__content--wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,7 +49,7 @@
   }
 }
 
-.view {
+.sign-up__wrapper {
   display: flex;
   gap: 1rem;
   flex-direction: column;
@@ -67,7 +71,7 @@
   text-align: center;
 }
 
-.leftview {
+.sign-up__img {
   @media (max-width: 768px) {
     display: none;
   }
