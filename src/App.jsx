@@ -18,7 +18,7 @@ import { getAll } from "./api/api";
 
 function App() {
   const [users, setUsers] = useState([]);
-  const { user, loading } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const getUsers = async () => {
     const data = await getAll();
@@ -26,22 +26,14 @@ function App() {
   };
 
   const userLoggedIn = users?.data?.find(
-    (item) => item?.email === user?.user?.email
+    (item) => item?.email === (user?.email || user?.user?.email)
   );
 
   useEffect(() => {
     getUsers();
-
-    if (loading) {
-      return (
-        <div>
-          <h1>Loading...</h1>
-        </div>
-      );
-    }
   }, []);
 
-  console.log(userLoggedIn?.isProfessional);
+  console.log(userLoggedIn);
 
   return (
     <>
@@ -49,15 +41,20 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Login />} />
-        <Route path="/data-collected" element={<DataCollected />} />
+        <Route
+          path="/data-collected"
+          element={<DataCollected userLoggedIn={userLoggedIn} />}
+        />
         {userLoggedIn?.isProfessional && (
           <Route path="/signup" element={<Signup />} />
         )}
         <Route path="/*" element={<NotFound />} />
-
         <Route path="/Signout" element={<Signout />} />
         <Route path="/Contact" element={<Contact />} />
-        <Route path="/addProject" element={<ProjectForm />} />
+        <Route
+          path="/addProject"
+          element={<ProjectForm userLoggedIn={userLoggedIn} />}
+        />
         <Route path="/add-project" element={<AddProject />} />
         <Route path="/:id" element={<ProjectPage />} />
       </Routes>
