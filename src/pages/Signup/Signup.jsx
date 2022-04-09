@@ -29,11 +29,6 @@ export const Signup = () => {
   const [userExists, setUserExists] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, []);
 
   const schema = z.object({
     Email: z.string().email({ message: "Invalid email" }),

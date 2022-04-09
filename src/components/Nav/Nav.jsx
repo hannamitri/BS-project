@@ -1,5 +1,4 @@
-import nav from "./Nav.module.scss";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FaPagelines } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
@@ -9,6 +8,7 @@ import { ExternalLink } from "tabler-icons-react";
 import { getAll } from "../../api/api";
 import supabase from "../../lib/supabase";
 import { FiLogOut } from "react-icons/fi";
+import "./Nav.scss";
 
 export const Nav = () => {
   const [users, setUsers] = useState([]);
@@ -23,6 +23,8 @@ export const Nav = () => {
     (item) => item?.email === (user?.email || user?.user?.email)
   );
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getUsers();
 
@@ -36,7 +38,7 @@ export const Nav = () => {
   }, []);
 
   return (
-    <nav className={nav.container}>
+    <nav className="nav__wrapper">
       <h1>
         <FaPagelines />
         <p>Final Project</p>
@@ -44,29 +46,24 @@ export const Nav = () => {
 
       <ul>
         {!user && (
-          <>
-            <li className={nav.button}>
-              <Link to="/signup">Sign up</Link>
-            </li>
-            <li className={nav.button}>
-              <Link to="/signin">Sign in</Link>
-            </li>
-          </>
+          <li className="nav__button">
+            <Link to="/signin">Sign in</Link>
+          </li>
         )}
       </ul>
       {user && (
-        <div className={nav.user_account}>
+        <div className="nav__user--account">
           <Group>
             <Menu
               placement="center"
               control={
-                <div className={nav.profile_letter}>
+                <div className="nav__profile--letter">
                   {userLoggedIn?.user_name.split(" ")[0][0].toUpperCase()}
                 </div>
               }
             >
               <Menu.Item
-                onClick={() => supabase.auth.signOut()}
+                onClick={() => navigate("/Signout")}
                 icon={<FiLogOut size={18} />}
               >
                 Logout
