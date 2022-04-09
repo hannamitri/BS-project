@@ -17,7 +17,7 @@ var GoogleAuthController = require("../controller/GoogleAuthController ");
 router.post("/updateUser", UsersController.updateUser);
 router.post("/insertUser", UsersController.insertUser);
 router.post("/deleteUser", UsersController.deleteUser);
-router.post("/getUserById", UsersController.getUserById);
+router.post("/getUserByEmail", UsersController.getUserByEmail);
 router.get("/getAll", UsersController.getAll);
 
 /*
@@ -44,6 +44,7 @@ router.post(
 router.post("/insertProject", ProjectController.insertProject);
 router.get("/getAllProjects", ProjectController.getAll);
 router.post("/deleteProject", ProjectController.deleteProject);
+router.post("/getProjectId", ProjectController.getProjectId);
 
 
 /**
@@ -58,13 +59,12 @@ router.post("/googlelogin", GoogleAuthController.googlelogin);
 router.post("/isProfessional", SupabaseController.isHeAuth);
 
 
-/**
+/*
  * User-manages-projects
 */
 router.post("/insertUsersProjects", UserProjectController.insert_Users_Projects);
 router.post("/getUsersbyProject", UserProjectController.getUsersbyProject);
 router.post("/getProjectsByUser", UserProjectController.getProjectsByUser)
-
 
 /**
  * DataProjectsController
@@ -74,6 +74,6 @@ router.post("/getProjectData", DataProjectsController.getProjectData);
 /**
  *UserDataController 
 */
-router.post("/userUploadsData", UserDataController.insert_Users_DataCollected);
+router.post("/getDataCollectedbyUsers", UserDataController.getDataCollectedbyUsers);
 
 module.exports = router;

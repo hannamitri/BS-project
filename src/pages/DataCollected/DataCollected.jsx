@@ -2,12 +2,13 @@ import styles from "./DataCollected.module.scss";
 import {
   getAllProjects,
   getDataCollected,
-  userUploadsData,
+  getProjectId,
 } from "../../api/api";
 import { insertDataCollected, getProjectsByUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
+import { Clock, Calendar } from 'tabler-icons-react';
 import {
   TextInput,
   Text,
@@ -38,23 +39,6 @@ export const DataCollected = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [totalprojects, setTotalProjects] = useState([]);
   const [singleProject, setSingleProject] = useState("");
-  // const [projectsdata, setProjectsData] = useState([]);
-  /*
-   ******* FOR TESTING PURPOSES DYNAMIC VALUES
-   */
-  // const userUploads = async (values) => {
-
-  //   const USER_DATA = {
-  //     user_id: 4,
-  //     data_id: 3,
-  //   };
-
-  //   try {
-  //     userUploadsData(USER_DATA);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const getProjectsofUser = async () => {
     let user = {
@@ -68,12 +52,6 @@ export const DataCollected = () => {
     const data = await getAllProjects(user);
     setTotalProjects(data);
   };
-
-  // console.log(singleProject);
-
-  // const getProjectId = totalprojects.find(
-  //   (item) => item.name === singleProject
-  // );
 
   const schema = z.object({
     description: z.string().min(10),
@@ -116,17 +94,28 @@ export const DataCollected = () => {
   };
 
   const trySubmit = async (values) => {
-    console.table(dataImage);
+
+    const project = {
+      name: values.project_name,
+    }
+
+    const selected_project_id = allProjects?.data?.find(
+      (item) => item?.name === project.name
+    );
+
+    console.log(selected_project_id);
+
     const dataCollected = {
       description: values.description,
       location_collected: values.location_collected,
       time_collected: values.time_collected,
       date_collected: values.date_collected,
       image: dataImage,
-      project_name: values.project_name,
+      project_id: selected_project_id?.project_id,
+      user_id: 4,
     };
     try {
-      // insertDataCollected(dataCollected);
+      insertDataCollected(dataCollected);
       console.log(dataCollected);
     } catch (err) {
       console.log(err);
@@ -156,7 +145,6 @@ export const DataCollected = () => {
     getCollectedResults();
     getProjectsofUser();
     getAllProjectss();
-    34;
   }, []);
 
   return (
@@ -199,19 +187,13 @@ export const DataCollected = () => {
               <form onSubmit={form.onSubmit(trySubmit)}>
                 <TextInput
                   required
-                  label="Project"
-                  placeholder="name of the project"
-                  icon={<IoDocumentsOutline size={16} />}
-                  {...form.getInputProps("project_id")}
-                />
-                <TextInput
-                  required
                   label="Location Collected"
                   placeholder="Location"
                   {...form.getInputProps("location_collected")}
                 />
                 <DatePicker
                   placeholder="Pick date"
+                  icon={<Calendar size={16} />}
                   label="Date Collected"
                   required
                   {...form.getInputProps("date_collected")}
@@ -219,7 +201,7 @@ export const DataCollected = () => {
                 <TimeInput
                   label="Time Collected"
                   format="12"
-                  defaultValue={new Date()}
+                  icon={<Clock size={16} />}
                   required
                   {...form.getInputProps("time_collected")}
                 />
@@ -232,7 +214,7 @@ export const DataCollected = () => {
                   clearable
                   placeholder={"Select a Project"}
                   {...form.getInputProps("project_name")}
-                  // {setSingleProject(...form.getInputProps("project_name"))}
+
                 />
                 <Textarea
                   required
