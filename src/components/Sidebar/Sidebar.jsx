@@ -35,9 +35,6 @@ const Sidebar = () => {
     }
   }, []);
 
-  console.log(userLoggedIn?.isProfessional, userLoggedIn);
-  console.log(users);
-
   return (
     <div className="sidebar">
       <div className="sidebar__wrapper">
@@ -58,7 +55,7 @@ const Sidebar = () => {
         {userLoggedIn?.isProfessional ? (
           <>
             <div className="sidebar__links">
-              <Link to="/add-user">
+              <Link to="/signup">
                 <AiOutlineUserAdd />
                 Create User
               </Link>

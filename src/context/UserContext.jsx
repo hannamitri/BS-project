@@ -28,7 +28,7 @@ export const UserProvider = ({ children }) => {
       } else {
         setUser(null);
       }
-      navigate("/");
+      // navigate("/");
       setLoading(false);
     });
     setLoading(false);
