@@ -1,5 +1,9 @@
 import styles from "./DataCollected.module.scss";
-import { getDataCollected, userUploadsData } from "../../api/api";
+import {
+  getAllProjects,
+  getDataCollected,
+  userUploadsData,
+} from "../../api/api";
 import { insertDataCollected, getProjectsByUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
@@ -32,7 +36,9 @@ export const DataCollected = () => {
   const [loadingState, setLoadingState] = useState(false);
 
   const [allProjects, setAllProjects] = useState([]);
-  const [projectsdata, setProjectsData] = useState([]);
+  const [totalprojects, setTotalProjects] = useState([]);
+  const [singleProject, setSingleProject] = useState("");
+  // const [projectsdata, setProjectsData] = useState([]);
   /*
    ******* FOR TESTING PURPOSES DYNAMIC VALUES
    */
@@ -58,7 +64,16 @@ export const DataCollected = () => {
     setAllProjects(data);
   };
 
-  const navigate = useNavigate();
+  const getAllProjectss = async () => {
+    const data = await getAllProjects(user);
+    setTotalProjects(data);
+  };
+
+  // console.log(singleProject);
+
+  // const getProjectId = totalprojects.find(
+  //   (item) => item.name === singleProject
+  // );
 
   const schema = z.object({
     description: z.string().min(10),
@@ -132,16 +147,17 @@ export const DataCollected = () => {
   const formatDataProjects = () => {
     let newProjects = [];
     allProjects?.data?.map((project, index) => {
-      newProjects.push(project.name)
-    })
+      newProjects.push(project.name);
+    });
     return newProjects;
-  }
+  };
 
   useEffect(() => {
     getCollectedResults();
-    getProjectsofUser(); 34
+    getProjectsofUser();
+    getAllProjectss();
+    34;
   }, []);
-
 
   return (
     <>
@@ -216,6 +232,7 @@ export const DataCollected = () => {
                   clearable
                   placeholder={"Select a Project"}
                   {...form.getInputProps("project_name")}
+                  // {setSingleProject(...form.getInputProps("project_name"))}
                 />
                 <Textarea
                   required

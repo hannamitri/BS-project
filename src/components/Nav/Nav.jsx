@@ -7,6 +7,8 @@ import { Group, Avatar, Text, Menu, Button } from "@mantine/core";
 import AvatarImage from "../../images/Login/login_image.jpg";
 import { ExternalLink } from "tabler-icons-react";
 import { getAll } from "../../api/api";
+import supabase from "../../lib/supabase";
+import { FiLogOut } from "react-icons/fi";
 
 export const Nav = () => {
   const [users, setUsers] = useState([]);
@@ -17,7 +19,9 @@ export const Nav = () => {
     setUsers(data);
   };
 
-  const userLoggedIn = users?.data?.find((item) => item?.email === user?.email);
+  const userLoggedIn = users?.data?.find(
+    (item) => item?.email === (user?.email || user?.user?.email)
+  );
 
   useEffect(() => {
     getUsers();
@@ -30,7 +34,6 @@ export const Nav = () => {
       );
     }
   }, []);
-  console.log(userLoggedIn?.isProfessional);
 
   return (
     <nav className={nav.container}>
@@ -38,8 +41,9 @@ export const Nav = () => {
         <FaPagelines />
         <p>Final Project</p>
       </h1>
+
       <ul>
-        {!user ? (
+        {!user && (
           <>
             <li className={nav.button}>
               <Link to="/signup">Sign up</Link>
@@ -48,51 +52,38 @@ export const Nav = () => {
               <Link to="/signin">Sign in</Link>
             </li>
           </>
-        ) : (
-          <>
-            <li className={nav.button}>
-              <Link to={`/signout`}>Logout</Link>
-            </li>
-          </>
         )}
       </ul>
-      <div>EMAIL: {userLoggedIn?.email}</div>
-
-      <div className={nav.user_account}>
-        <Group>
-          <div className={nav.profile_letter}>
-            {userLoggedIn?.user_name[0].toUpperCase()}
-          </div>
-          <div style={{ flex: 1 }}>
-            <Text size="sm" weight={500}>
-              {userLoggedIn?.user_name}
-            </Text>
-
-            <Text color="dimmed" size="xs">
-              {userLoggedIn?.email}
-            </Text>
-          </div>
-
-          {/* <Avatar src={AvatarImage} radius="xl" /> */}
-        </Group>
-
-        {/* <Group position="center">
-          <Menu withArrow placement="center">
-            <Menu.Item component="a" href="https://mantine.dev">
-              Mantine website
-            </Menu.Item>
-
-            <Menu.Item
-              icon={<ExternalLink size={14} />}
-              component="a"
-              href="https://mantine.dev"
-              target="_blank"
+      {user && (
+        <div className={nav.user_account}>
+          <Group>
+            <Menu
+              placement="center"
+              control={
+                <div className={nav.profile_letter}>
+                  {userLoggedIn?.user_name.split(" ")[0][0].toUpperCase()}
+                </div>
+              }
             >
-              External link
-            </Menu.Item>
-          </Menu>
-        </Group> */}
-      </div>
+              <Menu.Item
+                onClick={() => supabase.auth.signOut()}
+                icon={<FiLogOut size={18} />}
+              >
+                Logout
+              </Menu.Item>
+            </Menu>
+            {/* <div style={{ flex: 1 }}>
+              <Text size="sm" weight={500}>
+                {userLoggedIn?.user_name}
+              </Text>
+
+              <Text color="dimmed" size="xs">
+                {userLoggedIn?.email}
+              </Text>
+            </div> */}
+          </Group>
+        </div>
+      )}
     </nav>
   );
 };
