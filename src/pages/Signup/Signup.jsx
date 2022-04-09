@@ -1,4 +1,4 @@
-import styles from "./Signup.module.scss";
+import "./Signup.scss";
 import { useContext, useState, useMemo, useEffect, useRef } from "react";
 import { UserContext } from "../../context/UserContext";
 import supabase from "../../lib/supabase";
@@ -117,7 +117,7 @@ export const Signup = () => {
   }, []);
   const password = useRef();
   return (
-    <main className={styles.container}>
+    <main className="sign-up__wrapper">
       {userExists && (
         <Notification
           icon={<X size={18} />}
@@ -141,9 +141,9 @@ export const Signup = () => {
           A user with that email already exists!
         </Notification>
       )}
-      <section className={styles.view}>
-        <div className={styles.mainContent}>
-          <article className={styles.leftview}>
+      <section className="sign-up__wrapper">
+        <div className="sign-up__content--wrapper">
+          <article className="sign-up__img">
             <img
               src={LoginIllustration}
               alt="Illustration"
@@ -152,7 +152,7 @@ export const Signup = () => {
             />
             <Link to="/signin">Already have an account? Sign in instead</Link>
           </article>
-          <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
+          <Box sx={{ maxWidth: 300 }} mx="auto" className="sign-up__content">
             <h1>Sign up</h1>
             <form onSubmit={form.onSubmit(trySubmit)} disabled={disabled}>
               <TextInput
@@ -195,24 +195,24 @@ export const Signup = () => {
 
               <Group position="left" mt="md" style={{ position: "relative" }}>
                 {loadingState ? (
-                  <span className={styles.loading}>
+                  <span className="sign-up__loading">
                     <Loader />
                   </span>
                 ) : (
                   <Button type="submit">Login</Button>
                 )}
               </Group>
-              <span id="thingy" className={styles.thiny}>
-                <Link to="/signin" id="thingy">
+              <span className="sign-up__already--registered">
+                <Link to="/signin">
                   Already have an account? Sign in instead
                 </Link>
               </span>
             </form>
           </Box>
         </div>
-        <div className={styles.alternatives}>
+        {/* <div className={styles.alternatives}>
           <div className={styles.leftalt}></div>
-        </div>
+        </div> */}
       </section>
     </main>
   );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getAll, getDataCollected } from "../../api/api";
-import header from "./HomeHeader.module.scss";
 import { FaLayerGroup } from "react-icons/fa";
 import { GrGroup } from "react-icons/gr";
+import "./HomeHeader.scss";
 
 const HomeHeader = () => {
   const [dataCollected, setDataCollected] = useState([]);
@@ -23,13 +23,13 @@ const HomeHeader = () => {
   }, []);
 
   return (
-    <div className={header.header_wrapper}>
+    <div className="header__wrapper">
       <div>
         <div>Welcome to web portal</div>
         <div>Feel free to browse any of the below projects</div>
       </div>
 
-      <div className={header.header_content_wrapper}>
+      <div className="header__contact--wrapper">
         <div>
           <div>
             <FaLayerGroup />
