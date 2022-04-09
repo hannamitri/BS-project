@@ -1,14 +1,10 @@
 import styles from "./DataCollected.module.scss";
-import {
-  getAllProjects,
-  getDataCollected,
-  getProjectId,
-} from "../../api/api";
+import { getAllProjects, getDataCollected, getProjectId } from "../../api/api";
 import { insertDataCollected, getProjectsByUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
-import { Clock, Calendar } from 'tabler-icons-react';
+import { Clock, Calendar } from "tabler-icons-react";
 import {
   TextInput,
   Text,
@@ -23,26 +19,22 @@ import {
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
 import { Lock, X } from "tabler-icons-react";
-import { HiOutlineAtSymbol } from "react-icons/hi";
 import { z } from "zod";
 import LoginIllustration from "../../images/Login/data.svg";
 import { Link } from "react-router-dom";
-import { MdOutlineDescription } from "react-icons/md";
-import { IoDocumentsOutline } from "react-icons/io5";
 import { FiDatabase } from "react-icons/fi";
 
-export const DataCollected = () => {
+export const DataCollected = ({ userLoggedIn }) => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
 
   const [allProjects, setAllProjects] = useState([]);
   const [totalprojects, setTotalProjects] = useState([]);
-  const [singleProject, setSingleProject] = useState("");
 
   const getProjectsofUser = async () => {
     let user = {
-      user_id: 4,
+      user_id: +userLoggedIn?.user_id,
     };
     const data = await getProjectsByUser(user);
     setAllProjects(data);
@@ -94,10 +86,9 @@ export const DataCollected = () => {
   };
 
   const trySubmit = async (values) => {
-
     const project = {
       name: values.project_name,
-    }
+    };
 
     const selected_project_id = allProjects?.data?.find(
       (item) => item?.name === project.name
@@ -112,7 +103,7 @@ export const DataCollected = () => {
       date_collected: values.date_collected,
       image: dataImage,
       project_id: selected_project_id?.project_id,
-      user_id: 4,
+      user_id: +userLoggedIn?.user_id,
     };
     try {
       insertDataCollected(dataCollected);
@@ -141,11 +132,13 @@ export const DataCollected = () => {
     return newProjects;
   };
 
+  console.log(userLoggedIn);
+
   useEffect(() => {
     getCollectedResults();
     getProjectsofUser();
     getAllProjectss();
-  }, []);
+  }, [userLoggedIn?.user_id]);
 
   return (
     <>
@@ -214,7 +207,6 @@ export const DataCollected = () => {
                   clearable
                   placeholder={"Select a Project"}
                   {...form.getInputProps("project_name")}
-
                 />
                 <Textarea
                   required
