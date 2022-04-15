@@ -63,6 +63,7 @@ export const Signup = () => {
       pn,
       isProfessional: 0,
       Location,
+      isAdmin: 0,
     };
 
     if (error) {

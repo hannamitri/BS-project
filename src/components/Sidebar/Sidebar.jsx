@@ -61,7 +61,7 @@ const Sidebar = () => {
               </Link>
             </div>
             <div className="sidebar__links">
-              <Link to="/add-user">
+              <Link to="/add-user-project">
                 <AiOutlineUsergroupAdd />
                 Include Users
               </Link>
