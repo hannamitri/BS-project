@@ -11,6 +11,16 @@ export const AdminPage = () => {
         const systemusers = await getAll();
         setAllUsers(systemusers);
     };
+
+    const deleteUserById = async (user_id) => {
+        let user = {
+            id: user_id,
+        }
+
+        await deleteUser(user)
+            .then((th) => console.log(th))
+            .catch((err) => console.log(err));
+    }
     useEffect(() => {
         getUsers();
         console.log(allUsers.data)
@@ -46,7 +56,7 @@ export const AdminPage = () => {
                                         <td>{user.Location}</td>
                                         <td>{user.email}</td>
                                         <td>{user.isAdmin}</td>
-                                        <td><button>Delete</button></td>
+                                        <td><button onClick={deleteUserById(user.user_id)}>Delete</button></td>
                                     </tr>
                                 ))
                             }

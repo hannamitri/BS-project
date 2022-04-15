@@ -6,4 +6,5 @@ export { DataCollected } from "./DataCollected/DataCollected.jsx";
 export { Signout } from "./Signout/Signout";
 export { Contact } from "./Contact/Contact";
 export { ProjectForm } from "./ProjectForm/ProjectForm";
-export { AdminPage } from "./AdminPage/AdminPage"
+export { AdminPage } from "./AdminPage/AdminPage";
+export { AdminProject } from "./AdminProject/AdminProject";

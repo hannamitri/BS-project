@@ -79,6 +79,14 @@ const Sidebar = () => {
                 Accounts
               </Link>
             </div>
+            <div className="sidebar__links">
+              <Link to="/manage-projects">
+                <AiOutlineUserAdd />
+                Manage
+                <br />
+                Projects
+              </Link>
+            </div>
           </>
         ) : null}
 
