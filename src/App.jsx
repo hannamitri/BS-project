@@ -38,7 +38,7 @@ function App() {
   console.log(userLoggedIn);
 
   return (
-    <>
+    <div className="main">
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -63,7 +63,7 @@ function App() {
         <Route path="/manage-projects" element={<AdminProject />} />
 
       </Routes>
-    </>
+    </div>
   );
 }
 
