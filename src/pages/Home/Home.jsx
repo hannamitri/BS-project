@@ -1,4 +1,4 @@
-import home from "./Home.module.scss";
+import "./Home.scss";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import Projects from "../../components/Projects/Projects";
@@ -10,9 +10,9 @@ export const Home = () => {
     console.log(user);
   }
   return (
-    <div className={home.container}>
+    <div className="main__container">
       <Sidebar />
-      <div className={home.content_wrapper}>
+      <div className="main__content--wrapper">
         <HomeHeader />
         <Projects />
       </div>

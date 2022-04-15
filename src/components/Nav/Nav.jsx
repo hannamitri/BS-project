@@ -9,9 +9,11 @@ import { getAll } from "../../api/api";
 import supabase from "../../lib/supabase";
 import { FiLogOut } from "react-icons/fi";
 import "./Nav.scss";
+import { Login } from "../../pages/Login/Login";
 
 export const Nav = () => {
   const [users, setUsers] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
   const { user, loading } = useContext(UserContext);
 
   const getUsers = async () => {
@@ -38,49 +40,42 @@ export const Nav = () => {
   }, []);
 
   return (
-    <nav className="nav__wrapper">
-      <h1>
-        <FaPagelines />
-        <p>Final Project</p>
-      </h1>
+    <>
+      <nav className="nav__wrapper">
+        <h1>
+          <FaPagelines />
+          <p>Final Project</p>
+        </h1>
 
-      <ul>
         {!user && (
-          <li className="nav__button">
-            <Link to="/signin">Sign in</Link>
-          </li>
+          <button className="button" onClick={() => setOpenModal(true)}>
+            Login
+          </button>
         )}
-      </ul>
-      {user && (
-        <div className="nav__user--account">
-          <Group>
-            <Menu
-              placement="center"
-              control={
-                <div className="nav__profile--letter">
-                  {userLoggedIn?.user_name.split(" ")[0][0].toUpperCase()}
-                </div>
-              }
-            >
-              <Menu.Item
-                onClick={() => navigate("/Signout")}
-                icon={<FiLogOut size={18} />}
-              >
-                Logout
-              </Menu.Item>
-            </Menu>
-            {/* <div style={{ flex: 1 }}>
-              <Text size="sm" weight={500}>
-                {userLoggedIn?.user_name}
-              </Text>
 
-              <Text color="dimmed" size="xs">
-                {userLoggedIn?.email}
-              </Text>
-            </div> */}
-          </Group>
-        </div>
-      )}
-    </nav>
+        {user && (
+          <div className="nav__user--account">
+            <Group>
+              <Menu
+                placement="center"
+                control={
+                  <div className="nav__profile--letter">
+                    {userLoggedIn?.user_name.split(" ")[0][0].toUpperCase()}
+                  </div>
+                }
+              >
+                <Menu.Item
+                  onClick={() => navigate("/Signout")}
+                  icon={<FiLogOut size={18} />}
+                >
+                  Logout
+                </Menu.Item>
+              </Menu>
+            </Group>
+          </div>
+        )}
+      </nav>
+      {openModal && <Login />}
+    </>
   );
 };
