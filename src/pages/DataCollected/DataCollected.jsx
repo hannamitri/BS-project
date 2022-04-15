@@ -23,6 +23,7 @@ import { z } from "zod";
 import LoginIllustration from "../../images/Login/data.svg";
 import { Link } from "react-router-dom";
 import { FiDatabase } from "react-icons/fi";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 export const DataCollected = ({ userLoggedIn }) => {
   const { user, loading, setUser } = useContext(UserContext);
@@ -142,107 +143,111 @@ export const DataCollected = ({ userLoggedIn }) => {
 
   return (
     <>
-      <main className={styles.container}>
-        {userNotFound && (
-          <Notification
-            icon={<X size={18} />}
-            color="red"
-            title="Signin failed"
-            styles={{
-              root: {
-                backgroundColor: "#FB5D64",
-                position: "absolute",
-                zIndex: 3,
-                opacity: 0.95,
-                top: 90,
-              },
-              title: { color: "228BE6", fontWeight: "bold" },
-              description: { color: "white" },
-              icon: {
-                color: "white",
-              },
-              closeButton: { color: "white", ":hover": { color: "black" } },
-            }}
-            onClose={() => setUserNotFound(false)}
-          >
-            A user was not found!
-          </Notification>
-        )}
+      <div style={{ display: 'flex' }}>
+        <Sidebar />
 
-        <section className={styles.view}>
-          <div className={styles.mainContent}>
-            <article className={styles.leftview}>
-              <img src={LoginIllustration} alt="Illustration" width={500} />
-              <Link to="/signup">View data</Link>
-            </article>
-            <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
-              <h1>Upload data</h1>
-              <form onSubmit={form.onSubmit(trySubmit)}>
-                <TextInput
-                  required
-                  label="Location Collected"
-                  placeholder="Location"
-                  {...form.getInputProps("location_collected")}
-                />
-                <DatePicker
-                  placeholder="Pick date"
-                  icon={<Calendar size={16} />}
-                  label="Date Collected"
-                  required
-                  {...form.getInputProps("date_collected")}
-                />
-                <TimeInput
-                  label="Time Collected"
-                  format="12"
-                  icon={<Clock size={16} />}
-                  required
-                  {...form.getInputProps("time_collected")}
-                />
+        <main className={styles.container}>
+          {userNotFound && (
+            <Notification
+              icon={<X size={18} />}
+              color="red"
+              title="Signin failed"
+              styles={{
+                root: {
+                  backgroundColor: "#FB5D64",
+                  position: "absolute",
+                  zIndex: 3,
+                  opacity: 0.95,
+                  top: 90,
+                },
+                title: { color: "228BE6", fontWeight: "bold" },
+                description: { color: "white" },
+                icon: {
+                  color: "white",
+                },
+                closeButton: { color: "white", ":hover": { color: "black" } },
+              }}
+              onClose={() => setUserNotFound(false)}
+            >
+              A user was not found!
+            </Notification>
+          )}
 
-                <Select
-                  data={formatDataProjects()}
-                  label="Projects"
-                  required
-                  searchable
-                  clearable
-                  placeholder={"Select a Project"}
-                  {...form.getInputProps("project_name")}
-                />
-                <Textarea
-                  required
-                  label="Description"
-                  placeholder="your data"
-                  icon={<FiDatabase size={16} />}
-                  minRows={3}
-                  autosize
-                  maxRows={10}
-                  {...form.getInputProps("description")}
-                  styles={{
-                    icon: {
-                      alignItems: "flex-start",
-                      marginTop: 16,
-                    },
-                  }}
-                />
-                <input type="file" onChange={uploadImage} />
+          <section className={styles.view}>
+            <div className={styles.mainContent}>
+              <article className={styles.leftview}>
+                <img src={LoginIllustration} alt="Illustration" width={500} />
+                <Link to="/signup">View data</Link>
+              </article>
+              <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
+                <h1>Upload data</h1>
+                <form onSubmit={form.onSubmit(trySubmit)}>
+                  <TextInput
+                    required
+                    label="Location Collected"
+                    placeholder="Location"
+                    {...form.getInputProps("location_collected")}
+                  />
+                  <DatePicker
+                    placeholder="Pick date"
+                    icon={<Calendar size={16} />}
+                    label="Date Collected"
+                    required
+                    {...form.getInputProps("date_collected")}
+                  />
+                  <TimeInput
+                    label="Time Collected"
+                    format="12"
+                    icon={<Clock size={16} />}
+                    required
+                    {...form.getInputProps("time_collected")}
+                  />
 
-                <Group position="left" mt="md" style={{ position: "relative" }}>
-                  {loadingState ? (
-                    <span className={styles.loading}>
-                      <Loader />
-                    </span>
-                  ) : (
-                    <Button type="submit">Submit data</Button>
-                  )}
-                </Group>
-              </form>
-            </Box>
-          </div>
-          <div className={styles.alternatives}>
-            <div className={styles.leftalt}></div>
-          </div>
-        </section>
-      </main>
+                  <Select
+                    data={formatDataProjects()}
+                    label="Projects"
+                    required
+                    searchable
+                    clearable
+                    placeholder={"Select a Project"}
+                    {...form.getInputProps("project_name")}
+                  />
+                  <Textarea
+                    required
+                    label="Description"
+                    placeholder="your data"
+                    icon={<FiDatabase size={16} />}
+                    minRows={3}
+                    autosize
+                    maxRows={10}
+                    {...form.getInputProps("description")}
+                    styles={{
+                      icon: {
+                        alignItems: "flex-start",
+                        marginTop: 16,
+                      },
+                    }}
+                  />
+                  <input type="file" onChange={uploadImage} />
+
+                  <Group position="left" mt="md" style={{ position: "relative" }}>
+                    {loadingState ? (
+                      <span className={styles.loading}>
+                        <Loader />
+                      </span>
+                    ) : (
+                      <Button type="submit">Submit data</Button>
+                    )}
+                  </Group>
+                </form>
+              </Box>
+            </div>
+            <div className={styles.alternatives}>
+              <div className={styles.leftalt}></div>
+            </div>
+          </section>
+        </main>
+      </div>
     </>
   );
 };
