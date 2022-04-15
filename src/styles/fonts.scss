@@ -2,6 +2,13 @@
 
 // Bodoni https://fonts.google.com/specimen/Bodoni+Moda?query=Bodoni
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
 :root {
   --bodoni: "Bodoni Moda";
 
