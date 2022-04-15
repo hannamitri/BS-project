@@ -1,16 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import project from "./Project.module.scss";
+import "./Project.scss";
 
 const Project = ({ name, category, date_created, image, id }) => {
   return (
-    <div>
-      <div>ID: {id}</div>
-      <div>date_created: {date_created}</div>
-      <div>category: {category}</div>
-      <img src={image} alt="" />
-      <div className={project.project_button}>
-        <Link to={`/${name.replace(/ /g, "-").toLowerCase()}`}>name</Link>
+    <div className="project__wrapper">
+      <div className="project__image">
+        <img src={image} alt="" />
+      </div>
+      <div className="project__content--wrapper">
+        <div className="project__name">{name}</div>
+        <div className="project__date">{date_created}</div>
+      </div>
+      <div>
+        <Link
+          className="project__button"
+          to={`/${name.replace(/ /g, "-").toLowerCase()}`}
+        >
+          View Details
+        </Link>
       </div>
     </div>
   );

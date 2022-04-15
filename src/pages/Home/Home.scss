@@ -1,0 +1,11 @@
+@use "./../../styles/fonts.scss";
+
+.main__container {
+  display: flex;
+  min-height: calc(100vh - 60px);
+
+  .main__content--wrapper {
+    padding: 15px;
+    background-color: #eef0f4;
+  }
+}
