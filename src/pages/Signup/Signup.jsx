@@ -91,7 +91,6 @@ export const Signup = () => {
       }
     } else {
       setDisabled(true);
-      console.log(userOBJ)
       await insertUser(userOBJ)
         .then((th) => console.log(th))
         .catch((err) => console.log(err));
