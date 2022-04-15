@@ -29,7 +29,7 @@ exports.getUserByEmail = async (req, res) => {
 
 exports.deleteUser = (req, res) => {
   const { id } = req.body;
-  let sql = `delete from users WHERE user_id = ${id} `;
+  let sql = `delete from users WHERE user_id = "${id}"`;
   console.log(sql);
   connection.query(sql, (err, result) => {
     if (err) throw err;
@@ -42,7 +42,7 @@ exports.updateUser = (req, res) => {
 
   let updateSql = `UPDATE Users set user_name = "${Name}", password = "${Password}", \
     Location = "${Location}", email = "${Email}, phone_number ="${pn}, isProfessional ="${isProfessional}""\
-        WHERE user_id = ${id} `;
+        WHERE user_id = ${id}`;
 
   console.log(updateSql);
 

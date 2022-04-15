@@ -6,8 +6,8 @@ import { insertProject } from "../../api/api";
 import { useForm } from "@mantine/form";
 
 const AddProject = () => {
-  const [dataImage, setDataImage] = useState("");
 
+  const [dataImage, setDataImage] = useState("");
   let specialDate = new Date();
   const dtfUS = new Intl.DateTimeFormat("en", {
     month: "long",

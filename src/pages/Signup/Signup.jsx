@@ -12,6 +12,8 @@ import {
   PasswordInput,
   Select,
   Notification,
+  RadioGroup,
+  Radio,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { Lock, X } from "tabler-icons-react";
@@ -23,7 +25,7 @@ import { MdSettingsPhone } from "react-icons/md";
 import LoginIllustration from "../../images/Login/wfh.svg";
 import { Link } from "react-router-dom";
 import countryList from "react-select-country-list";
-
+import Sidebar from "../../components/Sidebar/Sidebar";
 export const Signup = () => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userExists, setUserExists] = useState(false);
@@ -46,24 +48,37 @@ export const Signup = () => {
       .min(4, { message: "Phone number should be 4 digits or more" }),
   });
 
-  const trySubmit = async ({ Password, Email, Name, Location, pn }) => {
+  const trySubmit = async ({ Password, Email, Name, Location, pn, role }) => {
     setUserExists(false);
     setLoadingState(true);
     console.log(Password);
-    console.table([Password, Email, Name, Location, pn]);
+    console.table([Password, Email, Name, Location, pn, role]);
     let { user, error } = await supabase.auth.signUp({
       email: Email,
       password: Password,
     });
+
+    let adminValue = 0;
+    let professionalValue = 0;
+
+
+
+    if (role === "admin") {
+      adminValue = 1;
+    }
+    else if (role === "professional") {
+      professionalValue = 1;
+    }
 
     let userOBJ = {
       Name,
       Email,
       Password,
       pn,
-      isProfessional: 0,
+      isProfessional: professionalValue,
       Location,
-      isAdmin: 0,
+      isAdmin: adminValue,
+      role,
     };
 
     if (error) {
@@ -71,19 +86,11 @@ export const Signup = () => {
         setUserExists(true);
         setLoadingState(false);
       } else {
-        // await insertUser(userOBJ)
-        //   .then((th) => console.log(th))
-        //   .catch((err) => console.log(err));
-        // if (user) {
-        //   setUser(user);
-        //   navigate("/");
-        // }
         setLoadingState(false);
         throw new Error(error.message);
       }
     } else {
       setDisabled(true);
-
       await insertUser(userOBJ)
         .then((th) => console.log(th))
         .catch((err) => console.log(err));
@@ -102,6 +109,7 @@ export const Signup = () => {
       Password: "",
       Location: "",
       pn: "",
+      role: "",
     },
     schema: zodResolver(schema),
   });
@@ -118,103 +126,113 @@ export const Signup = () => {
   }, []);
   const password = useRef();
   return (
-    <main className="sign-up__wrapper">
-      {userExists && (
-        <Notification
-          icon={<X size={18} />}
-          color="red"
-          title="Signup failed"
-          styles={{
-            root: {
-              backgroundColor: "#FB5D64",
-              position: "absolute",
-              zIndex: 3,
-              opacity: 0.95,
-              top: 90,
-            },
-            title: { color: "228BE6", fontWeight: "bold" },
-            description: { color: "white" },
-            icon: { color: "white" },
-            closeButton: { color: "white", ":hover": { color: "black" } },
-          }}
-          onClose={() => setUserExists(false)}
-        >
-          A user with that email already exists!
-        </Notification>
-      )}
-      <section className="sign-up__wrapper">
-        <div className="sign-up__content--wrapper">
-          <article className="sign-up__img">
-            <img
-              src={LoginIllustration}
-              alt="Illustration"
-              width={500}
-              height={500}
-            />
-            <Link to="/signin">Already have an account? Sign in instead</Link>
-          </article>
-          <Box sx={{ maxWidth: 300 }} mx="auto" className="sign-up__content">
-            <h1>Sign up</h1>
-            <form onSubmit={form.onSubmit(trySubmit)} disabled={disabled}>
-              <TextInput
-                required
-                icon={<FaUserAlt size={16} />}
-                label="Name"
-                placeholder="Your name"
-                {...form.getInputProps("Name")}
-              />
-              <TextInput
-                required
-                icon={<HiOutlineAtSymbol size={16} />}
-                label="Email"
-                placeholder="your@email.com"
-                {...form.getInputProps("Email")}
-              />
-              <PasswordInput
-                required
-                label="Password"
-                placeholder="Your password"
-                icon={<Lock size={16} />}
-                {...form.getInputProps("Password")}
-              />
-              <TextInput
-                required
-                label="Phone number"
-                placeholder="Your phone number"
-                type="number"
-                icon={<MdSettingsPhone size={16} />}
-                {...form.getInputProps("pn")}
-              />
-              <Select
-                data={options}
-                label="Country"
-                required
-                icon={<FaGlobeEurope size={16} />}
-                placeholder={"Select a country"}
-                {...form.getInputProps("Location")}
-              />
+    <div style={{ display: "flex" }}>
+      <Sidebar />
 
-              <Group position="left" mt="md" style={{ position: "relative" }}>
-                {loadingState ? (
-                  <span className="sign-up__loading">
-                    <Loader />
-                  </span>
-                ) : (
-                  <Button type="submit">Login</Button>
-                )}
-              </Group>
-              <span className="sign-up__already--registered">
-                <Link to="/signin">
-                  Already have an account? Sign in instead
-                </Link>
-              </span>
-            </form>
-          </Box>
-        </div>
-        {/* <div className={styles.alternatives}>
-          <div className={styles.leftalt}></div>
-        </div> */}
-      </section>
-    </main>
+      <main className="sign-up__wrapper">
+        {userExists && (
+          <Notification
+            icon={<X size={18} />}
+            color="red"
+            title="Signup failed"
+            styles={{
+              root: {
+                backgroundColor: "#FB5D64",
+                position: "absolute",
+                zIndex: 3,
+                opacity: 0.95,
+                top: 90,
+              },
+              title: { color: "228BE6", fontWeight: "bold" },
+              description: { color: "white" },
+              icon: { color: "white" },
+              closeButton: { color: "white", ":hover": { color: "black" } },
+            }}
+            onClose={() => setUserExists(false)}
+          >
+            A user with that email already exists!
+          </Notification>
+        )}
+        <section className="sign-up__wrapper">
+          <div className="sign-up__content--wrapper">
+            <article className="sign-up__img">
+              <img
+                src={LoginIllustration}
+                alt="Illustration"
+                width={500}
+                height={500}
+              />
+              <Link to="/signin">Already have an account? Sign in instead</Link>
+            </article>
+            <Box sx={{ maxWidth: 350 }} mx="auto" className="sign-up__content">
+              <h1>Sign up</h1>
+              <form onSubmit={form.onSubmit(trySubmit)} disabled={disabled}>
+                <TextInput
+                  required
+                  icon={<FaUserAlt size={16} />}
+                  label="Name"
+                  placeholder="Your name"
+                  {...form.getInputProps("Name")}
+                />
+                <TextInput
+                  required
+                  icon={<HiOutlineAtSymbol size={16} />}
+                  label="Email"
+                  placeholder="your@email.com"
+                  {...form.getInputProps("Email")}
+                />
+                <PasswordInput
+                  required
+                  label="Password"
+                  placeholder="Your password"
+                  icon={<Lock size={16} />}
+                  {...form.getInputProps("Password")}
+                />
+                <TextInput
+                  required
+                  label="Phone number"
+                  placeholder="Your phone number"
+                  type="number"
+                  icon={<MdSettingsPhone size={16} />}
+                  {...form.getInputProps("pn")}
+                />
+                <Select
+                  data={options}
+                  label="Country"
+                  required
+                  icon={<FaGlobeEurope size={16} />}
+                  placeholder={"Select a country"}
+                  {...form.getInputProps("Location")}
+                />
+                <RadioGroup
+                  label="Select User's Role"
+                  description="This is define a User's Role"
+                  required
+                  {...form.getInputProps("role")}
+                >
+                  <Radio value="citizen" label="Citizen" />
+
+                  <Radio value="professional" label="Professional" />
+
+                  <Radio value="admin" label="Admin" />
+
+                </RadioGroup>
+
+                <Group position="left" mt="md" style={{ position: "relative" }}>
+                  {loadingState ? (
+                    <span className="sign-up__loading">
+                      <Loader />
+                    </span>
+                  ) : (
+                    <Button type="submit">Login</Button>
+                  )}
+                </Group>
+
+              </form>
+            </Box>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 };

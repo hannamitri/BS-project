@@ -25,7 +25,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getUsers();
-
+    console.log(userLoggedIn)
     if (loading) {
       return (
         <div>
@@ -55,15 +55,36 @@ const Sidebar = () => {
         {userLoggedIn?.isProfessional ? (
           <>
             <div className="sidebar__links">
+              <Link to="/add-user-project">
+                <AiOutlineUsergroupAdd />
+                Include Users
+              </Link>
+            </div>
+          </>
+        ) : null}
+
+        {userLoggedIn?.isAdmin ? (
+          <>
+            <div className="sidebar__links">
               <Link to="/signup">
                 <AiOutlineUserAdd />
                 Create User
               </Link>
             </div>
             <div className="sidebar__links">
-              <Link to="/add-user-project">
-                <AiOutlineUsergroupAdd />
-                Include Users
+              <Link to="/admin-page">
+                <AiOutlineUserAdd />
+                Manage
+                <br />
+                Accounts
+              </Link>
+            </div>
+            <div className="sidebar__links">
+              <Link to="/manage-projects">
+                <AiOutlineUserAdd />
+                Manage
+                <br />
+                Projects
               </Link>
             </div>
           </>
