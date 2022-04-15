@@ -52,7 +52,7 @@ function App() {
         <Route path="/Signout" element={<Signout />} />
         <Route path="/Contact" element={<Contact />} />
         <Route
-          path="/addProject"
+          path="/add-user-project"
           element={<ProjectForm userLoggedIn={userLoggedIn} />}
         />
         <Route path="/add-project" element={<AddProject />} />

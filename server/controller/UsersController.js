@@ -53,9 +53,9 @@ exports.updateUser = (req, res) => {
 };
 
 exports.insertUser = (req, res) => {
-  const { Name, Email, Password, Location, isProfessional, pn } = req.body;
-  let saveSql = `INSERT INTO Users(user_name, phone_number, isProfessional ,Location, email,Password) VALUES\
-    ("${Name}","${pn}", "${isProfessional}", "${Location}", "${Email}", "${Password}")`;
+  const { Name, Email, Password, Location, isProfessional, pn, isAdmin } = req.body;
+  let saveSql = `INSERT INTO Users(user_name, phone_number, isProfessional ,Location, email,Password,isAdmin) VALUES\
+    ("${Name}","${pn}", "${isProfessional}", "${Location}", "${Email}", "${Password}", "${isAdmin}")`;
   console.log(saveSql);
   connection.query(saveSql, (err, result) => {
     if (err) throw err;
