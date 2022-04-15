@@ -9,31 +9,12 @@ svg {
   margin: 0 auto;
   height: 60px;
   background-color: #fbfbfd;
+  padding: 0 15px;
 
   .nav__user--account {
     display: flex;
     align-items: center;
     margin: 10px;
-  }
-
-  > ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-
-    .nav__button {
-      background-color: var(--primary);
-      padding: 8px 24px;
-      cursor: pointer;
-
-      border-radius: 16px;
-      box-shadow: 0 0 4px rgba(0, 0, 0, 1);
-      color: white;
-    }
   }
 
   .nav__profile--letter {

@@ -15,10 +15,28 @@
   --p1: 16px;
   --p2: 12px;
   --small: 6.76px;
-
-  --primary: #7c41bf;
-
+  --primary: #4d83fd;
   --click: click 0.5s;
+}
+
+.button {
+  border: none;
+  background-color: var(--primary);
+  padding: 8px 24px;
+  color: white;
+  height: 40px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  opacity: 1;
+  outline: 0;
+  transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.65;
+  }
 }
 
 @keyframes click {
