@@ -55,12 +55,14 @@ function App() {
         <Route path="/*" element={<NotFound />} />
         <Route path="/Signout" element={<Signout />} />
         <Route path="/Contact" element={<Contact />} />
-        <Route
-          path="/add-user-project"
-          element={<ProjectForm userLoggedIn={userLoggedIn} />}
-        />
+        {userLoggedIn?.isAdmin && (
+          <Route
+            path="/add-user-project"
+            element={<ProjectForm userLoggedIn={userLoggedIn} />}
+          />
+        )}
         <Route path="/add-project" element={<AddProject />} />
-        <Route path="/:id" element={<ProjectPage />} />
+        <Route path="/project/:id" element={<ProjectPage />} />
         <Route path="/admin-page" element={<AdminPage />} />
         <Route path="/manage-projects" element={<AdminProject />} />
       </Routes>

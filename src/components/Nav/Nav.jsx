@@ -1,16 +1,14 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { FaPagelines } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import { Group, Avatar, Text, Menu, Button } from "@mantine/core";
-import AvatarImage from "../../images/Login/login_image.jpg";
-import { ExternalLink } from "tabler-icons-react";
+import { Group, Menu } from "@mantine/core";
 import { getAll } from "../../api/api";
-import supabase from "../../lib/supabase";
 import { FiLogOut } from "react-icons/fi";
 import "./Nav.scss";
 import { Login } from "../../pages/Login/Login";
 import Logo from "../../images/intranet.png";
+import SkeletonLoading from "../UI/skeletonLoading/skeletonLoading";
+import { Skeleton } from "@mantine/core";
 
 export const Nav = () => {
   const [users, setUsers] = useState([]);
@@ -47,6 +45,8 @@ export const Nav = () => {
     }
   }, []);
 
+  console.log(user);
+
   return (
     <>
       <nav className="nav__wrapper">
@@ -60,32 +60,33 @@ export const Nav = () => {
           </button>
         )}
 
-        {userLoggedIn ? (
-          <div className="nav__user--account">
-            <Group>
-              <Menu
-                placement="center"
-                control={
-                  <div className="nav__profile--letter">
-                    {userLoggedIn?.user_name.split(" ")[0][0].toUpperCase()}
-                  </div>
-                }
-              >
-                <Menu.Item
-                  onClick={() => navigate("/Signout")}
-                  icon={<FiLogOut size={18} />}
+        {user &&
+          (userLoggedIn ? (
+            <div className="nav__user--account">
+              <Group>
+                <Menu
+                  placement="center"
+                  control={
+                    <div className="nav__profile--letter">
+                      {userLoggedIn?.user_name.split(" ")[0][0].toUpperCase()}
+                    </div>
+                  }
                 >
-                  Logout
-                </Menu.Item>
-              </Menu>
-            </Group>
-          </div>
-        ) : (
-          <div
-            className="skeleton__box"
-            style={{ width: "100px", height: "40px" }}
-          ></div>
-        )}
+                  <Menu.Item
+                    onClick={() => navigate("/Signout")}
+                    icon={<FiLogOut size={18} />}
+                  >
+                    Logout
+                  </Menu.Item>
+                </Menu>
+              </Group>
+            </div>
+          ) : (
+            <div className="nav__skeleton">
+              <Skeleton height={50} width="100px" />
+              <Skeleton height={50} circle />
+            </div>
+          ))}
       </nav>
       <Login />
     </>
