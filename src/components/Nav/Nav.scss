@@ -11,6 +11,14 @@ svg {
   background-color: #fbfbfd;
   padding: 0 15px;
 
+  .nav__logo {
+    display: flex;
+    img {
+      max-width: 200px;
+      height: 100%;
+    }
+  }
+
   .nav__user--account {
     display: flex;
     align-items: center;

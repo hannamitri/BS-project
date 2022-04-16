@@ -13,6 +13,7 @@ const Projects = () => {
 
   useEffect(() => {
     getProjects();
+    // console.log()
   }, []);
 
   return (
@@ -23,7 +24,7 @@ const Projects = () => {
           name={project.name}
           category={project.category}
           date_created={project.date_created}
-          image={project.image}
+          projectImage={project.image}
           id={project.project_id}
         />
       ))}

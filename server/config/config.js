@@ -1,5 +1,5 @@
 var config = {
-  PORT: 3306,
+  PORT: 3300,
   HOST: "localhost",
   USER: "root",
   PASSWORD: "root",
