@@ -7,7 +7,6 @@ import { FiLogOut } from "react-icons/fi";
 import "./Nav.scss";
 import { Login } from "../../pages/Login/Login";
 import Logo from "../../images/intranet.png";
-import SkeletonLoading from "../UI/skeletonLoading/skeletonLoading";
 import { Skeleton } from "@mantine/core";
 
 export const Nav = () => {
