@@ -55,8 +55,8 @@ const HomeHeader = () => {
           </>
         ) : (
           <>
-            <Skeleton height={80} width={225} />
-            <Skeleton height={80} width={225} />
+            <Skeleton animate={false} height={80} width={225} />
+            <Skeleton animate={false} height={80} width={225} />
           </>
         )}
       </div>

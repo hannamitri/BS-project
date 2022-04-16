@@ -52,11 +52,11 @@ const Sidebar = () => {
               </Link>
             </div>
           ) : (
-            <Skeleton height={35} width="90%" mb="md" mx="auto" />
+            <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
           ))}
 
         {user &&
-          (userLoggedIn?.isProfessional ? (
+          (userLoggedIn?.isAdmin ? (
             <>
               <div className="sidebar__links">
                 <Link to="/add-user-project">
@@ -66,7 +66,7 @@ const Sidebar = () => {
               </div>
             </>
           ) : (
-            <Skeleton height={35} width="90%" mb="md" mx="auto" />
+            <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
           ))}
 
         {user &&
@@ -97,9 +97,9 @@ const Sidebar = () => {
             </>
           ) : (
             <>
-              <Skeleton height={35} width="90%" mb="md" mx="auto" />
-              <Skeleton height={35} width="90%" mb="md" mx="auto" />
-              <Skeleton height={35} width="90%" mb="md" mx="auto" />
+              <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
+              <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
+              <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
             </>
           ))}
 

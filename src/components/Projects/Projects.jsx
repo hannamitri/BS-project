@@ -37,10 +37,10 @@ const Projects = () => {
           <>
             {new Array(8).fill(0).map((_) => (
               <div>
-                <Skeleton height={175} mb="md" />
-                <Skeleton height={20} width={150} mb="md" />
-                <Skeleton height={20} width={100} mb="md" />
-                <Skeleton height={35} width="85%" />
+                <Skeleton animate={false} height={175} mb="md" />
+                <Skeleton animate={false} height={20} width={150} mb="md" />
+                <Skeleton animate={false} height={20} width={100} mb="md" />
+                <Skeleton animate={false} height={35} width="85%" />
               </div>
             ))}
           </>

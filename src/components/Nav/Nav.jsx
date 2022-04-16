@@ -26,10 +26,6 @@ export const Nav = () => {
     document.body.classList.add("login__open");
   };
 
-  const closeModal = () => {
-    document.body.classList.remove("login__open");
-  };
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -82,8 +78,8 @@ export const Nav = () => {
             </div>
           ) : (
             <div className="nav__skeleton">
-              <Skeleton height={50} width="100px" />
-              <Skeleton height={50} circle />
+              <Skeleton animate={false} height={50} width="100px" />
+              <Skeleton animate={false} height={50} circle />
             </div>
           ))}
       </nav>
