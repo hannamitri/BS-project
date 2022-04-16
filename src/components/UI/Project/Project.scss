@@ -1,8 +1,14 @@
 .project__wrapper {
   text-align: center;
+  width: 100%;
 
   .project__image {
     display: flex;
+
+    img {
+      height: 175px;
+      border-radius: 12px 12px 0 0;
+    }
   }
 
   .project__name {
@@ -39,4 +45,11 @@
       border-top: 1px solid transparent;
     }
   }
+}
+
+.project__skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }

@@ -10,10 +10,10 @@ import supabase from "../../lib/supabase";
 import { FiLogOut } from "react-icons/fi";
 import "./Nav.scss";
 import { Login } from "../../pages/Login/Login";
+import Logo from "../../images/intranet.png";
 
 export const Nav = () => {
   const [users, setUsers] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
   const { user, loading } = useContext(UserContext);
 
   const getUsers = async () => {
@@ -24,6 +24,14 @@ export const Nav = () => {
   const userLoggedIn = users?.data?.find(
     (item) => item?.email === (user?.email || user?.user?.email)
   );
+
+  const openModal = () => {
+    document.body.classList.add("login__open");
+  };
+
+  const closeModal = () => {
+    document.body.classList.remove("login__open");
+  };
 
   const navigate = useNavigate();
 
@@ -42,18 +50,17 @@ export const Nav = () => {
   return (
     <>
       <nav className="nav__wrapper">
-        <h1>
-          <FaPagelines />
-          <p>Final Project</p>
-        </h1>
+        <div className="nav__logo">
+          <img src={Logo} alt="" />
+        </div>
 
         {!user && (
-          <button className="button" onClick={() => setOpenModal(true)}>
+          <button className="button" onClick={() => openModal()}>
             Login
           </button>
         )}
 
-        {user && (
+        {userLoggedIn ? (
           <div className="nav__user--account">
             <Group>
               <Menu
@@ -73,9 +80,14 @@ export const Nav = () => {
               </Menu>
             </Group>
           </div>
+        ) : (
+          <div
+            className="skeleton__box"
+            style={{ width: "100px", height: "40px" }}
+          ></div>
         )}
       </nav>
-      {openModal && <Login />}
+      <Login />
     </>
   );
 };

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { getAll, getDataCollected } from "../../api/api";
+import { getAll, getAllProjects } from "../../api/api";
 import { FaLayerGroup } from "react-icons/fa";
-import { GrGroup } from "react-icons/gr";
+import { ImUsers } from "react-icons/im";
 import "./HomeHeader.scss";
 
 const HomeHeader = () => {
-  const [dataCollected, setDataCollected] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
   const [users, setUsers] = useState([]);
-  const getCollectedResults = async () => {
-    const data = await getDataCollected();
-    setDataCollected(data);
+  const getTotalProjects = async () => {
+    const data = await getAllProjects();
+    setAllProjects(data);
   };
 
   const getUsers = async () => {
@@ -18,14 +18,14 @@ const HomeHeader = () => {
   };
 
   useEffect(() => {
-    getCollectedResults();
+    getTotalProjects();
     getUsers();
   }, []);
 
   return (
     <div className="header__wrapper">
       <div>
-        <div>Welcome to web portal</div>
+        <h2>Welcome to web portal</h2>
         <div>Feel free to browse any of the below projects</div>
       </div>
 
@@ -35,14 +35,14 @@ const HomeHeader = () => {
             <FaLayerGroup />
           </div>
           <div>
-            <div>{dataCollected?.data?.length}</div>
+            <div>{allProjects?.data?.length}</div>
             <div>Projects</div>
           </div>
         </div>
 
         <div>
           <div>
-            <GrGroup />
+            <ImUsers />
           </div>
           <div>
             <div>{users?.data?.length}</div>
