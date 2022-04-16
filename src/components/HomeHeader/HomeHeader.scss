@@ -1,4 +1,9 @@
 .header__wrapper {
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
   background: rgb(240, 173, 129);
   background: linear-gradient(
     90deg,
@@ -15,9 +20,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius:8px;
+  border-radius: 8px;
 
   .header__contact--wrapper {
+    @media (max-width: 800px) {
+      grid-template-columns: 1fr;
+    }
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;

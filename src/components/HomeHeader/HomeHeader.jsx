@@ -3,6 +3,7 @@ import { getAll, getAllProjects } from "../../api/api";
 import { FaLayerGroup } from "react-icons/fa";
 import { ImUsers } from "react-icons/im";
 import "./HomeHeader.scss";
+import { Skeleton } from "@mantine/core";
 
 const HomeHeader = () => {
   const [allProjects, setAllProjects] = useState([]);
@@ -30,25 +31,34 @@ const HomeHeader = () => {
       </div>
 
       <div className="header__contact--wrapper">
-        <div>
-          <div>
-            <FaLayerGroup />
-          </div>
-          <div>
-            <div>{allProjects?.data?.length}</div>
-            <div>Projects</div>
-          </div>
-        </div>
+        {allProjects.data?.length && users.data?.length ? (
+          <>
+            <div>
+              <div>
+                <FaLayerGroup />
+              </div>
+              <div>
+                <div>{allProjects?.data?.length}</div>
+                <div>Projects</div>
+              </div>
+            </div>
 
-        <div>
-          <div>
-            <ImUsers />
-          </div>
-          <div>
-            <div>{users?.data?.length}</div>
-            <div>Users Contributed</div>
-          </div>
-        </div>
+            <div>
+              <div>
+                <ImUsers />
+              </div>
+              <div>
+                <div>{users?.data?.length}</div>
+                <div>Users Contributed</div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <Skeleton height={80} width={225} />
+            <Skeleton height={80} width={225} />
+          </>
+        )}
       </div>
     </div>
   );

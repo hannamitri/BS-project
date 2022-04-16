@@ -61,12 +61,9 @@ export const Signup = () => {
     let adminValue = 0;
     let professionalValue = 0;
 
-
-
     if (role === "admin") {
       adminValue = 1;
-    }
-    else if (role === "professional") {
+    } else if (role === "professional") {
       professionalValue = 1;
     }
 
@@ -129,7 +126,7 @@ export const Signup = () => {
     <div style={{ display: "flex" }}>
       <Sidebar />
 
-      <main className="sign-up__wrapper">
+      <div className="sign-up__wrapper">
         {userExists && (
           <Notification
             icon={<X size={18} />}
@@ -153,86 +150,81 @@ export const Signup = () => {
             A user with that email already exists!
           </Notification>
         )}
-        <section className="sign-up__wrapper">
-          <div className="sign-up__content--wrapper">
-            <article className="sign-up__img">
-              <img
-                src={LoginIllustration}
-                alt="Illustration"
-                width={500}
-                height={500}
-              />
-              <Link to="/signin">Already have an account? Sign in instead</Link>
-            </article>
-            <Box sx={{ maxWidth: 350 }} mx="auto" className="sign-up__content">
-              <h1>Sign up</h1>
-              <form onSubmit={form.onSubmit(trySubmit)} disabled={disabled}>
-                <TextInput
-                  required
-                  icon={<FaUserAlt size={16} />}
-                  label="Name"
-                  placeholder="Your name"
-                  {...form.getInputProps("Name")}
-                />
-                <TextInput
-                  required
-                  icon={<HiOutlineAtSymbol size={16} />}
-                  label="Email"
-                  placeholder="your@email.com"
-                  {...form.getInputProps("Email")}
-                />
-                <PasswordInput
-                  required
-                  label="Password"
-                  placeholder="Your password"
-                  icon={<Lock size={16} />}
-                  {...form.getInputProps("Password")}
-                />
-                <TextInput
-                  required
-                  label="Phone number"
-                  placeholder="Your phone number"
-                  type="number"
-                  icon={<MdSettingsPhone size={16} />}
-                  {...form.getInputProps("pn")}
-                />
-                <Select
-                  data={options}
-                  label="Country"
-                  required
-                  icon={<FaGlobeEurope size={16} />}
-                  placeholder={"Select a country"}
-                  {...form.getInputProps("Location")}
-                />
-                <RadioGroup
-                  label="Select User's Role"
-                  description="This is define a User's Role"
-                  required
-                  {...form.getInputProps("role")}
-                >
-                  <Radio value="citizen" label="Citizen" />
-
-                  <Radio value="professional" label="Professional" />
-
-                  <Radio value="admin" label="Admin" />
-
-                </RadioGroup>
-
-                <Group position="left" mt="md" style={{ position: "relative" }}>
-                  {loadingState ? (
-                    <span className="sign-up__loading">
-                      <Loader />
-                    </span>
-                  ) : (
-                    <Button type="submit">Login</Button>
-                  )}
-                </Group>
-
-              </form>
-            </Box>
+        <div className="sign-up__content--wrapper">
+          <div className="sign-up__img">
+            <img
+              src={LoginIllustration}
+              alt="Illustration"
+              width={500}
+              height={500}
+            />
           </div>
-        </section>
-      </main>
+          <Box sx={{ maxWidth: 350 }} mx="auto" className="sign-up__content">
+            <h1>Sign up</h1>
+            <form onSubmit={form.onSubmit(trySubmit)} disabled={disabled}>
+              <TextInput
+                required
+                icon={<FaUserAlt size={16} />}
+                label="Name"
+                placeholder="Your name"
+                {...form.getInputProps("Name")}
+              />
+              <TextInput
+                required
+                icon={<HiOutlineAtSymbol size={16} />}
+                label="Email"
+                placeholder="your@email.com"
+                {...form.getInputProps("Email")}
+              />
+              <PasswordInput
+                required
+                label="Password"
+                placeholder="Your password"
+                icon={<Lock size={16} />}
+                {...form.getInputProps("Password")}
+              />
+              <TextInput
+                required
+                label="Phone number"
+                placeholder="Your phone number"
+                type="number"
+                icon={<MdSettingsPhone size={16} />}
+                {...form.getInputProps("pn")}
+              />
+              <Select
+                data={options}
+                label="Country"
+                required
+                icon={<FaGlobeEurope size={16} />}
+                placeholder={"Select a country"}
+                {...form.getInputProps("Location")}
+              />
+              <RadioGroup
+                label="Select User's Role"
+                description="This is define a User's Role"
+                required
+                {...form.getInputProps("role")}
+              >
+                <Radio value="citizen" label="Citizen" />
+
+                <Radio value="professional" label="Professional" />
+
+                <Radio value="admin" label="Admin" />
+              </RadioGroup>
+
+              <Group position="left" mt="md" style={{ position: "relative" }}>
+                {loadingState ? (
+                  <span className="sign-up__loading">
+                    <Loader />
+                  </span>
+                ) : (
+                  <Button type="submit">Sign up</Button>
+                )}
+              </Group>
+            </form>
+          </Box>
+        </div>
+      </div>
     </div>
   );
 };

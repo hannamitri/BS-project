@@ -1,3 +1,4 @@
+import { Skeleton } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Project.scss";
@@ -36,24 +37,18 @@ const Project = ({ name, category, date_created, projectImage, id }) => {
             <div className="project__name">{name}</div>
             <div className="project__date">{date_created}</div>
           </div>
-          <div>
-            <Link
-              className="project__button"
-              to={`/${name.replace(/ /g, "-").toLowerCase()}`}
-            >
+          <div className="project__button">
+            <Link to={`project/${name.replace(/ /g, "-").toLowerCase()}`}>
               View Details
             </Link>
           </div>
         </div>
       ) : (
         <div className="project__skeleton">
-          <div
-            className="skeleton__box"
-            style={{ width: "100%", height: "175px" }}
-          ></div>
-          <div className="skeleton__box" style={{ width: "150px" }}></div>
-          <div className="skeleton__box" style={{ width: "100px" }}></div>
-          <div className="skeleton__box" style={{ width: "100%" }}></div>
+          <Skeleton height={175} mb="md" />
+          <Skeleton height={20} width={150} mb="md" />
+          <Skeleton height={20} width={100} mb="md" />
+          <Skeleton height={35} width="85%" />
         </div>
       )}
     </>
