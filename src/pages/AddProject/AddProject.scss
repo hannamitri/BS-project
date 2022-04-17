@@ -1,0 +1,20 @@
+.project__form--wrapper {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+
+  .project__form {
+    max-width: 350px;
+    width: 100%;
+
+    svg {
+      color: var(--primary);
+    }
+  }
+}

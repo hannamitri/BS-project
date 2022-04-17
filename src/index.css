@@ -22,8 +22,6 @@ a {
 }
 
 .skeleton__box {
-  /* height: 1em; */
-  /* margin-bottom: 10px; */
   position: relative;
   overflow: hidden;
   background-color: #dddbdd;
@@ -52,4 +50,12 @@ a {
   100% {
     transform: translateX(100%);
   }
+}
+
+.flex {
+  display: flex;
+}
+
+svg {
+  color: var(--primary);
 }
