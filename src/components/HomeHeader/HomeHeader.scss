@@ -22,13 +22,18 @@
   align-items: center;
   border-radius: 8px;
 
-  .header__contact--wrapper {
+  .header__content--wrapper {
     @media (max-width: 800px) {
       grid-template-columns: 1fr;
     }
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
+
+    .header__content--info {
+      display: flex;
+      justify-content: end;
+    }
 
     > div {
       display: flex;

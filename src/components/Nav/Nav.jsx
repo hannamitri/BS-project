@@ -7,7 +7,6 @@ import { FiLogOut } from "react-icons/fi";
 import "./Nav.scss";
 import { Login } from "../../pages/Login/Login";
 import Logo from "../../images/intranet.png";
-import SkeletonLoading from "../UI/skeletonLoading/skeletonLoading";
 import { Skeleton } from "@mantine/core";
 
 export const Nav = () => {
@@ -25,10 +24,6 @@ export const Nav = () => {
 
   const openModal = () => {
     document.body.classList.add("login__open");
-  };
-
-  const closeModal = () => {
-    document.body.classList.remove("login__open");
   };
 
   const navigate = useNavigate();
@@ -83,8 +78,8 @@ export const Nav = () => {
             </div>
           ) : (
             <div className="nav__skeleton">
-              <Skeleton height={50} width="100px" />
-              <Skeleton height={50} circle />
+              <Skeleton animate={false} height={50} width="100px" />
+              <Skeleton animate={false} height={50} circle />
             </div>
           ))}
       </nav>

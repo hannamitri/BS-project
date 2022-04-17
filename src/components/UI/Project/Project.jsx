@@ -9,7 +9,7 @@ const Project = ({ name, category, date_created, projectImage, id }) => {
   const mountedRef = useRef(true);
 
   useEffect(() => {
-    const image = new Image();
+  const image = new Image();
     image.src = projectImage;
     image.onload = () => {
       setTimeout(() => {
@@ -45,10 +45,10 @@ const Project = ({ name, category, date_created, projectImage, id }) => {
         </div>
       ) : (
         <div className="project__skeleton">
-          <Skeleton height={175} mb="md" />
-          <Skeleton height={20} width={150} mb="md" />
-          <Skeleton height={20} width={100} mb="md" />
-          <Skeleton height={35} width="85%" />
+          <Skeleton animate={false} height={175} mb="md" />
+          <Skeleton animate={false} height={20} width={150} mb="md" />
+          <Skeleton animate={false} height={20} width={100} mb="md" />
+          <Skeleton animate={false} height={35} width="85%" />
         </div>
       )}
     </>

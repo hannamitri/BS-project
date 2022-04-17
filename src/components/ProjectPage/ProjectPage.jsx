@@ -5,8 +5,14 @@ import {
   getProjectData,
   getUsersbyProject,
 } from "../../api/api";
-
 import "./ProjectPage.scss";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+
+import { Navigation } from "swiper";
+import { Skeleton } from "@mantine/core";
+import DataCollectedSlide from "../UI/DataCollectedSlide/DataCollectedSlide";
 
 const ProjectPage = () => {
   const [allProjects, setAllProjects] = useState([]);
@@ -51,29 +57,67 @@ const ProjectPage = () => {
   return (
     <div className="project__detail--wrapper">
       <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1>
-      {projectData?.data ? (
+
+      <Swiper
+        slidesPerView={1}
+        navigation={!!projectData?.data?.length}
+        modules={[Navigation]}
+        className="data-collected__slider"
+      >
         <div className="projects__detail">
-          {projectData?.data?.map((projectdata, index) => (
-            <div key={index}>
-              <img src={projectdata.image} alt="" />
-              <div>date_created: {projectdata.date_collected}</div>
-              <div>Location Collected: {projectdata.location_collected}</div>
-              <div>Time Collected:{projectdata.time_collected}</div>
-              <div>Description:{projectdata.description}</div>
-            </div>
-          ))}
+          {projectData?.data?.length ? (
+            projectData?.data?.map((projectdata, index) => (
+              <SwiperSlide>
+                <DataCollectedSlide
+                  dataCollectedImage={projectdata.image}
+                  dataCollectedDate={projectdata.date_collected}
+                  dataCollectedLocation={projectdata.location_collected}
+                  dataCollectedTime={projectdata.time_collected}
+                  dataCollectedDescription={projectdata.description}
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide>
+              <Skeleton
+                animate={false}
+                height={700}
+                width="90%"
+                mb="md"
+                mx="auto"
+              />
+              <Skeleton
+                animate={false}
+                height={20}
+                width="80%"
+                mb="md"
+                mx="auto"
+              />
+              <Skeleton
+                animate={false}
+                height={20}
+                width="80%"
+                mb="md"
+                mx="auto"
+              />
+              <Skeleton
+                animate={false}
+                height={20}
+                width="60%"
+                mb="md"
+                mx="auto"
+              />
+              <Skeleton
+                animate={false}
+                height={20}
+                width="80%"
+                mb="md"
+                mx="auto"
+              />
+            </SwiperSlide>
+          )}
         </div>
-      ) : (
-        <div>
-          <div
-            className="skeleton__box"
-            style={{ width: "300px", height: "300px" }}
-          ></div>
-          <div className="skeleton__box" style={{ width: "200px" }}></div>
-          <div className="skeleton__box" style={{ width: "250px" }}></div>
-          <div className="skeleton__box" style={{ width: "150px" }}></div>
-        </div>
-      )}
+      </Swiper>
 
       <div>
         <h1>LIST OF USERS BELONGS TO PROJECT: {original_project?.name}</h1>
@@ -81,39 +125,42 @@ const ProjectPage = () => {
           <div>
             {users?.data?.map((usersData, index) => (
               <div key={index}>
-                <div>{usersData.user_id}</div>
                 <div>{usersData.user_name}</div>
                 <div>{usersData.Location}</div>
-                <div>{usersData.email}</div>
-                <div>{}</div>
-                <div>{usersData.phone_number}</div>
-                <br />
                 <br />
               </div>
             ))}
           </div>
         ) : (
           <div>
-            <div
-              className="skeleton__box"
-              style={{ width: "200px" }}
-            ></div>
-            <div
-              className="skeleton__box"
-              style={{ width: "250px" }}
-            ></div>
-            <div
-              className="skeleton__box"
-              style={{ width: "150px" }}
-            ></div>
-            <div
-              className="skeleton__box"
-              style={{ width: "100px" }}
-            ></div>
-            <div
-              className="skeleton__box"
-              style={{ width: "150px" }}
-            ></div>
+            {/* <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="60%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            /> */}
           </div>
         )}
       </div>
