@@ -9,7 +9,7 @@ const Project = ({ name, category, date_created, projectImage, id }) => {
   const mountedRef = useRef(true);
 
   useEffect(() => {
-    const image = new Image();
+  const image = new Image();
     image.src = projectImage;
     image.onload = () => {
       setTimeout(() => {

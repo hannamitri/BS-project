@@ -30,35 +30,40 @@ const HomeHeader = () => {
         <div>Feel free to browse any of the below projects</div>
       </div>
 
-      <div className="header__contact--wrapper">
-        {allProjects.data?.length && users.data?.length ? (
-          <>
+      <div className="header__content--wrapper">
+        <>
+          <div>
             <div>
-              <div>
-                <FaLayerGroup />
-              </div>
-              <div>
-                <div>{allProjects?.data?.length}</div>
-                <div>Projects</div>
-              </div>
+              <FaLayerGroup />
             </div>
+            <div>
+              <div className="header__content--info">
+                {allProjects?.data?.length ? (
+                  allProjects?.data?.length
+                ) : (
+                  <Skeleton height={10} width={30} />
+                )}
+              </div>
+              <div>Projects</div>
+            </div>
+          </div>
 
+          <div>
             <div>
-              <div>
-                <ImUsers />
-              </div>
-              <div>
-                <div>{users?.data?.length}</div>
-                <div>Users Contributed</div>
-              </div>
+              <ImUsers />
             </div>
-          </>
-        ) : (
-          <>
-            <Skeleton animate={false} height={80} width={225} />
-            <Skeleton animate={false} height={80} width={225} />
-          </>
-        )}
+            <div>
+              <div className="header__content--info">
+                {users?.data?.length ? (
+                  users?.data?.length
+                ) : (
+                  <Skeleton height={10} width={30} />
+                )}
+              </div>
+              <div>Users Contributed</div>
+            </div>
+          </div>
+        </>
       </div>
     </div>
   );
