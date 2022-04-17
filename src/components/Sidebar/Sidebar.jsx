@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Accordion, Skeleton } from "@mantine/core";
+import { Skeleton } from "@mantine/core";
 import "./Sidebar.scss";
-import { FaPagelines } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { getAll } from "../../api/api";
 import { UserContext } from "../../context/UserContext";
@@ -52,7 +51,13 @@ const Sidebar = () => {
               </Link>
             </div>
           ) : (
-            <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
+            <Skeleton
+              animate={false}
+              height={35}
+              width="90%"
+              mb="md"
+              mx="auto"
+            />
           ))}
 
         {user &&
@@ -66,7 +71,33 @@ const Sidebar = () => {
               </div>
             </>
           ) : (
-            <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
+            <Skeleton
+              animate={false}
+              height={35}
+              width="90%"
+              mb="md"
+              mx="auto"
+            />
+          ))}
+
+        {user &&
+          (userLoggedIn?.isProfessional ? (
+            <>
+              <div className="sidebar__links">
+                <Link to="/add-project">
+                  <AiOutlineUsergroupAdd />
+                  Add Project
+                </Link>
+              </div>
+            </>
+          ) : (
+            <Skeleton
+              animate={false}
+              height={35}
+              width="90%"
+              mb="md"
+              mx="auto"
+            />
           ))}
 
         {user &&
@@ -97,9 +128,27 @@ const Sidebar = () => {
             </>
           ) : (
             <>
-              <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
-              <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
-              <Skeleton animate={false} height={35} width="90%" mb="md" mx="auto" />
+              <Skeleton
+                animate={false}
+                height={35}
+                width="90%"
+                mb="md"
+                mx="auto"
+              />
+              <Skeleton
+                animate={false}
+                height={35}
+                width="90%"
+                mb="md"
+                mx="auto"
+              />
+              <Skeleton
+                animate={false}
+                height={35}
+                width="90%"
+                mb="md"
+                mx="auto"
+              />
             </>
           ))}
 

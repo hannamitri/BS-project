@@ -1,7 +1,3 @@
-svg {
-  color: var(--primary);
-}
-
 .nav__wrapper {
   display: flex;
   justify-content: space-between;
@@ -23,6 +19,10 @@ svg {
     display: flex;
     align-items: center;
     margin: 10px;
+
+    svg {
+      color: var(--primary);
+    }
   }
 
   .nav__profile--letter {

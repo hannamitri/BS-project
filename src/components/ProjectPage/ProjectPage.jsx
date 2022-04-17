@@ -66,17 +66,20 @@ const ProjectPage = () => {
       >
         <div className="projects__detail">
           {projectData?.data?.length ? (
-            projectData?.data?.map((projectdata, index) => (
-              <SwiperSlide>
-                <DataCollectedSlide
-                  dataCollectedImage={projectdata.image}
-                  dataCollectedDate={projectdata.date_collected}
-                  dataCollectedLocation={projectdata.location_collected}
-                  dataCollectedTime={projectdata.time_collected}
-                  dataCollectedDescription={projectdata.description}
-                />
-              </SwiperSlide>
-            ))
+            projectData?.data?.map(
+              (projectdata, index) =>
+                projectdata.image && (
+                  <SwiperSlide>
+                    <DataCollectedSlide
+                      dataCollectedImage={projectdata.image}
+                      dataCollectedDate={projectdata.date_collected}
+                      dataCollectedLocation={projectdata.location_collected}
+                      dataCollectedTime={projectdata.time_collected}
+                      dataCollectedDescription={projectdata.description}
+                    />
+                  </SwiperSlide>
+                )
+            )
           ) : (
             <SwiperSlide>
               <Skeleton

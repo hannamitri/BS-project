@@ -8,20 +8,26 @@
   margin: 0 auto;
 
   .contact__wrapper {
-    display: flex;
-    align-items: center;
     @media (max-width: 1150px) {
       flex-direction: column;
+    }
+    display: flex;
+    align-items: center;
+
+    .contact__content {
+      svg {
+        color: var(--primary);
+      }
+
+      .contact__button {
+        margin-top: 16px;
+      }
     }
 
     img {
       @media (max-width: 700px) {
         display: none;
       }
-    }
-
-    .contact__button {
-      margin-top: 16px;
     }
   }
 }
