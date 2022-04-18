@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 export { Login } from "./Login/Login";
 export { Home } from "./Home/Home";
 export { Signup } from "./Signup/Signup";
