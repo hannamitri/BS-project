@@ -27,7 +27,9 @@ export const AdminPage = () => {
     });
     setAllUsers(systemusers);
   }
-  const [datatable, setDatatable] = useState({
+
+
+  const datatable = {
     columns: [
       {
         label: 'User ID',
@@ -94,47 +96,47 @@ export const AdminPage = () => {
       },
 
     ],
-    rows:
-      // arrayUsers,
-      [
-        {
-          email: "nathaliesaab6@gmail.com",
-          isAdmin: 1,
-          isProf: 1,
-          location: "Tannourine",
-          pn: "76776003",
-          user_id: "17",
-          user_name: "nath",
-        },
-        {
-          email: "nathaliesaab6@gmail.com",
-          isAdmin: 1,
-          isProf: 1,
-          location: "Tannourine",
-          pn: "76776003",
-          user_id: "17",
-          user_name: "nath",
-        },
-        {
-          email: "nathaliesaab6@gmail.com",
-          isAdmin: 1,
-          isProf: 1,
-          location: "Tannourine",
-          pn: "76776003",
-          user_id: "17",
-          user_name: "nath",
-        },
-        {
-          email: "nathaliesaab6@gmail.com",
-          isAdmin: 1,
-          isProf: 1,
-          location: "Tannourine",
-          pn: "76776003",
-          user_id: "17",
-          user_name: "nath",
-        },
-      ]
-  });
+    rows: 
+    // arrayUsers,
+    [
+      {
+        email: "nathaliesaab6@gmail.com",
+        isAdmin: 1,
+        isProf: 1,
+        location: "Tannourine",
+        pn: "76776003",
+        user_id: "17",
+        user_name: "nath",
+      },
+      {
+        email: "nathaliesaab6@gmail.com",
+        isAdmin: 1,
+        isProf: 1,
+        location: "Tannourine",
+        pn: "76776003",
+        user_id: "17",
+        user_name: "nath",
+      },
+      {
+        email: "nathaliesaab6@gmail.com",
+        isAdmin: 1,
+        isProf: 1,
+        location: "Tannourine",
+        pn: "76776003",
+        user_id: "17",
+        user_name: "nath",
+      },
+      {
+        email: "nathaliesaab6@gmail.com",
+        isAdmin: 1,
+        isProf: 1,
+        location: "Tannourine",
+        pn: "76776003",
+        user_id: "17",
+        user_name: "nath",
+      },
+    ]
+  };
 
 
   const deleteUserById = async (user_id) => {
@@ -150,9 +152,6 @@ export const AdminPage = () => {
 
   useEffect(() => {
     getUsers();
-    formatDataUsers();
-    console.log(datatable)
-
   }, []);
   return (
     <div style={{ display: "flex" }}>
