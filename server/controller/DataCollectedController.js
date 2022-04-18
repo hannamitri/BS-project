@@ -66,3 +66,14 @@ exports.insertDataCollected = (req, res) => {
     res.status(200).send(result);
   });
 };
+
+
+exports.getDataBetweenDates = (req, res) => {
+  const { startDate, endDate } = req.body;
+  let sql = `SELECT * from datacollected where(date_collected BETWEEN '${startDate}' AND '${endDate}')`;
+  console.log(sql);
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send(result);
+  });
+};

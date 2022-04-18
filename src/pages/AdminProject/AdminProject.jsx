@@ -10,6 +10,7 @@ import {
     deleteProject,
     updateProject,
     getProjectsBetweenDates,
+    getDataBetweenDates
 } from "../../api/api";
 
 export const AdminProject = () => {
@@ -43,6 +44,15 @@ export const AdminProject = () => {
         }
         const projects = await getProjectsBetweenDates(dates);
         return projects;
+    };
+
+    const getDataBetweenTwoDates = async () => {
+        let dates = {
+            startDate: 'April 20',
+            endDate: 'April 23',
+        }
+        const data_collected = await getDataBetweenDates(dates);
+        return data_collected;
     };
 
 
@@ -81,7 +91,8 @@ export const AdminProject = () => {
     useEffect(() => {
         getUsers();
         getProjects();
-        console.log(getProjectsBetweenTwoDates());
+        // console.log(getProjectsBetweenTwoDates());
+        console.log(getDataBetweenTwoDates());
     }, []);
 
     return (

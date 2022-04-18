@@ -36,6 +36,7 @@ router.post(
   "/insertDataCollected",
   DataCollectedController.insertDataCollected,
 );
+router.post("/getDataBetweenDates", DataCollectedController.getDataBetweenDates)
 
 
 /*
