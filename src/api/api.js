@@ -89,6 +89,14 @@ const deleteDataCollected = async (data) => {
     .catch((err) => err.response);
 };
 
+const getDataBetweenDates = async (data) => {
+  let url = `${baseUrl}/getDataBetweenDates`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+}
+
 /*
  * Projects Apis
  */
@@ -228,6 +236,7 @@ export {
   updateDataCollected,
   deleteDataCollected,
   insertDataCollected,
+  getDataBetweenDates,
 
   //Projects
   getAllProjects,
