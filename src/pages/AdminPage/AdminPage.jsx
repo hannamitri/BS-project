@@ -2,7 +2,7 @@ import styles from "./AdminPage.css";
 import { Table } from "@mantine/core";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
-import { getAll, deleteUser, updateUser } from "../../api/api";
+import { getAll, deleteUser, updateUser, updateProject } from "../../api/api";
 
 export const AdminPage = () => {
 
@@ -22,30 +22,8 @@ export const AdminPage = () => {
       .then((th) => console.log(th))
       .catch((err) => console.log(err));
   };
-
-  const updateUserInformation = async () => {
-
-    let user = {
-      id: 18,
-      Name: "test",
-      Email: "testtest@gmail.com",
-      Password: "111111",
-      location: "Batroun",
-      pn: "76773",
-      isProfessional: "0",
-      isAdmin: "1",
-    }
-
-
-    await updateUser(user)
-      .then((th) => console.log(th))
-      .catch((err) => console.log(err));
-
-  }
-
   useEffect(() => {
     getUsers();
-
   }, []);
   return (
     <div style={{ display: "flex" }}>
