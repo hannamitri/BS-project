@@ -60,7 +60,7 @@ export const AdminPage = () => {
                   <td>{user.email}</td>
                   <td>{user.isAdmin}</td>
                   <td>
-                    <button onClick={deleteUserById(user.user_id)}>
+                    <button onClick={() => deleteUserById(user.user_id)}>
                       Delete
                     </button>
                   </td>

@@ -19,6 +19,7 @@ export const AdminProject = () => {
             user_id: id
         }
         const projects = await getProjectsByUser(user);
+        console.log(projects);
         return projects;
     };
 
@@ -34,7 +35,7 @@ export const AdminProject = () => {
     }
     useEffect(() => {
         getUsers();
-        console.log(allUsers.data)
+        // getProjectsOfUsers(17);
     }, []);
 
     return (
@@ -66,7 +67,6 @@ export const AdminProject = () => {
                                                     <td>{project.category}</td>
                                                     <td>{project.name}</td>
                                                     <td>{project.date_created}</td>
-
                                                 </tr>
                                             ))
                                         }
