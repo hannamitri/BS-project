@@ -2,9 +2,11 @@ import styles from "./AdminPage.css";
 import { Table } from "@mantine/core";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
-import { getAll, deleteUser } from "../../api/api";
+import { getAll, deleteUser, updateUser, updateProject } from "../../api/api";
 
 export const AdminPage = () => {
+
+
   const [allUsers, setAllUsers] = useState([]);
   const getUsers = async () => {
     const systemusers = await getAll();
@@ -22,9 +24,7 @@ export const AdminPage = () => {
   };
   useEffect(() => {
     getUsers();
-    console.log(allUsers.data);
   }, []);
-
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
