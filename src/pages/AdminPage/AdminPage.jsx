@@ -1,19 +1,17 @@
-import styles from "./AdminPage.css";
 import { Table, Pagination } from "@mantine/core";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
 import { getAll, deleteUser, updateUser, updateProject } from "../../api/api";
-import { MDBDataTableV5 } from 'mdbreact';
 
-import { useTable, usePagination } from 'react-table'
 export const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
-  const [userrows, setRows] = useState([]);
+  const [activePage, setPage] = useState(1);
+  const numberOfRowsInPaginaton = 3;
 
   const arrayUsers = [];
   const getUsers = async () => {
     const systemusers = await getAll();
-    systemusers?.data?.forEach(element => {
+    systemusers?.data?.forEach((element) => {
       let user = {
         user_id: `${element?.user_id}`,
         user_name: element?.user_name,
@@ -22,122 +20,11 @@ export const AdminPage = () => {
         location: element?.Location,
         email: element?.email,
         isAdmin: element?.isAdmin,
-      }
+      };
       arrayUsers.push(user);
     });
     setAllUsers(systemusers);
-  }
-
-
-  const datatable = {
-    columns: [
-      {
-        label: 'User ID',
-        field: 'user_id',
-        width: 150,
-        attributes: {
-          'aria-controls': 'DataTable',
-          'aria-label': 'User ID',
-        },
-      },
-      {
-        label: 'User Name',
-        field: 'user_name',
-        width: 150,
-        attributes: {
-          'aria-controls': 'DataTable',
-          'aria-label': 'User Name',
-        },
-      },
-      {
-        label: 'Phone Number',
-        field: 'pn',
-        width: 150,
-        attributes: {
-          'aria-controls': 'DataTable',
-          'aria-label': 'Phone Number',
-        },
-      },
-      {
-        label: 'Professional',
-        field: 'isProf',
-        width: 150,
-        attributes: {
-          'aria-controls': 'DataTable',
-          'aria-label': 'Professional',
-        },
-      },
-      {
-        label: 'Email',
-        field: 'email',
-        width: 150,
-        attributes: {
-          'aria-controls': 'DataTable',
-          'aria-label': 'Email',
-        },
-      },
-      {
-        label: 'Location',
-        field: 'location',
-        width: 150,
-        attributes: {
-          'aria-controls': 'DataTable',
-          'aria-label': 'Location',
-        },
-      },
-      {
-        label: 'Admin',
-        field: 'isAdmin',
-        width: 150,
-        attributes: {
-          'aria-controls': 'DataTable',
-          'aria-label': 'Admin',
-        },
-      },
-
-    ],
-    rows: 
-    // arrayUsers,
-    [
-      {
-        email: "nathaliesaab6@gmail.com",
-        isAdmin: 1,
-        isProf: 1,
-        location: "Tannourine",
-        pn: "76776003",
-        user_id: "17",
-        user_name: "nath",
-      },
-      {
-        email: "nathaliesaab6@gmail.com",
-        isAdmin: 1,
-        isProf: 1,
-        location: "Tannourine",
-        pn: "76776003",
-        user_id: "17",
-        user_name: "nath",
-      },
-      {
-        email: "nathaliesaab6@gmail.com",
-        isAdmin: 1,
-        isProf: 1,
-        location: "Tannourine",
-        pn: "76776003",
-        user_id: "17",
-        user_name: "nath",
-      },
-      {
-        email: "nathaliesaab6@gmail.com",
-        isAdmin: 1,
-        isProf: 1,
-        location: "Tannourine",
-        pn: "76776003",
-        user_id: "17",
-        user_name: "nath",
-      },
-    ]
   };
-
 
   const deleteUserById = async (user_id) => {
     let user = {
@@ -149,6 +36,18 @@ export const AdminPage = () => {
       .catch((err) => console.log(err));
   };
 
+  const rows = allUsers?.data
+    ?.slice(
+      activePage * numberOfRowsInPaginaton - numberOfRowsInPaginaton,
+      activePage * numberOfRowsInPaginaton
+    )
+    .map((user) => (
+      <tr key={user.user_name}>
+        <td>{user.user_name}</td>
+        <td>{user.user_id}</td>
+        <td>{user.phone_number}</td>
+      </tr>
+    ));
 
   useEffect(() => {
     getUsers();
@@ -156,12 +55,27 @@ export const AdminPage = () => {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <main className={styles.container}>
-        <h1 h1 className={styles.title} > List of Users</h1>
-        <div className={styles.wrapper} >
-          <MDBDataTableV5 hover entriesOptions={[5, 20, 25]} entries={5} pagesAmount={4} data={datatable} fullPagination />
+      <div>
+        <h1>displays 3 users per page.</h1>
+        <div>
+          <Table striped highlightOnHover>
+            <thead>
+              <tr>
+                <th>name</th>
+                <th>Id</th>
+                <th>Number</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+
+          <Pagination
+            page={activePage}
+            onChange={setPage}
+            total={Math.ceil(allUsers?.data?.length / numberOfRowsInPaginaton)}
+          />
         </div>
-      </main >
-    </div >
+      </div>
+    </div>
   );
 };
