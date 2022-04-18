@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Group, Menu } from "@mantine/core";
@@ -8,6 +7,8 @@ import "./Nav.scss";
 import { Login } from "../../pages/Login/Login";
 import Logo from "../../images/intranet.png";
 import { Skeleton } from "@mantine/core";
+import supabase from "../../lib/supabase";
+import { useNavigate } from "react-router-dom";
 
 export const Nav = () => {
   const [users, setUsers] = useState([]);
@@ -26,7 +27,11 @@ export const Nav = () => {
     document.body.classList.add("login__open");
   };
 
-  const navigate = useNavigate();
+  const nav = useNavigate();
+  const logout = () => {
+    supabase.auth.signOut();
+    nav("/");
+  };
 
   useEffect(() => {
     getUsers();
@@ -68,7 +73,7 @@ export const Nav = () => {
                   }
                 >
                   <Menu.Item
-                    onClick={() => navigate("/Signout")}
+                    onClick={() => logout()}
                     icon={<FiLogOut size={18} />}
                   >
                     Logout
