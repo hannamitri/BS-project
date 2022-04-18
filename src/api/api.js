@@ -126,7 +126,13 @@ const insertProject = async (data) => {
 };
 
 
-
+const updateProject = async (data) => {
+  let url = `${baseUrl}/updateProject}`
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+}
 
 /*
  * Google Api
@@ -222,6 +228,7 @@ export {
   deleteProject,
   insertProject,
   getProjectId,
+  updateProject,
 
 
   //user_manages_projects api

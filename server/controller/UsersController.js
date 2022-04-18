@@ -38,10 +38,10 @@ exports.deleteUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  const { id, Name, Email, Password, Location, pn, isProfessional } = req.body;
+  const { id, Name, Email, Password, location, pn, isProfessional, isAdmin } = req.body;
 
   let updateSql = `UPDATE Users set user_name = "${Name}", password = "${Password}", \
-    Location = "${Location}", email = "${Email}, phone_number ="${pn}, isProfessional ="${isProfessional}""\
+    location = "${location}", email = "${Email}", phone_number ="${pn}", isProfessional ="${isProfessional}",isAdmin ="${isAdmin}"\
         WHERE user_id = ${id}`;
 
   console.log(updateSql);

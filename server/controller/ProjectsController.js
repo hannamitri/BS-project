@@ -25,11 +25,22 @@ exports.insertProject = (req, res) => {
 };
 
 
+exports.updateProject = (req, res) => {
+  const { category, name, image, date_created, project_id } = req.body;
+  let saveSql = `Update Projects set category="${category}",name="${name}",date_created="${date_created}",image="${image}" where project_id="${project_id}"`;
+  console.log(saveSql);
+  connection.query(saveSql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send(result);
+  });
+};
+
+
 exports.getProjectId = (req, res) => {
 
   const { name } = req.body;
 
-  let saveSql = `Select project_id from projects where name ="${name}"; `;
+  let saveSql = `Select project_id from projects where name = "${name}"; `;
 
   console.log(saveSql);
 
