@@ -1,0 +1,33 @@
+.contact__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 60px);
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .contact__wrapper {
+    @media (max-width: 1150px) {
+      flex-direction: column;
+    }
+    display: flex;
+    align-items: center;
+
+    .contact__content {
+      svg {
+        color: var(--primary);
+      }
+
+      .contact__button {
+        margin-top: 16px;
+      }
+    }
+
+    img {
+      @media (max-width: 700px) {
+        display: none;
+      }
+    }
+  }
+}

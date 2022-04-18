@@ -20,6 +20,7 @@ import { getAll } from "./api/api";
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
   const { user } = useContext(UserContext);
 
   const getUsers = async () => {
@@ -38,32 +39,34 @@ function App() {
   console.log(userLoggedIn);
 
   return (
-    <>
-      <Nav />
+    <div className="main">
+      <Nav openModal={openModal} setOpenModal={setOpenModal} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home openModal={openModal} setOpenModal={setOpenModal} />}
+        />
         <Route path="/signin" element={<Login />} />
         <Route
           path="/data-collected"
           element={<DataCollected userLoggedIn={userLoggedIn} />}
         />
-        {userLoggedIn?.isAdmin && (
-          <Route path="/signup" element={<Signup />} />
-        )}
+        {userLoggedIn?.isAdmin && <Route path="/signup" element={<Signup />} />}
         <Route path="/*" element={<NotFound />} />
         <Route path="/Signout" element={<Signout />} />
         <Route path="/Contact" element={<Contact />} />
-        <Route
-          path="/add-user-project"
-          element={<ProjectForm userLoggedIn={userLoggedIn} />}
-        />
+        {userLoggedIn?.isAdmin && (
+          <Route
+            path="/add-user-project"
+            element={<ProjectForm userLoggedIn={userLoggedIn} />}
+          />
+        )}
         <Route path="/add-project" element={<AddProject />} />
-        <Route path="/:id" element={<ProjectPage />} />
+        <Route path="/project/:id" element={<ProjectPage />} />
         <Route path="/admin-page" element={<AdminPage />} />
         <Route path="/manage-projects" element={<AdminProject />} />
-
       </Routes>
-    </>
+    </div>
   );
 }
 

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Accordion } from "@mantine/core";
+import { Skeleton } from "@mantine/core";
 import "./Sidebar.scss";
-import { FaPagelines } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { getAll } from "../../api/api";
 import { UserContext } from "../../context/UserContext";
@@ -25,7 +24,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getUsers();
-    console.log(userLoggedIn)
+    console.log(userLoggedIn);
     if (loading) {
       return (
         <div>
@@ -43,52 +42,115 @@ const Sidebar = () => {
             <MdOutlineAssignment /> Projects
           </Link>
         </div>
-        {user && (
-          <div className="sidebar__links">
-            <Link to="/data-collected">
-              <FiDatabase />
-              Upload Data
-            </Link>
-          </div>
-        )}
+        {user &&
+          (userLoggedIn ? (
+            <div className="sidebar__links">
+              <Link to="/data-collected">
+                <FiDatabase />
+                Upload Data
+              </Link>
+            </div>
+          ) : (
+            <Skeleton
+              animate={false}
+              height={35}
+              width="90%"
+              mb="md"
+              mx="auto"
+            />
+          ))}
 
-        {userLoggedIn?.isProfessional ? (
-          <>
-            <div className="sidebar__links">
-              <Link to="/add-user-project">
-                <AiOutlineUsergroupAdd />
-                Include Users
-              </Link>
-            </div>
-          </>
-        ) : null}
+        {user &&
+          (userLoggedIn?.isAdmin ? (
+            <>
+              <div className="sidebar__links">
+                <Link to="/add-user-project">
+                  <AiOutlineUsergroupAdd />
+                  Include Users
+                </Link>
+              </div>
+            </>
+          ) : (
+            <Skeleton
+              animate={false}
+              height={35}
+              width="90%"
+              mb="md"
+              mx="auto"
+            />
+          ))}
 
-        {userLoggedIn?.isAdmin ? (
-          <>
-            <div className="sidebar__links">
-              <Link to="/signup">
-                <AiOutlineUserAdd />
-                Create User
-              </Link>
-            </div>
-            <div className="sidebar__links">
-              <Link to="/admin-page">
-                <AiOutlineUserAdd />
-                Manage
-                <br />
-                Accounts
-              </Link>
-            </div>
-            <div className="sidebar__links">
-              <Link to="/manage-projects">
-                <AiOutlineUserAdd />
-                Manage
-                <br />
-                Projects
-              </Link>
-            </div>
-          </>
-        ) : null}
+        {user &&
+          (userLoggedIn?.isProfessional ? (
+            <>
+              <div className="sidebar__links">
+                <Link to="/add-project">
+                  <AiOutlineUsergroupAdd />
+                  Add Project
+                </Link>
+              </div>
+            </>
+          ) : (
+            <Skeleton
+              animate={false}
+              height={35}
+              width="90%"
+              mb="md"
+              mx="auto"
+            />
+          ))}
+
+        {user &&
+          (userLoggedIn?.isAdmin ? (
+            <>
+              <div className="sidebar__links">
+                <Link to="/signup">
+                  <AiOutlineUserAdd />
+                  Create User
+                </Link>
+              </div>
+              <div className="sidebar__links">
+                <Link to="/admin-page">
+                  <AiOutlineUserAdd />
+                  Manage
+                  <br />
+                  Accounts
+                </Link>
+              </div>
+              <div className="sidebar__links">
+                <Link to="/manage-projects">
+                  <AiOutlineUserAdd />
+                  Manage
+                  <br />
+                  Projects
+                </Link>
+              </div>
+            </>
+          ) : (
+            <>
+              <Skeleton
+                animate={false}
+                height={35}
+                width="90%"
+                mb="md"
+                mx="auto"
+              />
+              <Skeleton
+                animate={false}
+                height={35}
+                width="90%"
+                mb="md"
+                mx="auto"
+              />
+              <Skeleton
+                animate={false}
+                height={35}
+                width="90%"
+                mb="md"
+                mx="auto"
+              />
+            </>
+          ))}
 
         <div className="sidebar__links">
           <Link to="/contact">

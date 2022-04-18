@@ -1,4 +1,4 @@
-import styles from "./Login.module.scss";
+import "./Login.scss";
 import { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import supabase from "../../lib/supabase";
@@ -17,8 +17,9 @@ import { HiOutlineAtSymbol } from "react-icons/hi";
 import { z } from "zod";
 import LoginIllustration from "../../images/Login/wfh_1.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
 
-export const Login = () => {
+export const Login = ({ openModal, setOpenModal }) => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
@@ -51,8 +52,13 @@ export const Login = () => {
     if (user) {
       setUser(user);
       navigate("/");
+      document.body.classList.remove("login__open");
     }
   }
+
+  const closeModal = () => {
+    document.body.classList.remove("login__open");
+  };
 
   const form = useForm({
     initialValues: {
@@ -64,8 +70,11 @@ export const Login = () => {
   });
 
   return (
-    <>
-      <main className={styles.container}>
+    <div className={`login__wrapper ${openModal ? "showLogin" : ""}`}>
+      <div className="login__content">
+        <button className="login__close--button" onClick={() => closeModal()}>
+          <FaTimes />
+        </button>
         {userNotFound && (
           <Notification
             icon={<X size={18} />}
@@ -89,48 +98,49 @@ export const Login = () => {
             A user was not found!
           </Notification>
         )}
-        <section className={styles.view}>
-          <div className={styles.mainContent}>
-            <article className={styles.leftview}>
-              <img src={LoginIllustration} alt="Illustration" width={500} />
+        <div className="mainContent">
+          <div className="leftview">
+            <div>
+              <img src={LoginIllustration} alt="Illustration" width={600} />
+            </div>
+            <div>
               <Link to="/signup">Create an account</Link>
-            </article>
-            <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
-              <h1>Log in</h1>
-              <form onSubmit={form.onSubmit(trySignin)}>
-                <TextInput
-                  required
-                  icon={<HiOutlineAtSymbol size={16} />}
-                  label="Email"
-                  placeholder="your@email.com"
-                  {...form.getInputProps("email")}
-                  type="text"
-                />
-                <PasswordInput
-                  required
-                  label="Password"
-                  placeholder="your password"
-                  icon={<Lock size={16} />}
-                  {...form.getInputProps("password")}
-                />
+            </div>
+          </div>
+          <Box sx={{ maxWidth: 400 }} mx="auto" className="rightview">
+            <h1>Log in</h1>
+            <form onSubmit={form.onSubmit(trySignin)}>
+              <TextInput
+                required
+                icon={<HiOutlineAtSymbol size={16} />}
+                label="Email"
+                placeholder="your@email.com"
+                {...form.getInputProps("email")}
+                type="text"
+              />
+              <PasswordInput
+                required
+                label="Password"
+                placeholder="your password"
+                icon={<Lock size={16} />}
+                {...form.getInputProps("password")}
+              />
 
-                <Group position="left" mt="md" style={{ position: "relative" }}>
-                  {loadingState ? (
-                    <span className={styles.loading}>
-                      <Loader />
-                    </span>
-                  ) : (
-                    <Button type="submit">Login</Button>
-                  )}
-                </Group>
-              </form>
-            </Box>
-          </div>
-          <div className={styles.alternatives}>
-            <div className={styles.leftalt}></div>
-          </div>
-        </section>
-      </main>
-    </>
+              <Group position="left" mt="md" style={{ position: "relative" }}>
+                {loadingState ? (
+                  <span className="loading">
+                    <Loader />
+                  </span>
+                ) : (
+                  <button type="submit" className="button">
+                    Login
+                  </button>
+                )}
+              </Group>
+            </form>
+          </Box>
+        </div>
+      </div>
+    </div>
   );
 };

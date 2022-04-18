@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { getAll, getDataCollected } from "../../api/api";
+import { getAll, getAllProjects } from "../../api/api";
 import { FaLayerGroup } from "react-icons/fa";
-import { GrGroup } from "react-icons/gr";
+import { ImUsers } from "react-icons/im";
 import "./HomeHeader.scss";
+import { Skeleton } from "@mantine/core";
 
 const HomeHeader = () => {
-  const [dataCollected, setDataCollected] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
   const [users, setUsers] = useState([]);
-  const getCollectedResults = async () => {
-    const data = await getDataCollected();
-    setDataCollected(data);
+  const getTotalProjects = async () => {
+    const data = await getAllProjects();
+    setAllProjects(data);
   };
 
   const getUsers = async () => {
@@ -18,37 +19,51 @@ const HomeHeader = () => {
   };
 
   useEffect(() => {
-    getCollectedResults();
+    getTotalProjects();
     getUsers();
   }, []);
 
   return (
     <div className="header__wrapper">
       <div>
-        <div>Welcome to web portal</div>
+        <h2>Welcome to web portal</h2>
         <div>Feel free to browse any of the below projects</div>
       </div>
 
-      <div className="header__contact--wrapper">
-        <div>
+      <div className="header__content--wrapper">
+        <>
           <div>
-            <FaLayerGroup />
+            <div>
+              <FaLayerGroup />
+            </div>
+            <div>
+              <div className="header__content--info">
+                {allProjects?.data?.length ? (
+                  allProjects?.data?.length
+                ) : (
+                  <Skeleton height={10} width={30} />
+                )}
+              </div>
+              <div>Projects</div>
+            </div>
           </div>
-          <div>
-            <div>{dataCollected?.data?.length}</div>
-            <div>Projects</div>
-          </div>
-        </div>
 
-        <div>
           <div>
-            <GrGroup />
+            <div>
+              <ImUsers />
+            </div>
+            <div>
+              <div className="header__content--info">
+                {users?.data?.length ? (
+                  users?.data?.length
+                ) : (
+                  <Skeleton height={10} width={30} />
+                )}
+              </div>
+              <div>Users Contributed</div>
+            </div>
           </div>
-          <div>
-            <div>{users?.data?.length}</div>
-            <div>Users Contributed</div>
-          </div>
-        </div>
+        </>
       </div>
     </div>
   );

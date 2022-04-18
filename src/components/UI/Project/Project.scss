@@ -1,8 +1,18 @@
 .project__wrapper {
   text-align: center;
+  width: 100%;
 
   .project__image {
     display: flex;
+    width: 100%;
+
+    img {
+      @media (max-width: 800px) {
+        height: 200px;
+      }
+      height: 175px;
+      border-radius: 12px 12px 0 0;
+    }
   }
 
   .project__name {
@@ -22,21 +32,31 @@
   }
 
   .project__button {
-    display: flex;
-    justify-content: center;
-    background-color: #fbfbfd;
-    border-top: 1px solid #80808050;
-    border-radius: 0 0 12px 12px;
-    padding: 8px;
-    color: #8e8e8e;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
+    width: 100%;
+    a {
+      display: flex;
+      justify-content: center;
+      background-color: #fbfbfd;
+      border-top: 1px solid rgba(128, 128, 128, 0.25);
+      border-radius: 0 0 12px 12px;
+      padding: 8px;
+      color: #8e8e8e;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease-in-out;
 
-    &:hover {
-      background-color: var(--primary);
-      color: white;
-      border-top: 1px solid transparent;
+      &:hover {
+        background-color: var(--primary);
+        color: white;
+        border-top: 1px solid transparent;
+      }
     }
   }
+}
+
+.project__skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
