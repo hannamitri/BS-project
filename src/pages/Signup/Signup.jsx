@@ -23,7 +23,6 @@ import { z } from "zod";
 import { insertUser } from "../../api/api";
 import { MdSettingsPhone } from "react-icons/md";
 import LoginIllustration from "../../images/Login/wfh.svg";
-import { Link } from "react-router-dom";
 import countryList from "react-select-country-list";
 import Sidebar from "../../components/Sidebar/Sidebar";
 export const Signup = () => {
@@ -110,7 +109,7 @@ export const Signup = () => {
     },
     schema: zodResolver(schema),
   });
-  // selector
+
   const [disabled, setDisabled] = useState(false);
   const options = useMemo(() => {
     let data = countryList().getData();
