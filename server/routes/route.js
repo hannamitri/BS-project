@@ -46,6 +46,7 @@ router.get("/getAllProjects", ProjectController.getAll);
 router.post("/deleteProject", ProjectController.deleteProject);
 router.post("/getProjectId", ProjectController.getProjectId);
 router.post("/updateProject", ProjectController.updateProject);
+router.post("/getProjectsBetweenDates", ProjectController.getProjectsBetweenDates);
 
 
 /**

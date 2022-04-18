@@ -9,6 +9,7 @@ import {
     getAllProjects,
     deleteProject,
     updateProject,
+    getProjectsBetweenDates,
 } from "../../api/api";
 
 export const AdminProject = () => {
@@ -32,6 +33,15 @@ export const AdminProject = () => {
             user_id: id
         }
         const projects = await getProjectsByUser(user);
+        return projects;
+    };
+
+    const getProjectsBetweenTwoDates = async () => {
+        let dates = {
+            startDate: 'April 20',
+            endDate: 'April 24',
+        }
+        const projects = await getProjectsBetweenDates(dates);
         return projects;
     };
 
@@ -71,6 +81,7 @@ export const AdminProject = () => {
     useEffect(() => {
         getUsers();
         getProjects();
+        console.log(getProjectsBetweenTwoDates());
     }, []);
 
     return (
@@ -79,7 +90,7 @@ export const AdminProject = () => {
             <main className={styles.container}>
 
                 <div className={styles.wrapper}>
-                    {
+                    {/* {
                         allUsers?.data?.map((user, index) => (
                             <div key={index}>
                                 <h1> Projects of user: {user.user_name}</h1>
@@ -110,7 +121,7 @@ export const AdminProject = () => {
                                 </Table>
                             </div>
                         ))
-                    }
+                    } */}
                 </div>
                 <div>
                     <h1 className={styles.title}>List of Projects</h1>

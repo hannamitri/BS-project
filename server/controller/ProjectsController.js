@@ -61,4 +61,12 @@ exports.deleteProject = (req, res) => {
   });
 };
 
-
+exports.getProjectsBetweenDates = (req, res) => {
+  const { startDate, endDate } = req.body;
+  let sql = `SELECT * from projects where(date_created BETWEEN '${startDate}' AND '${endDate}')`;
+  console.log(sql);
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send(result);
+  });
+};

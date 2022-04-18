@@ -131,6 +131,13 @@ const updateProject = async (data) => {
     .then((response) => response)
     .catch((err) => err.response);
 };
+const getProjectsBetweenDates = async (data) => {
+  let url = `${baseUrl}/getProjectsBetweenDates`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
 
 
 /*
@@ -228,6 +235,7 @@ export {
   insertProject,
   getProjectId,
   updateProject,
+  getProjectsBetweenDates,
 
 
   //user_manages_projects api
