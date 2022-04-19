@@ -25,11 +25,17 @@ import { MdSettingsPhone } from "react-icons/md";
 import LoginIllustration from "../../images/Login/wfh.svg";
 import countryList from "react-select-country-list";
 import Sidebar from "../../components/Sidebar/Sidebar";
-export const Signup = () => {
+import Message from "../../components/UI/Message/Message";
+
+export const Signup = ({ userLoggedIn }) => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userExists, setUserExists] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
   const navigate = useNavigate();
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [successStatus, setSuccessStatus] = useState(false);
+  const [errormessage, setErrorMessage] = useState("");
+
 
   const schema = z.object({
     Email: z.string().email({ message: "Invalid email" }),
@@ -87,12 +93,11 @@ export const Signup = () => {
       }
     } else {
       setDisabled(true);
-      await insertUser(userOBJ)
-        .then((th) => console.log(th))
-        .catch((err) => console.log(err));
+      if (await insertUser(userOBJ)) {
+        setSuccessStatus(true)
+      }
       if (user) {
-        setUser(user);
-        navigate("/");
+        setUser(userLoggedIn);
       }
       setLoadingState(false);
     }
@@ -149,6 +154,22 @@ export const Signup = () => {
             A user with that email already exists!
           </Notification>
         )}
+        {errorStatus && (
+          <Message
+            bgcolor="#f03e3e"
+            title={errormessage}
+            setStatus={setErrorStatus}
+            NotificationIcon={IoIosCloseCircle}
+          />
+        )}
+        {successStatus && (
+          <Message
+            bgcolor="#38b000"
+            title="User Added Successufully!!!"
+            setStatus={setSuccessStatus}
+            NotificationIcon={IoIosCheckbox}
+          />
+        )}
         <div className="sign-up__content--wrapper">
           <div className="sign-up__img">
             <img
@@ -158,6 +179,7 @@ export const Signup = () => {
               height={500}
             />
           </div>
+
           <Box sx={{ maxWidth: 350 }} mx="auto" className="sign-up__content">
             <h1>Sign up</h1>
             <form onSubmit={form.onSubmit(trySubmit)} disabled={disabled}>

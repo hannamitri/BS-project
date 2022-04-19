@@ -1,15 +1,15 @@
 import React from "react";
 import { IoIosCloseCircle, IoIosClose } from "react-icons/io";
-import "./ProjectError.scss";
+import "./Message.scss";
 
-const ProjectError = ({ setImageLimit, title }) => {
+const Message = ({ NotificationIcon, setStatus, title, bgcolor }) => {
   return (
     <div className="project-image__limit--error">
-      <IoIosCloseCircle />
+      <NotificationIcon style={{ color: bgcolor }} />
       <div>{title}</div>
       <div
         className="project__close--icon"
-        onClick={() => setImageLimit(false)}
+        onClick={() => setStatus(false)}
       >
         <IoIosClose />
       </div>
@@ -17,4 +17,4 @@ const ProjectError = ({ setImageLimit, title }) => {
   );
 };
 
-export default ProjectError;
+export default Message;

@@ -6,7 +6,7 @@ import { getAll, deleteUser, updateUser, updateProject } from "../../api/api";
 export const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [activePage, setPage] = useState(1);
-  const numberOfRowsInPaginaton = 3;
+  const numberOfRowsInPaginaton = 10;
 
   const arrayUsers = [];
   const getUsers = async () => {
@@ -36,16 +36,33 @@ export const AdminPage = () => {
       .catch((err) => console.log(err));
   };
 
+  const checkStatus = (number) => {
+    if (number === 0) {
+      return "No";
+    }
+    else {
+      return "Yes";
+    }
+  }
   const rows = allUsers?.data
     ?.slice(
       activePage * numberOfRowsInPaginaton - numberOfRowsInPaginaton,
       activePage * numberOfRowsInPaginaton
     )
     .map((user) => (
-      <tr key={user.user_name}>
-        <td>{user.user_name}</td>
+      <tr key={user.user_id}>
         <td>{user.user_id}</td>
+        <td>{user.user_name}</td>
         <td>{user.phone_number}</td>
+        <td> {checkStatus(user.isProfessional)}</td>
+        <td> {user.Location} </td>
+        <td> {user.email} </td>
+        <td> {checkStatus(user.isAdmin)}</td>
+        <td>
+          <button onClick={() => deleteUserById(user.user_id)}>
+            Delete
+          </button>
+        </td>
       </tr>
     ));
 
@@ -61,9 +78,14 @@ export const AdminPage = () => {
           <Table striped highlightOnHover>
             <thead>
               <tr>
-                <th>name</th>
-                <th>Id</th>
-                <th>Number</th>
+                <th>ID </th>
+                <th> USER NAME </th>
+                <th> PHONE NUMBER </th>
+                <th> IS PROFESSIONAL </th>
+                <th> LOCATION </th>
+                <th> EMAIL </th>
+                <th> ISADMIN </th>
+                <th> Delete </th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>

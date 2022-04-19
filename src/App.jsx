@@ -51,7 +51,8 @@ function App() {
           path="/data-collected"
           element={<DataCollected userLoggedIn={userLoggedIn} />}
         />
-        {userLoggedIn?.isAdmin && <Route path="/signup" element={<Signup />} />}
+        {userLoggedIn?.isAdmin &&
+          <Route path="/signup" element={<Signup userLoggedIn={userLoggedIn} />} />}
         <Route path="/*" element={<NotFound />} />
         <Route path="/Signout" element={<Signout />} />
         <Route path="/Contact" element={<Contact />} />
