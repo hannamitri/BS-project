@@ -11,21 +11,22 @@ export const Home = () => {
     console.log(user);
   }
 
-  // const [value, setValue] =
-  //   useState <
-  //   [Date | null, Date | null] >
-  //   [new Date(2021, 11, 1), new Date(2021, 11, 5)];
+  // const trySignUpping = async () => {
+  //   let { user } = await supabase.auth.signUp({
+  //     email: "tttest12@hotmail.com",
+  //     password: "123456789",
+  //   });
+
+  //   console.log(user);
+  // };
+  // useEffect(() => {
+  //   trySignUpping();
+  // }, []);
 
   return (
     <div className="main__container">
       <Sidebar />
       <div className="main__content--wrapper">
-        {/* <DateRangePicker
-          label="Book hotel"
-          placeholder="Pick dates range"
-          value={value}
-          onChange={setValue}
-        /> */}
         <HomeHeader />
         <Projects />
       </div>
