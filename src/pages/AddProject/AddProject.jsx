@@ -5,10 +5,9 @@ import { HiOutlineAtSymbol } from "react-icons/hi";
 import { insertProject } from "../../api/api";
 import { useForm } from "@mantine/form";
 import "./AddProject.scss";
-import ProjectError from "../../components/UI/ProjectError/ProjectError";
-import Success from "../../components/UI/Success/Success";
+import Message from "../../components/UI/ProjectError/Message";
 import Sidebar from "../../components/Sidebar/Sidebar";
-
+import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 const AddProject = () => {
   const [dataImage, setDataImage] = useState("");
   const [errorStatus, setErrorStatus] = useState(false);
@@ -93,15 +92,17 @@ const AddProject = () => {
       <Sidebar />
       <div className="project__form--wrapper">
         {errorStatus && (
-          <ProjectError
+          <Message
             title={errormessage}
-            setErrorStatus={setErrorStatus}
+            setStatus={setErrorStatus}
+            NotificationIcon={IoIosCloseCircle}
           />
         )}
         {successStatus && (
-          <Success
-            title="Project Added Successfully!!"
-            setSuccessStatus={setSuccessStatus}
+          <Message
+            title="Project Added Successufully!!!"
+            setStatus={setSuccessStatus}
+            NotificationIcon={IoIosCheckbox}
           />
         )}
         <form className="project__form" onSubmit={form.onSubmit(trySubmit)}>
