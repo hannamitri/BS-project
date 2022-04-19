@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Clock, Calendar } from "tabler-icons-react";
-import ProjectError from "../../components/UI/ProjectError/ProjectError";
+import Message from "../../components/UI/Message/Message";
 import {
   TextInput,
   Text,
@@ -200,9 +200,9 @@ export const DataCollected = ({ userLoggedIn }) => {
             </article>
             <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
               {errorStatus && (
-                <ProjectError
+                <Message
                   title={errormessage}
-                  setErrorStatus={setErrorStatus}
+                  setStatus={setErrorStatus}
                 />
               )}
               <h1>Upload data</h1>

@@ -5,7 +5,7 @@ import { HiOutlineAtSymbol } from "react-icons/hi";
 import { insertProject } from "../../api/api";
 import { useForm } from "@mantine/form";
 import "./AddProject.scss";
-import Message from "../../components/UI/ProjectError/Message";
+import Message from "../../components/UI/Message/Message";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 const AddProject = () => {
