@@ -19,6 +19,15 @@ export const AdminProject = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [dateProjects, setDateProjects] = useState([]);
   const [dateValue, setDateValue] = useState(null);
+  const [value, setValue] = useState([new Date(), new Date()]);
+
+  const dtfUS = new Intl.DateTimeFormat("en", {
+    month: "long",
+    day: "2-digit",
+  });
+
+  // console.log(dtfUS.format(value[0]));
+  // console.log(dateValue);
 
   const getProjects = async () => {
     const data = await getAllProjects();
@@ -90,55 +99,15 @@ export const AdminProject = () => {
   useEffect(() => {
     getUsers();
     getProjects();
-    getProjectsBetweenTwoDates("April 15, April 16");
-    console.log(dateProjects?.data);
+    console.log(value);
+    getProjectsBetweenTwoDates(dtfUS.format(value[0]), dtfUS.format(value[1]));
   }, []);
-
-  const { value, setValue } =
-    useState <
-    [Date | null, Date | null] >
-    [new Date(2021, 11, 1), new Date(2021, 11, 5)];
-
-  console.log(dateValue);
 
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
       <main className={styles.container}>
-        <div className={styles.wrapper}>
-          {/* {
-                        allUsers?.data?.map((user, index) => (
-                            <div key={index}>
-                                <h1> Projects of user: {user.user_name}</h1>
-
-                                <Table highlightOnHover horizontalSpacing="lg" verticalSpacing="lg" fontSize="xs">
-
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>NAME</th>
-                                            <th>CATEGORY</th>
-                                            <th>DATE CREATED</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            getProjectsOfUsers(user.user_id)?.data?.map((project, index) => (
-                                                <tr key={index}>
-                                                    <td>{project.project_id}</td>
-                                                    <td>{project.category}</td>
-                                                    <td>{project.name}</td>
-                                                    <td>{project.date_created}</td>
-
-                                                </tr>
-                                            ))
-                                        }
-                                    </tbody>
-                                </Table>
-                            </div>
-                        ))
-                    } */}
-        </div>
+        <div className={styles.wrapper}></div>
         <div>
           <h1 className={styles.title}>List of Projects</h1>
           <div className={styles.wrapper}>
@@ -183,10 +152,18 @@ export const AdminProject = () => {
             placeholder="Pick dates range"
             value={value}
             onChange={setValue}
-            onDropdownClose={(e) => setDateValue(e)}
+            onDropdownOpen={() => setValue([])}
+            onDropdownClose={() =>
+              getProjectsBetweenTwoDates(
+                dtfUS.format(value[0]),
+                dtfUS.format(value[1])
+              )
+            }
           />
         </div>
-        <div>value: {value}</div>
+        {dateProjects?.data?.map((project, index) => (
+          <div>{project.name}</div>
+        ))}
       </main>
     </div>
   );
