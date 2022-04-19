@@ -93,6 +93,7 @@ const AddProject = () => {
       <div className="project__form--wrapper">
         {errorStatus && (
           <Message
+            bgcolor="#f03e3e"
             title={errormessage}
             setStatus={setErrorStatus}
             NotificationIcon={IoIosCloseCircle}
@@ -100,6 +101,7 @@ const AddProject = () => {
         )}
         {successStatus && (
           <Message
+            bgcolor="#38b000"
             title="Project Added Successufully!!!"
             setStatus={setSuccessStatus}
             NotificationIcon={IoIosCheckbox}

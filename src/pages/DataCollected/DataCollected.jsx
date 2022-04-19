@@ -8,7 +8,6 @@ import { Clock, Calendar } from "tabler-icons-react";
 import Message from "../../components/UI/Message/Message";
 import {
   TextInput,
-  Text,
   Notification,
   Button,
   Group,
@@ -25,7 +24,7 @@ import LoginIllustration from "../../images/Login/data.svg";
 import { Link } from "react-router-dom";
 import { FiDatabase } from "react-icons/fi";
 import Sidebar from "../../components/Sidebar/Sidebar";
-
+import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 export const DataCollected = ({ userLoggedIn }) => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
@@ -34,6 +33,7 @@ export const DataCollected = ({ userLoggedIn }) => {
   const [totalprojects, setTotalProjects] = useState([]);
   const [errorStatus, setErrorStatus] = useState(false);
   const [errormessage, setErrorMessage] = useState("");
+  const [successStatus, setSuccessStatus] = useState(false);
 
   const getProjectsofUser = async () => {
     let user = {
@@ -96,6 +96,7 @@ export const DataCollected = ({ userLoggedIn }) => {
   };
 
   const trySubmit = async (values) => {
+
     const project = {
       name: values.project_name,
     };
@@ -126,8 +127,21 @@ export const DataCollected = ({ userLoggedIn }) => {
         user_id: +userLoggedIn?.user_id,
       };
       try {
-        insertDataCollected(dataCollected);
-        console.log(dataCollected);
+        if (insertDataCollected(dataCollected)) {
+          setSuccessStatus(true);
+          setErrorStatus(false);
+          values.description = "";
+          values.location_collected = "";
+          values.time_collected = null;
+          values.date_collected = null;
+          values.project_name = "";
+          setDataImage("");
+        }
+        else {
+          // setErrorStatus(true)
+          // setErrorMessage("An error occured! Try uploading data again.")
+        }
+
       } catch (err) {
         console.log(err);
       }
@@ -201,8 +215,18 @@ export const DataCollected = ({ userLoggedIn }) => {
             <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
               {errorStatus && (
                 <Message
+                  bgcolor="#f03e3e"
                   title={errormessage}
                   setStatus={setErrorStatus}
+                  NotificationIcon={IoIosCloseCircle}
+                />
+              )}
+              {successStatus && (
+                <Message
+                  bgcolor="#38b000"
+                  title="Data Collected Uploaded Successufully!!!"
+                  setStatus={setSuccessStatus}
+                  NotificationIcon={IoIosCheckbox}
                 />
               )}
               <h1>Upload data</h1>

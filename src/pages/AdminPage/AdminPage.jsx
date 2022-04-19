@@ -42,10 +42,19 @@ export const AdminPage = () => {
       activePage * numberOfRowsInPaginaton
     )
     .map((user) => (
-      <tr key={user.user_name}>
-        <td>{user.user_name}</td>
+      <tr key={user.user_id}>
         <td>{user.user_id}</td>
+        <td>{user.user_name}</td>
         <td>{user.phone_number}</td>
+        <td> {user.isProfessional} </td>
+        <td> {user.Location} </td>
+        <td> {user.email} </td>
+        <td> {user.isAdmin} </td>
+        <td>
+          <button onClick={() => deleteUserById(user.user_id)}>
+            Delete
+          </button>
+        </td>
       </tr>
     ));
 
@@ -61,9 +70,14 @@ export const AdminPage = () => {
           <Table striped highlightOnHover>
             <thead>
               <tr>
-                <th>name</th>
-                <th>Id</th>
-                <th>Number</th>
+                <th>ID </th>
+                <th> USER NAME </th>
+                <th> PHONE NUMBER </th>
+                <th> IS PROFESSIONAL </th>
+                <th> LOCATION </th>
+                <th> EMAIL </th>
+                <th> ISADMIN </th>
+                <th> Delete </th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>
