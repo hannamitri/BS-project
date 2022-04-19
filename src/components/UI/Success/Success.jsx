@@ -1,15 +1,15 @@
 import React from "react";
-import { IoIosCloseCircle, IoIosClose } from "react-icons/io";
-import "./ProjectError.scss";
+import { IoIosClose, IoIosCheckbox } from "react-icons/io";
+import "./Success.scss";
 
-const ProjectError = ({ setErrorStatus, title }) => {
+const Success = ({ setSuccessStatus, title }) => {
   return (
     <div className="project-image__limit--error">
-      <IoIosCloseCircle />
+      <IoIosCheckbox />
       <div>{title}</div>
       <div
         className="project__close--icon"
-        onClick={() => setErrorStatus(false)}
+      // onClick={() => setSuccessStatus(false)}
       >
         <IoIosClose />
       </div>

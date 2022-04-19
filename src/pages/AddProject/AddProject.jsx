@@ -6,12 +6,14 @@ import { insertProject } from "../../api/api";
 import { useForm } from "@mantine/form";
 import "./AddProject.scss";
 import ProjectError from "../../components/UI/ProjectError/ProjectError";
+import Success from "../../components/UI/Success/Success";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
 const AddProject = () => {
   const [dataImage, setDataImage] = useState("");
-  const [imageLimit, setImageLimit] = useState(false);
-
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [successStatus, setSuccessStatus] = useState(false);
+  const [errormessage, setErrorMessage] = useState("");
   let specialDate = new Date();
   const dtfUS = new Intl.DateTimeFormat("en", {
     month: "long",
@@ -37,30 +39,45 @@ const AddProject = () => {
 
   const uploadImage = async (event) => {
     const file = event.target.files[0];
-
     if (file.size / 1024 > 1000) {
-      setImageLimit(true);
-      console.log("nope nope");
+      setErrorStatus(true);
+      setErrorMessage("Image size should be less than 1MB.");
     } else {
-      setImageLimit(false);
+      setErrorStatus(false);
       const base64 = await convertBase64(file);
       setDataImage(base64);
-      console.log("yes yes");
     }
   };
 
   const trySubmit = async (values) => {
-    console.table(dataImage);
-    const project = {
-      category: values.category,
-      name: values.name,
-      image: dataImage,
-      date_created: dtfUS.format(specialDate),
-    };
-    try {
-      insertProject(project);
-    } catch (err) {
-      console.log(err);
+    if (values.category.length > 45) {
+      setErrorStatus(true);
+      setErrorMessage("Project's Category cannot exceed 45 characters.")
+    }
+    else if (values.name.length > 45) {
+      setErrorStatus(true);
+      setErrorMessage("Project's Name cannot exceed 45 characters.")
+    }
+    else {
+      setErrorStatus(false);
+
+      const project = {
+        category: values.category,
+        name: values.name,
+        image: dataImage,
+        date_created: dtfUS.format(specialDate),
+      }
+      try {
+        if (insertProject(project)) {
+          setSuccessStatus(true);
+          values.category = "";
+          values.name = "";
+          setDataImage("");
+        }
+
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -75,13 +92,18 @@ const AddProject = () => {
     <div className="flex">
       <Sidebar />
       <div className="project__form--wrapper">
-        {imageLimit && (
+        {errorStatus && (
           <ProjectError
-            title="Image size should be less than 1MB."
-            setImageLimit={setImageLimit}
+            title={errormessage}
+            setErrorStatus={setErrorStatus}
           />
         )}
-
+        {successStatus && (
+          <Success
+            title="Project Added Successfully!!"
+            setSuccessStatus={setSuccessStatus}
+          />
+        )}
         <form className="project__form" onSubmit={form.onSubmit(trySubmit)}>
           <TextInput
             required

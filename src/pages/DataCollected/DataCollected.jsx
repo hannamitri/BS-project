@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Clock, Calendar } from "tabler-icons-react";
+import ProjectError from "../../components/UI/ProjectError/ProjectError";
 import {
   TextInput,
   Text,
@@ -29,9 +30,10 @@ export const DataCollected = ({ userLoggedIn }) => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
-
   const [allProjects, setAllProjects] = useState([]);
   const [totalprojects, setTotalProjects] = useState([]);
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [errormessage, setErrorMessage] = useState("");
 
   const getProjectsofUser = async () => {
     let user = {
@@ -81,9 +83,16 @@ export const DataCollected = ({ userLoggedIn }) => {
 
   const uploadImage = async (event) => {
     const file = event.target.files[0];
-    console.log(event.target.files);
-    const base64 = await convertBase64(file);
-    setDataImage(base64);
+    if (file.size / 1024 > 1000) {
+      setErrorStatus(true);
+      setErrorMessage("Image size should be less than 1MB.");
+      console.log("nope nope");
+    } else {
+      setErrorStatus(false);
+      const base64 = await convertBase64(file);
+      setDataImage(base64);
+      console.log("yes yes");
+    }
   };
 
   const trySubmit = async (values) => {
@@ -97,20 +106,31 @@ export const DataCollected = ({ userLoggedIn }) => {
 
     console.log(selected_project_id);
 
-    const dataCollected = {
-      description: values.description,
-      location_collected: values.location_collected,
-      time_collected: values.time_collected,
-      date_collected: values.date_collected,
-      image: dataImage,
-      project_id: selected_project_id?.project_id,
-      user_id: +userLoggedIn?.user_id,
-    };
-    try {
-      insertDataCollected(dataCollected);
-      console.log(dataCollected);
-    } catch (err) {
-      console.log(err);
+    if (values.location_collected.length > 45) {
+      setErrorStatus(true);
+      setErrorMessage("Location Collected cannot exceed 45 characters");
+    }
+    else if (values.description.length > 255) {
+      setErrorStatus(true);
+      setErrorMessage("Description cannot exceed 255 characters");
+    }
+    else {
+      setErrorStatus(false);
+      const dataCollected = {
+        description: values.description,
+        location_collected: values.location_collected,
+        time_collected: values.time_collected,
+        date_collected: values.date_collected,
+        image: dataImage,
+        project_id: selected_project_id?.project_id,
+        user_id: +userLoggedIn?.user_id,
+      };
+      try {
+        insertDataCollected(dataCollected);
+        console.log(dataCollected);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -179,6 +199,12 @@ export const DataCollected = ({ userLoggedIn }) => {
               <Link to="/signup">View data</Link>
             </article>
             <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
+              {errorStatus && (
+                <ProjectError
+                  title={errormessage}
+                  setErrorStatus={setErrorStatus}
+                />
+              )}
               <h1>Upload data</h1>
               <form onSubmit={form.onSubmit(trySubmit)}>
                 <TextInput
@@ -246,6 +272,6 @@ export const DataCollected = ({ userLoggedIn }) => {
           </div>
         </section>
       </main>
-    </div>
+    </div >
   );
 };

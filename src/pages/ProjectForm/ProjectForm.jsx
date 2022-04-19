@@ -9,6 +9,7 @@ import {
   insertUsersProjects,
 } from "../../api/api";
 import LoginIllustration from "../../images/Login/data.svg";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 export const ProjectForm = ({ userLoggedIn }) => {
   const [allProjects, setAllProjects] = useState([]);
@@ -88,7 +89,8 @@ export const ProjectForm = ({ userLoggedIn }) => {
   });
 
   return (
-    <div className={styles.container}>
+    <div style={{ display: "flex" }}>
+      <Sidebar />
       <div className={styles.mainContent}>
         <article className={styles.leftview}>
           <img src={LoginIllustration} alt="Illustration" width={500} />
