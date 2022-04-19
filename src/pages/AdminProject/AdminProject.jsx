@@ -1,5 +1,5 @@
 import styles from "./AdminProject.css";
-import { Table } from "@mantine/core";
+import { Table, Pagination } from "@mantine/core";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
 import {
@@ -20,7 +20,8 @@ export const AdminProject = () => {
   const [dateProjects, setDateProjects] = useState([]);
   const [dateValue, setDateValue] = useState(null);
   const [value, setValue] = useState([new Date(), new Date()]);
-
+  const [activePage, setPage] = useState(1);
+  const numberOfRowsInPaginaton = 10;
   const dtfUS = new Intl.DateTimeFormat("en", {
     month: "long",
     day: "2-digit",
@@ -96,10 +97,31 @@ export const AdminProject = () => {
       .then((th) => console.log(th))
       .catch((err) => console.log(err));
   };
+
+  const rows = allProjects?.data
+    ?.slice(
+      activePage * numberOfRowsInPaginaton - numberOfRowsInPaginaton,
+      activePage * numberOfRowsInPaginaton
+    )
+    .map((project) => (
+      <tr key={project.project_id}>
+        <td>{project.project_id}</td>
+        <td>{project.name}</td>
+        <td>{project.category}</td>
+        <td>{project.date_created}</td>
+        <td>
+          <button
+            onClick={() => deleteProjectById(project.project_id)}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ));
+
   useEffect(() => {
     getUsers();
     getProjects();
-    console.log(value);
     getProjectsBetweenTwoDates(dtfUS.format(value[0]), dtfUS.format(value[1]));
   }, []);
 
@@ -111,12 +133,7 @@ export const AdminProject = () => {
         <div>
           <h1 className={styles.title}>List of Projects</h1>
           <div className={styles.wrapper}>
-            <Table
-              highlightOnHover
-              horizontalSpacing="lg"
-              verticalSpacing="lg"
-              fontSize="xs"
-            >
+            <Table striped highlightOnHover>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -127,23 +144,14 @@ export const AdminProject = () => {
                 </tr>
               </thead>
               <tbody>
-                {allProjects?.data?.map((project, index) => (
-                  <tr key={index}>
-                    <td>{project.project_id}</td>
-                    <td>{project.name}</td>
-                    <td>{project.category}</td>
-                    <td>{project.date_created}</td>
-                    <td>
-                      <button
-                        onClick={() => deleteProjectById(project.project_id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {rows}
               </tbody>
             </Table>
+            <Pagination
+              page={activePage}
+              onChange={setPage}
+              total={Math.ceil(allProjects?.data?.length / numberOfRowsInPaginaton)}
+            />
           </div>
         </div>
         <div>

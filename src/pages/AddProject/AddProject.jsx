@@ -91,6 +91,7 @@ const AddProject = () => {
     <div className="flex">
       <Sidebar />
       <div className="project__form--wrapper">
+        <h1>Create Project</h1>
         {errorStatus && (
           <Message
             bgcolor="#f03e3e"

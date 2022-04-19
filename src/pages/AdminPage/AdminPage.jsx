@@ -6,7 +6,7 @@ import { getAll, deleteUser, updateUser, updateProject } from "../../api/api";
 export const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [activePage, setPage] = useState(1);
-  const numberOfRowsInPaginaton = 3;
+  const numberOfRowsInPaginaton = 10;
 
   const arrayUsers = [];
   const getUsers = async () => {
@@ -36,6 +36,14 @@ export const AdminPage = () => {
       .catch((err) => console.log(err));
   };
 
+  const checkStatus = (number) => {
+    if (number === 0) {
+      return "No";
+    }
+    else {
+      return "Yes";
+    }
+  }
   const rows = allUsers?.data
     ?.slice(
       activePage * numberOfRowsInPaginaton - numberOfRowsInPaginaton,
@@ -46,10 +54,10 @@ export const AdminPage = () => {
         <td>{user.user_id}</td>
         <td>{user.user_name}</td>
         <td>{user.phone_number}</td>
-        <td> {user.isProfessional} </td>
+        <td> {checkStatus(user.isProfessional)}</td>
         <td> {user.Location} </td>
         <td> {user.email} </td>
-        <td> {user.isAdmin} </td>
+        <td> {checkStatus(user.isAdmin)}</td>
         <td>
           <button onClick={() => deleteUserById(user.user_id)}>
             Delete
