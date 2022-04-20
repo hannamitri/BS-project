@@ -9,12 +9,11 @@ const Project = ({ name, category, date_created, projectImage, id }) => {
   const mountedRef = useRef(true);
 
   useEffect(() => {
-  const image = new Image();
+    const image = new Image();
     image.src = projectImage;
     image.onload = () => {
       setTimeout(() => {
         if (mountedRef.current) {
-          console.log("heyyyyyyyyyyyyyyyyy");
           setImg(image);
         }
       }, 300);
@@ -24,7 +23,7 @@ const Project = ({ name, category, date_created, projectImage, id }) => {
         mountedRef.current = false;
       }, 400);
     };
-  });
+  }, []);
 
   return (
     <>
