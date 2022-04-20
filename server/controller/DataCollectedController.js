@@ -13,6 +13,16 @@ exports.getDataCollected = async (req, res) => {
   });
 };
 
+exports.getDataCollectedByUser = async (req, res) => {
+  let tableName = "DataCollected";
+  const { user_id } = req.body;
+  let sql = `SELECT * FROM ${tableName} where user_id="${user_id}"`;
+  connection.query(sql, (error, result) => {
+    if (error) throw error;
+    res.status(200).send(result);
+  });
+};
+
 exports.deleteDataCollected = (req, res) => {
   const { data_id } = req.body;
   let sql = `delete from DataCollected WHERE data_id=${data_id}`;
