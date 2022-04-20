@@ -3,6 +3,7 @@ import { useContext, useState, useMemo, useEffect, useRef } from "react";
 import { UserContext } from "../../context/UserContext";
 import supabase from "../../lib/supabase";
 import { FaGlobeEurope, FaUserAlt } from "react-icons/fa";
+import { IoIosCheckbox } from "react-icons/io";
 import {
   TextInput,
   Loader,
@@ -35,7 +36,6 @@ export const Signup = ({ userLoggedIn }) => {
   const [errorStatus, setErrorStatus] = useState(false);
   const [successStatus, setSuccessStatus] = useState(false);
   const [errormessage, setErrorMessage] = useState("");
-
 
   const schema = z.object({
     Email: z.string().email({ message: "Invalid email" }),
@@ -94,7 +94,7 @@ export const Signup = ({ userLoggedIn }) => {
     } else {
       setDisabled(true);
       if (await insertUser(userOBJ)) {
-        setSuccessStatus(true)
+        setSuccessStatus(true);
       }
       if (user) {
         setUser(userLoggedIn);

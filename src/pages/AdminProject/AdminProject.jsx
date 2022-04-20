@@ -27,6 +27,8 @@ export const AdminProject = () => {
     day: "2-digit",
   });
 
+  const [projectId, setProjectId] = useState("");
+
   // console.log(dtfUS.format(value[0]));
   // console.log(dateValue);
 
@@ -76,6 +78,7 @@ export const AdminProject = () => {
   };
 
   const deleteProjectById = async (project_id) => {
+    setProjectId(project_id);
     let project = {
       id: project_id,
     };
@@ -110,9 +113,7 @@ export const AdminProject = () => {
         <td>{project.category}</td>
         <td>{project.date_created}</td>
         <td>
-          <button
-            onClick={() => deleteProjectById(project.project_id)}
-          >
+          <button onClick={() => deleteProjectById(project.project_id)}>
             Delete
           </button>
         </td>
@@ -123,7 +124,7 @@ export const AdminProject = () => {
     getUsers();
     getProjects();
     getProjectsBetweenTwoDates(dtfUS.format(value[0]), dtfUS.format(value[1]));
-  }, []);
+  }, [projectId]);
 
   return (
     <div style={{ display: "flex" }}>
@@ -143,14 +144,14 @@ export const AdminProject = () => {
                   <th>Delete</th>
                 </tr>
               </thead>
-              <tbody>
-                {rows}
-              </tbody>
+              <tbody>{rows}</tbody>
             </Table>
             <Pagination
               page={activePage}
               onChange={setPage}
-              total={Math.ceil(allProjects?.data?.length / numberOfRowsInPaginaton)}
+              total={Math.ceil(
+                allProjects?.data?.length / numberOfRowsInPaginaton
+              )}
             />
           </div>
         </div>
