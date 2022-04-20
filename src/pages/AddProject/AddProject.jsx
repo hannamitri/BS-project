@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextInput } from "@mantine/core";
 import { FaUserAlt } from "react-icons/fa";
 import { HiOutlineAtSymbol } from "react-icons/hi";
@@ -7,12 +7,18 @@ import { useForm } from "@mantine/form";
 import "./AddProject.scss";
 import Message from "../../components/UI/Message/Message";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import {
+  getAllProjects
+} from "../../api/api";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
+
 const AddProject = () => {
   const [dataImage, setDataImage] = useState("");
   const [errorStatus, setErrorStatus] = useState(false);
   const [successStatus, setSuccessStatus] = useState(false);
   const [errormessage, setErrorMessage] = useState("");
+  const [allProjects, setAllProjects] = useState([]);
+
   let specialDate = new Date();
   const dtfUS = new Intl.DateTimeFormat("en", {
     month: "long",
@@ -20,6 +26,11 @@ const AddProject = () => {
     hour: "2-digit",
     minute: "2-digit",
   });
+
+  const getProjects = async () => {
+    const data = await getAllProjects();
+    setAllProjects(data);
+  };
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -49,6 +60,16 @@ const AddProject = () => {
   };
 
   const trySubmit = async (values) => {
+
+    const project = {
+      name: values.name,
+    };
+
+    const selected_project_id = allProjects?.data?.find(
+      (item) => item?.name === project.name
+    );
+
+
     if (values.category.length > 45) {
       setErrorStatus(true);
       setErrorMessage("Project's Category cannot exceed 45 characters.")
@@ -56,6 +77,10 @@ const AddProject = () => {
     else if (values.name.length > 45) {
       setErrorStatus(true);
       setErrorMessage("Project's Name cannot exceed 45 characters.")
+    }
+    else if (selected_project_id) {
+      setErrorStatus(true);
+      setErrorMessage("Project's Name already exists. Please enter a different One.")
     }
     else {
       setErrorStatus(false);
@@ -86,6 +111,10 @@ const AddProject = () => {
       name: "",
     },
   });
+
+  useEffect(() => {
+    getProjects();
+  }, []);
 
   return (
     <div className="flex">
