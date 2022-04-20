@@ -96,7 +96,6 @@ export const DataCollected = ({ userLoggedIn }) => {
   };
 
   const trySubmit = async (values) => {
-
     const project = {
       name: values.project_name,
     };
@@ -110,12 +109,10 @@ export const DataCollected = ({ userLoggedIn }) => {
     if (values.location_collected.length > 45) {
       setErrorStatus(true);
       setErrorMessage("Location Collected cannot exceed 45 characters");
-    }
-    else if (values.description.length > 255) {
+    } else if (values.description.length > 255) {
       setErrorStatus(true);
       setErrorMessage("Description cannot exceed 255 characters");
-    }
-    else {
+    } else {
       setErrorStatus(false);
       const dataCollected = {
         description: values.description,
@@ -136,12 +133,10 @@ export const DataCollected = ({ userLoggedIn }) => {
           values.date_collected = null;
           values.project_name = "";
           setDataImage("");
-        }
-        else {
+        } else {
           // setErrorStatus(true)
           // setErrorMessage("An error occured! Try uploading data again.")
         }
-
       } catch (err) {
         console.log(err);
       }
@@ -296,6 +291,6 @@ export const DataCollected = ({ userLoggedIn }) => {
           </div>
         </section>
       </main>
-    </div >
+    </div>
   );
 };

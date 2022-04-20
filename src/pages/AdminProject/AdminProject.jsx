@@ -1,7 +1,16 @@
 import styles from "./AdminProject.css";
-import { Table, Pagination } from "@mantine/core";
+import {
+  Table,
+  Pagination,
+  TextInput,
+  Button,
+  Modal,
+  Group,
+} from "@mantine/core";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
+import { HiOutlineAtSymbol } from "react-icons/hi";
+import { FaUserAlt } from "react-icons/fa";
 import {
   getAll,
   deleteUser,
@@ -13,14 +22,24 @@ import {
   getDataBetweenDates,
 } from "../../api/api";
 import { DatePicker, DateRangePicker } from "@mantine/dates";
+import { useForm } from "@mantine/form";
 
 export const AdminProject = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
   const [dateProjects, setDateProjects] = useState([]);
-  const [dateValue, setDateValue] = useState(null);
   const [value, setValue] = useState([new Date(), new Date()]);
   const [activePage, setPage] = useState(1);
+  const [opened, setOpened] = useState(false);
+  const [dataImage, setDataImage] = useState("");
+  const [successStatus, setSuccessStatus] = useState(false);
+  const [errormessage, setErrorMessage] = useState("");
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [singleProjectId, setSingleProjectId] = useState("");
+  const [projectName, setProjectName] = useState("");
+  const [projectCategory, setProjectCategory] = useState("");
+  const [projectImage, setProjectImage] = useState("");
+
   const numberOfRowsInPaginaton = 10;
   const dtfUS = new Intl.DateTimeFormat("en", {
     month: "long",
@@ -28,9 +47,6 @@ export const AdminProject = () => {
   });
 
   const [projectId, setProjectId] = useState("");
-
-  // console.log(dtfUS.format(value[0]));
-  // console.log(dateValue);
 
   const getProjects = async () => {
     const data = await getAllProjects();
@@ -87,18 +103,37 @@ export const AdminProject = () => {
       .catch((err) => console.log(err));
   };
 
-  const updateProjectData = async () => {
-    let project = {
-      category: "Agriculture in Koura",
-      name: "Batroun",
-      image: "dedeqdewf",
-      date_created: "April 23, 11:16 AM",
-      project_id: 4,
-    };
-
+  const updateProjectData = async (project) => {
     await updateProject(project)
       .then((th) => console.log(th))
       .catch((err) => console.log(err));
+  };
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    if (file.size / 1024 > 1000) {
+      setErrorStatus(true);
+      setErrorMessage("Image size should be less than 1MB.");
+    } else {
+      setErrorStatus(false);
+      const base64 = await convertBase64(file);
+      setDataImage(base64);
+    }
   };
 
   const rows = allProjects?.data
@@ -113,23 +148,73 @@ export const AdminProject = () => {
         <td>{project.category}</td>
         <td>{project.date_created}</td>
         <td>
-          <button onClick={() => deleteProjectById(project.project_id)}>
+          <Group position="center">
+            <button
+              className="button"
+              onClick={() =>
+                updateSingleProject(
+                  project.project_id,
+                  project.name,
+                  project.category,
+                  project.image
+                )
+              }
+            >
+              Edit project
+            </button>
+          </Group>
+        </td>
+        <td>
+          <button
+            className="button"
+            onClick={() => deleteProjectById(project.project_id)}
+          >
             Delete
           </button>
         </td>
       </tr>
     ));
 
+  const updateSingleProject = (project_id, name, category, image) => {
+    setOpened(true);
+    setSingleProjectId(project_id);
+    setProjectName(name);
+    setProjectCategory(category);
+    setDataImage(image);
+  };
+
+  const trySubmit = async () => {
+    const project = {
+      category: projectCategory,
+      name: projectName,
+      image: dataImage,
+      project_id: singleProjectId,
+    };
+    updateProjectData(project);
+
+    setProjectId(singleProjectId);
+    setOpened(false);
+  };
+
+  const form = useForm({
+    initialValues: {
+      category: projectCategory,
+      name: projectName,
+    },
+  });
+
   useEffect(() => {
     getUsers();
     getProjects();
     getProjectsBetweenTwoDates(dtfUS.format(value[0]), dtfUS.format(value[1]));
+    console.log(projectId);
+    setProjectId(0);
   }, [projectId]);
 
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <main className={styles.container}>
+      <div className={styles.container}>
         <div className={styles.wrapper}></div>
         <div>
           <h1 className={styles.title}>List of Projects</h1>
@@ -171,9 +256,68 @@ export const AdminProject = () => {
           />
         </div>
         {dateProjects?.data?.map((project, index) => (
-          <div>{project.name}</div>
+          <div key={index}>{project.name}</div>
         ))}
-      </main>
+
+        <>
+          <Modal
+            opened={opened}
+            onClose={() => setOpened(false)}
+            title="Introduce yourself!"
+          >
+            {errorStatus && (
+              <Message
+                bgcolor="#f03e3e"
+                title={errormessage}
+                setStatus={setErrorStatus}
+                NotificationIcon={IoIosCloseCircle}
+              />
+            )}
+            {successStatus && (
+              <Message
+                bgcolor="#38b000"
+                title="Project Added Successufully!!!"
+                setStatus={setSuccessStatus}
+                NotificationIcon={IoIosCheckbox}
+              />
+            )}
+            <div>
+              <form
+                className="project__form"
+                onSubmit={form.onSubmit(trySubmit)}
+              >
+                <TextInput
+                  required
+                  icon={<HiOutlineAtSymbol size={16} />}
+                  label="Project Category"
+                  placeholder="Project Category"
+                  {...form.getInputProps("category")}
+                  value={projectCategory}
+                  onChange={(e) => setProjectCategory(e.target.value)}
+                />
+                <TextInput
+                  id="project__input--name"
+                  required
+                  icon={<FaUserAlt size={16} />}
+                  label="Project name"
+                  placeholder="Project name"
+                  {...form.getInputProps("name")}
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                />
+                <input type="file" onChange={uploadImage} />
+                <br />
+
+                <img src={dataImage} alt="" />
+
+                <button className="button" type="submit">
+                  Update Project
+                </button>
+              </form>
+            </div>
+          </Modal>
+        </>
+      </div>
     </div>
   );
 };
