@@ -7,6 +7,7 @@ export const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [activePage, setPage] = useState(1);
   const numberOfRowsInPaginaton = 10;
+  const [userId, setUserId] = useState("");
 
   const arrayUsers = [];
   const getUsers = async () => {
@@ -27,6 +28,7 @@ export const AdminPage = () => {
   };
 
   const deleteUserById = async (user_id) => {
+    setUserId(user_id);
     let user = {
       id: user_id,
     };
@@ -36,14 +38,6 @@ export const AdminPage = () => {
       .catch((err) => console.log(err));
   };
 
-  const checkStatus = (number) => {
-    if (number === 0) {
-      return "No";
-    }
-    else {
-      return "Yes";
-    }
-  }
   const rows = allUsers?.data
     ?.slice(
       activePage * numberOfRowsInPaginaton - numberOfRowsInPaginaton,
@@ -54,21 +48,19 @@ export const AdminPage = () => {
         <td>{user.user_id}</td>
         <td>{user.user_name}</td>
         <td>{user.phone_number}</td>
-        <td> {checkStatus(user.isProfessional)}</td>
-        <td> {user.Location} </td>
-        <td> {user.email} </td>
-        <td> {checkStatus(user.isAdmin)}</td>
+        <td>{user.isProfessional ? "yes" : "no"}</td>
+        <td>{user.Location}</td>
+        <td>{user.email}</td>
+        <td>{user.isAdmin ? "yes" : "no"}</td>
         <td>
-          <button onClick={() => deleteUserById(user.user_id)}>
-            Delete
-          </button>
+          <button onClick={() => deleteUserById(user.user_id)}>Delete</button>
         </td>
       </tr>
     ));
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [userId]);
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
@@ -79,13 +71,13 @@ export const AdminPage = () => {
             <thead>
               <tr>
                 <th>ID </th>
-                <th> USER NAME </th>
-                <th> PHONE NUMBER </th>
-                <th> IS PROFESSIONAL </th>
-                <th> LOCATION </th>
-                <th> EMAIL </th>
-                <th> ISADMIN </th>
-                <th> Delete </th>
+                <th>USER NAME</th>
+                <th>PHONE NUMBER</th>
+                <th>IS PROFESSIONAL</th>
+                <th>LOCATION</th>
+                <th>EMAIL</th>
+                <th>ISADMIN</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>
