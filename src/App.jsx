@@ -10,6 +10,7 @@ import {
   ProjectForm,
   AdminPage,
   AdminProject,
+  UserContribution,
 } from "./pages";
 import { Nav } from "./components";
 import ProjectPage from "./components/ProjectPage/ProjectPage";
@@ -66,6 +67,7 @@ function App() {
         <Route path="/project/:id" element={<ProjectPage />} />
         <Route path="/admin-page" element={<AdminPage />} />
         <Route path="/manage-projects" element={<AdminProject />} />
+        <Route path="/user-contribution" element={<UserContribution />} />
       </Routes>
     </div>
   );

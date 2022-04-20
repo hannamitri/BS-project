@@ -97,6 +97,14 @@ const getDataBetweenDates = async (data) => {
     .catch((err) => err.response);
 }
 
+const getDataCollectedByUser = async (data) => {
+  let url = `${baseUrl}/getDataCollectedByUser`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+}
+
 /*
  * Projects Apis
  */
@@ -237,6 +245,7 @@ export {
   deleteDataCollected,
   insertDataCollected,
   getDataBetweenDates,
+  getDataCollectedByUser,
 
   //Projects
   getAllProjects,
