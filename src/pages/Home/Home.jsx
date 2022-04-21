@@ -25,7 +25,6 @@ export const Home = () => {
 
   return (
     <div className="main__container">
-      <Sidebar />
       <div className="main__content--wrapper">
         <HomeHeader />
         <Projects />

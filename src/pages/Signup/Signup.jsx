@@ -128,8 +128,6 @@ export const Signup = ({ userLoggedIn }) => {
   const password = useRef();
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar />
-
       <div className="sign-up__wrapper">
         {userExists && (
           <Notification
