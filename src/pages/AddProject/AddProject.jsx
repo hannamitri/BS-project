@@ -7,16 +7,14 @@ import { useForm } from "@mantine/form";
 import "./AddProject.scss";
 import Message from "../../components/UI/Message/Message";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import {
-  getAllProjects
-} from "../../api/api";
+import { getAllProjects } from "../../api/api";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 
 const AddProject = () => {
   const [dataImage, setDataImage] = useState("");
   const [errorStatus, setErrorStatus] = useState(false);
   const [successStatus, setSuccessStatus] = useState(false);
-  const [errormessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [allProjects, setAllProjects] = useState([]);
 
   let specialDate = new Date();
@@ -60,7 +58,6 @@ const AddProject = () => {
   };
 
   const trySubmit = async (values) => {
-
     const project = {
       name: values.name,
     };
@@ -69,20 +66,18 @@ const AddProject = () => {
       (item) => item?.name === project.name
     );
 
-
     if (values.category.length > 45) {
       setErrorStatus(true);
-      setErrorMessage("Project's Category cannot exceed 45 characters.")
-    }
-    else if (values.name.length > 45) {
+      setErrorMessage("Project's Category cannot exceed 45 characters.");
+    } else if (values.name.length > 45) {
       setErrorStatus(true);
-      setErrorMessage("Project's Name cannot exceed 45 characters.")
-    }
-    else if (selected_project_id) {
+      setErrorMessage("Project's Name cannot exceed 45 characters.");
+    } else if (selected_project_id) {
       setErrorStatus(true);
-      setErrorMessage("Project's Name already exists. Please enter a different One.")
-    }
-    else {
+      setErrorMessage(
+        "Project's Name already exists. Please enter a different One."
+      );
+    } else {
       setErrorStatus(false);
 
       const project = {
@@ -90,7 +85,7 @@ const AddProject = () => {
         name: values.name,
         image: dataImage,
         date_created: dtfUS.format(specialDate),
-      }
+      };
       try {
         if (insertProject(project)) {
           setSuccessStatus(true);
@@ -98,7 +93,6 @@ const AddProject = () => {
           values.name = "";
           setDataImage("");
         }
-
       } catch (err) {
         console.log(err);
       }
@@ -112,23 +106,30 @@ const AddProject = () => {
     },
   });
 
+  (errorMessage || successStatus) &&
+    setTimeout(() => {
+      setSuccessStatus(false);
+      setErrorStatus(false);
+    }, 10000);
+
   useEffect(() => {
     getProjects();
+    console.log(errorMessage, successStatus);
   }, []);
 
   return (
     <div className="flex">
-      <Sidebar />
       <div className="project__form--wrapper">
         <h1>Create Project</h1>
         {errorStatus && (
           <Message
             bgcolor="#f03e3e"
-            title={errormessage}
+            title={errorMessage}
             setStatus={setErrorStatus}
             NotificationIcon={IoIosCloseCircle}
           />
         )}
+
         {successStatus && (
           <Message
             bgcolor="#38b000"
