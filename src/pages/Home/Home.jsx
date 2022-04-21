@@ -26,8 +26,10 @@ export const Home = () => {
   return (
     <div className="main__container">
       <div className="main__content--wrapper">
-        <HomeHeader />
-        <Projects />
+        <div className="content__wrapper">
+          <HomeHeader />
+          <Projects />
+        </div>
       </div>
     </div>
   );

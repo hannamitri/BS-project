@@ -1,6 +1,7 @@
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 var moment = require("moment-timezone");
 const bcrypt = require("bcrypt");
+import { getAll } from "../../src/api/api.js";
 
 // MYSQL DATABASE CONNECTION
 const connection = require("../config/database.config.js");
