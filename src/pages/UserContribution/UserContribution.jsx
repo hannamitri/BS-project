@@ -11,8 +11,14 @@ import {
 import { useForm } from "@mantine/form";
 import "./UserContribution.css";
 import Message from "../../components/UI/Message/Message";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
+import { Skeleton } from "@mantine/core";
+import Project from "../../components/UI/Project/Project"
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper";
+import DataCollectedSlide from "../../components/UI/DataCollectedSlide/DataCollectedSlide"
 
 export const UserContribution = () => {
   const [dataImage, setDataImage] = useState("");
@@ -21,7 +27,15 @@ export const UserContribution = () => {
   const [errormessage, setErrorMessage] = useState("");
   const [allProjects, setAllProjects] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+  const [projectsOfUser, setProjectsOfUser] = useState([]);
+  const [dataOfUser, setDataOfUser] = useState([]);
   const [user, setUser] = useState();
+  const [showMore, setShowMore] = useState(8);
+  const [userId, setUserId] = useState(0);
+  const [displayProjects, setDisplayProjects] = useState(false);
+  const [displayData, setDisplayData] = useState(false);
+
+
   const getProjects = async () => {
     const data = await getAllProjects();
     setAllProjects(data);
@@ -43,50 +57,6 @@ export const UserContribution = () => {
     return newUsers;
   };
 
-  // const trySubmit = async (values) => {
-
-  //     const project = {
-  //         name: values.name,
-  //     };
-
-  //     const selected_project_id = allProjects?.data?.find(
-  //         (item) => item?.name === project.name
-  //     );
-
-  //     if (values.category.length > 45) {
-  //         setErrorStatus(true);
-  //         setErrorMessage("Project's Category cannot exceed 45 characters.")
-  //     }
-  //     else if (values.name.length > 45) {
-  //         setErrorStatus(true);
-  //         setErrorMessage("Project's Name cannot exceed 45 characters.")
-  //     }
-  //     else if (selected_project_id) {
-  //         setErrorStatus(true);
-  //         setErrorMessage("Project's Name already exists. Please enter a different One.")
-  //     }
-  //     else {
-  //         setErrorStatus(false);
-
-  //         const project = {
-  //             category: values.category,
-  //             name: values.name,
-  //             image: dataImage,
-  //             date_created: dtfUS.format(specialDate),
-  //         }
-  //         try {
-  //             // if (insertProject(project)) {
-  //             //     setSuccessStatus(true);
-  //             //     values.category = "";
-  //             //     values.name = "";
-  //             //     setDataImage("");
-  //             // }
-
-  //         } catch (err) {
-  //             console.log(err);
-  //         }
-  //     }
-  // };
 
   const form = useForm({
     initialValues: {
@@ -99,7 +69,13 @@ export const UserContribution = () => {
     const user = {
       email: event?.target?.value,
     };
+    if (user.email === "") {
+      setDisplayProjects(false);
+      setDisplayData(false);
+    }
     const selected = allUsers?.data?.find((item) => item?.email === user.email);
+
+    setUserId(selected?.user_id)
 
     console.log(selected);
 
@@ -112,27 +88,40 @@ export const UserContribution = () => {
 
   const getContributionType = async (event) => {
     let type = event?.target?.value;
+
     if (type === "") {
-      console.log("Type cannot be empty");
+      // console.log("Type cannot be empty");
+      setDisplayProjects(false);
+      setDisplayData(false);
     } else {
       if (type === "Data Collected") {
-        let dataOfUser = await getDataCollectedByUser(user);
+        let datas = await getDataCollectedByUser(user);
+        setDataOfUser(datas);
+        setDisplayData(true);
+        setDisplayProjects(false);
         console.log(dataOfUser?.data);
       } else {
-        let projectsOfUser = await getProjectsByUser(user);
-        console.log(projectsOfUser?.data);
+        let projects = await getProjectsByUser(user);
+        console.log(projects?.data)
+        setProjectsOfUser(projects)
+        setDisplayProjects(true)
+        setDisplayData(false);
       }
     }
   };
-
+  const hideData = () => {
+    setDisplayProjects(false);
+    setDisplayData(false);
+  }
   useEffect(() => {
     getProjects();
     getUsers();
-  }, []);
+    setUserId(0)
+  }, [userId]);
 
   return (
-    <div className="flex">
-      <div className="project__form--wrapper">
+    <div>
+      <div className="project__form--wrapper" style={{ marginBottom: "50px" }}>
         <h1>View Contribution of Users</h1>
         {errorStatus && (
           <Message
@@ -160,6 +149,7 @@ export const UserContribution = () => {
             placeholder={"Select User"}
             {...form.getInputProps("user")}
             onSelect={getUser}
+            onDropdownClose={() => hideData()}
           />
           <Select
             data={[
@@ -173,9 +163,131 @@ export const UserContribution = () => {
             placeholder={"Select contribution type"}
             {...form.getInputProps("project")}
             onSelect={getContributionType}
+            onDropdownClose={() => hideData()}
           />
         </form>
       </div>
-    </div>
+      <>
+        {displayProjects &&
+          <div id="#projectsOfUser">
+            <div className="projects__wrapper">
+              {projectsOfUser.data ? (
+                projectsOfUser?.data?.slice(0, showMore).map((project, index) => (
+                  <>
+                    <Project
+                      key={index}
+                      name={project.name}
+                      category={project.category}
+                      date_created={project.date_created}
+                      projectImage={project.image}
+                      id={project.project_id}
+                    />
+                  </>
+                ))
+
+              ) : (
+                <>
+                  {new Array(8).fill(0).map((_) => (
+                    <div>
+                      <Skeleton animate={false} height={175} mb="md" />
+                      <Skeleton animate={false} height={20} width={150} mb="md" />
+                      <Skeleton animate={false} height={20} width={100} mb="md" />
+                      <Skeleton animate={false} height={35} width="85%" />
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+            <div className="project__show-more--button">
+              {console.log(projectsOfUser?.data)}
+              {projectsOfUser.data?.length > 8 &&
+                (showMore === 8 ? (
+                  projectsOfUser.data && (
+                    <button
+                      className="button"
+                      onClick={() => setShowMore(projectsOfUser.data?.length)}
+                    >
+                      Show All
+                    </button>
+                  )
+                ) : (
+                  <button className="button" onClick={() => setShowMore(8)}>
+                    Show Less
+                  </button>
+                ))}
+            </div>
+          </div>
+        }
+      </>
+      {displayData &&
+        <div className="project__detail--wrapper">
+          {/* <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1> */}
+
+          <Swiper
+            slidesPerView={1}
+            navigation={!!dataOfUser?.data?.length}
+            modules={[Navigation]}
+            className="data-collected__slider"
+          >
+            <div className="projects__detail">
+              {dataOfUser?.data?.length ? (
+                dataOfUser?.data?.map(
+                  (projectdata, index) =>
+                    projectdata.image && (
+                      <SwiperSlide>
+                        <DataCollectedSlide
+                          dataCollectedImage={projectdata.image}
+                          dataCollectedDate={projectdata.date_collected}
+                          dataCollectedLocation={projectdata.location_collected}
+                          dataCollectedTime={projectdata.time_collected}
+                          dataCollectedDescription={projectdata.description}
+                        />
+                      </SwiperSlide>
+                    )
+                )
+              ) : (
+                <SwiperSlide>
+                  <Skeleton
+                    animate={false}
+                    height={700}
+                    width="90%"
+                    mb="md"
+                    mx="auto"
+                  />
+                  <Skeleton
+                    animate={false}
+                    height={20}
+                    width="80%"
+                    mb="md"
+                    mx="auto"
+                  />
+                  <Skeleton
+                    animate={false}
+                    height={20}
+                    width="80%"
+                    mb="md"
+                    mx="auto"
+                  />
+                  <Skeleton
+                    animate={false}
+                    height={20}
+                    width="60%"
+                    mb="md"
+                    mx="auto"
+                  />
+                  <Skeleton
+                    animate={false}
+                    height={20}
+                    width="80%"
+                    mb="md"
+                    mx="auto"
+                  />
+                </SwiperSlide>
+              )}
+            </div>
+          </Swiper>
+        </div>
+      }
+    </div >
   );
 };

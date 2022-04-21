@@ -5,6 +5,8 @@ import {
   TextInput,
   Group,
   Skeleton,
+  RadioGroup,
+  Radio,
 } from "@mantine/core";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
@@ -26,6 +28,7 @@ export const AdminPage = () => {
   const [userIsProfessional, setUserIsProfessional] = useState("");
   const [location, setLocation] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [singleUserId, setSingleUserId] = useState("");
   const [userIsAdmin, setuserIsAdmin] = useState("");
   const numberOfRowsInPaginaton = 10;
@@ -180,7 +183,7 @@ export const AdminPage = () => {
   return (
     <div style={{ display: "flex" }}>
       <div>
-        <h1>displays 3 users per page.</h1>
+        <h1>List of Users</h1>
         <div>
           <Table striped highlightOnHover>
             <thead>
@@ -193,7 +196,8 @@ export const AdminPage = () => {
                 <th>LOCATION</th>
                 <th>EMAIL</th>
                 <th>ISADMIN</th>
-                <th>Delete</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>
@@ -223,7 +227,7 @@ export const AdminPage = () => {
             {successStatus && (
               <Message
                 bgcolor="#38b000"
-                title="Project Added Successufully!!!"
+                title="User Added Successufully!!!"
                 setStatus={setSuccessStatus}
                 NotificationIcon={IoIosCheckbox}
               />
@@ -293,9 +297,21 @@ export const AdminPage = () => {
                   value={userIsAdmin}
                   onChange={(e) => setuserIsAdmin(e.target.value)}
                 />
+                {/* <RadioGroup
+                  label="Select User's Role"
+                  description="This is define a User's Role"
+                  required
+                  {...form.getInputProps("role")}
+                >
+                  <Radio value="citizen" label="Citizen" />
 
-                <button className="button" type="submit">
-                  Update Project
+                  <Radio value="professional" label="Professional" />
+
+                  <Radio value="admin" label="Admin" />
+                </RadioGroup> */}
+
+                <button className="button" type="submit" style={{ marginTop: "30px" }}>
+                  Update User
                 </button>
               </form>
             </div>

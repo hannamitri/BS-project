@@ -224,7 +224,8 @@ export const AdminProject = () => {
                   <th>NAME</th>
                   <th>CATEGORY</th>
                   <th>DATE CREATED</th>
-                  <th>Delete</th>
+                  <th>EDIT</th>
+                  <th>DELETE</th>
                 </tr>
               </thead>
               <tbody>{rows}</tbody>
