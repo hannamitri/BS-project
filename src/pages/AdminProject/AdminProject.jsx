@@ -191,7 +191,6 @@ export const AdminProject = () => {
       project_id: singleProjectId,
     };
     updateProjectData(project);
-
     setProjectId(singleProjectId);
     setOpened(false);
   };
@@ -213,7 +212,6 @@ export const AdminProject = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar />
       <div className={styles.container}>
         <div className={styles.wrapper}></div>
         <div>

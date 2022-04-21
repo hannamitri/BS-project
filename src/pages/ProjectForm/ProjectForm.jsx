@@ -35,26 +35,26 @@ export const ProjectForm = ({ userLoggedIn }) => {
 
   const formatDataUsers = () => {
     let newUsers = [];
-    console.log(projectUsers)
+    console.log(projectUsers);
     allUsers?.data?.map((user) => {
       let obj = {
-        "value": user.email,
-        "label": user.email
-      }
-      newUsers.push(obj)
-      projectUsers.forEach(element => {
+        value: user.email,
+        label: user.email,
+      };
+      newUsers.push(obj);
+      projectUsers.forEach((element) => {
         if (element?.user_id === user?.user_id) {
           let obj = {
-            "value": user.email,
-            "label": user.email
-          }
-          newUsers.pop(obj)
+            value: user.email,
+            label: user.email,
+          };
+          newUsers.pop(obj);
           let disabled_obj = {
-            "value": element.email,
-            "label": element.email,
-            "disabled": true
-          }
-          newUsers.push(disabled_obj)
+            value: element.email,
+            label: element.email,
+            disabled: true,
+          };
+          newUsers.push(disabled_obj);
         }
       });
     });
@@ -93,10 +93,11 @@ export const ProjectForm = ({ userLoggedIn }) => {
       try {
         if (await insertUsersProjects(user_projects)) {
           setSuccessStatus(true);
-        }
-        else {
+        } else {
           setErrorStatus(true);
-          setErrorMessage("An errorr ocuured while including users. Please Try Again!");
+          setErrorMessage(
+            "An errorr ocuured while including users. Please Try Again!"
+          );
         }
       } catch (err) {
         console.log(err);
@@ -112,13 +113,12 @@ export const ProjectForm = ({ userLoggedIn }) => {
     );
     console.log(selected?.project_id);
     let project_database = {
-      project_id: selected?.project_id
-    }
+      project_id: selected?.project_id,
+    };
     let project_users = await getUsersbyProject(project_database);
 
-    setProjectUsers(project_users?.data)
-
-  }
+    setProjectUsers(project_users?.data);
+  };
   useEffect(() => {
     getProjects();
     getDataofproj();
@@ -136,7 +136,6 @@ export const ProjectForm = ({ userLoggedIn }) => {
 
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar />
       <div className={styles.mainContent}>
         <article className={styles.leftview}>
           <img src={LoginIllustration} alt="Illustration" width={500} />

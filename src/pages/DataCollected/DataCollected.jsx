@@ -1,4 +1,4 @@
-import styles from "./DataCollected.module.scss";
+import "./DataCollected.scss";
 import { getAllProjects, getDataCollected, getProjectId } from "../../api/api";
 import { insertDataCollected, getProjectsByUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
@@ -172,9 +172,7 @@ export const DataCollected = ({ userLoggedIn }) => {
 
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar />
-
-      <main className={styles.container}>
+      <div className="container">
         {userNotFound && (
           <Notification
             icon={<X size={18} />}
@@ -201,13 +199,13 @@ export const DataCollected = ({ userLoggedIn }) => {
           </Notification>
         )}
 
-        <section className={styles.view}>
-          <div className={styles.mainContent}>
-            <article className={styles.leftview}>
+        <section className="view">
+          <div className="divContent">
+            <div className="leftView">
               <img src={LoginIllustration} alt="Illustration" width={500} />
               <Link to="/signup">View data</Link>
-            </article>
-            <Box sx={{ maxWidth: 300 }} mx="auto" className={styles.rightview}>
+            </div>
+            <Box sx={{ maxWidth: 300 }} mx="auto" className="rightview">
               {errorStatus && (
                 <Message
                   bgcolor="#f03e3e"
@@ -276,21 +274,20 @@ export const DataCollected = ({ userLoggedIn }) => {
 
                 <Group position="left" mt="md" style={{ position: "relative" }}>
                   {loadingState ? (
-                    <span className={styles.loading}>
+                    <span className="loading">
                       <Loader />
                     </span>
                   ) : (
-                    <Button type="submit">Submit data</Button>
+                    <button className="button" type="submit">
+                      Submit data
+                    </button>
                   )}
                 </Group>
               </form>
             </Box>
           </div>
-          <div className={styles.alternatives}>
-            <div className={styles.leftalt}></div>
-          </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 };

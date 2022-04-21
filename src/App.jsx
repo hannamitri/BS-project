@@ -18,6 +18,7 @@ import AddProject from "./pages/AddProject/AddProject";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./context/UserContext";
 import { getAll } from "./api/api";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -40,36 +41,43 @@ function App() {
   console.log(userLoggedIn);
 
   return (
-    <div className="main">
+    <>
       <Nav openModal={openModal} setOpenModal={setOpenModal} />
-      <Routes>
-        <Route
-          path="/"
-          element={<Home openModal={openModal} setOpenModal={setOpenModal} />}
-        />
-        <Route path="/signin" element={<Login />} />
-        <Route
-          path="/data-collected"
-          element={<DataCollected userLoggedIn={userLoggedIn} />}
-        />
-        {userLoggedIn?.isAdmin &&
-          <Route path="/signup" element={<Signup userLoggedIn={userLoggedIn} />} />}
-        <Route path="/*" element={<NotFound />} />
-        <Route path="/Signout" element={<Signout />} />
-        <Route path="/Contact" element={<Contact />} />
-        {userLoggedIn?.isAdmin && (
+      <div className="main">
+        <Sidebar />
+        <Routes>
           <Route
-            path="/add-user-project"
-            element={<ProjectForm userLoggedIn={userLoggedIn} />}
+            path="/"
+            element={<Home openModal={openModal} setOpenModal={setOpenModal} />}
           />
-        )}
-        <Route path="/add-project" element={<AddProject />} />
-        <Route path="/project/:id" element={<ProjectPage />} />
-        <Route path="/admin-page" element={<AdminPage />} />
-        <Route path="/manage-projects" element={<AdminProject />} />
-        <Route path="/user-contribution" element={<UserContribution />} />
-      </Routes>
-    </div>
+          <Route path="/signin" element={<Login />} />
+          <Route
+            path="/data-collected"
+            element={<DataCollected userLoggedIn={userLoggedIn} />}
+          />
+          {userLoggedIn?.isAdmin && (
+            <Route
+              path="/signup"
+              element={<Signup userLoggedIn={userLoggedIn} />}
+            />
+          )}
+          <Route path="/*" element={<NotFound />} />
+          <Route path="/Signout" element={<Signout />} />
+          <Route path="/Contact" element={<Contact />} />
+          {userLoggedIn?.isAdmin && (
+            <Route
+              path="/add-user-project"
+              element={<ProjectForm userLoggedIn={userLoggedIn} />}
+            />
+          )}
+          <Route path="/add-project" element={<AddProject />} />
+          <Route path="/project/:id" element={<ProjectPage />} />
+          <Route path="/admin-page" element={<AdminPage />} />
+          <Route path="/manage-projects" element={<AdminProject />} />
+          <Route path="/user-contribution" element={<UserContribution />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 

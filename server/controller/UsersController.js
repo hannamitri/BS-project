@@ -14,7 +14,6 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getUserByEmail = async (req, res) => {
-
   const { email } = req.body;
 
   let tableName = "Users";
@@ -38,11 +37,20 @@ exports.deleteUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  const { id, Name, Email, Password, location, pn, isProfessional, isAdmin } = req.body;
+  const {
+    user_id,
+    name,
+    email,
+    password,
+    location,
+    phone_number,
+    isProfessional,
+    isAdmin,
+  } = req.body;
 
-  let updateSql = `UPDATE Users set user_name = "${Name}", password = "${Password}", \
-    location = "${location}", email = "${Email}", phone_number ="${pn}", isProfessional ="${isProfessional}",isAdmin ="${isAdmin}"\
-        WHERE user_id = ${id}`;
+  let updateSql = `UPDATE Users set user_name = "${name}", password = "${password}", \
+    location = "${location}", email = "${email}", phone_number ="${phone_number}", isProfessional ="${isProfessional}",isAdmin ="${isAdmin}"\
+        WHERE user_id = ${user_id}`;
 
   console.log(updateSql);
 
@@ -53,7 +61,8 @@ exports.updateUser = (req, res) => {
 };
 
 exports.insertUser = (req, res) => {
-  const { Name, Email, Password, Location, isProfessional, pn, isAdmin } = req.body;
+  const { Name, Email, Password, Location, isProfessional, pn, isAdmin } =
+    req.body;
   let saveSql = `INSERT INTO Users(user_name, phone_number, isProfessional ,Location, email,Password,isAdmin) VALUES\
     ("${Name}","${pn}", "${isProfessional}", "${Location}", "${Email}", "${Password}", "${isAdmin}")`;
   console.log(saveSql);
