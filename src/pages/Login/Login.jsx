@@ -18,12 +18,19 @@ import { z } from "zod";
 import LoginIllustration from "../../images/Login/wfh_1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
+import { getAll } from "../../api/api";
 
 export const Login = ({ openModal, setOpenModal }) => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+
+  const getUsers = async () => {
+    const data = await getAll();
+    setUsers(data);
+  };
 
   const schema = z.object({
     email: z.string().email({ message: "Invalid email" }),
@@ -31,6 +38,10 @@ export const Login = ({ openModal, setOpenModal }) => {
       .string()
       .min(6, { message: "Your password is at least 6 characters" }),
   });
+
+  const getSpecificUser = users?.data?.find(
+    (user) => user.email === "mitreioi@gmail.com"
+  );
 
   async function trySignin({ email, password }) {
     setUserNotFound(false);
@@ -68,6 +79,12 @@ export const Login = ({ openModal, setOpenModal }) => {
 
     schema: zodResolver(schema),
   });
+
+  useEffect(() => {
+    getUsers();
+
+    console.log(getSpecificUser);
+  }, []);
 
   return (
     <div className={`login__wrapper ${openModal ? "showLogin" : ""}`}>

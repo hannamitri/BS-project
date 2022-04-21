@@ -7,13 +7,14 @@ import {
   Skeleton,
   RadioGroup,
   Radio,
+  Input,
 } from "@mantine/core";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
-import { getAll, deleteUser, updateUser, updateProject } from "../../api/api";
+import { getAll, deleteUser, updateUser } from "../../api/api";
 import { HiOutlineAtSymbol } from "react-icons/hi";
 import { FaUserAlt } from "react-icons/fa";
 import { useForm } from "@mantine/form";
+import "./AdminPage.scss";
 
 export const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -33,23 +34,12 @@ export const AdminPage = () => {
   const [userIsAdmin, setuserIsAdmin] = useState("");
   const numberOfRowsInPaginaton = 10;
   const [userId, setUserId] = useState("");
+  const [updatedList, setUpdatedList] = useState([]);
 
-  const arrayUsers = [];
   const getUsers = async () => {
-    const systemusers = await getAll();
-    systemusers?.data?.forEach((element) => {
-      let user = {
-        user_id: `${element?.user_id}`,
-        user_name: element?.user_name,
-        pn: element?.phone_number,
-        isProf: element?.isProfessional,
-        location: element?.Location,
-        email: element?.email,
-        isAdmin: element?.isAdmin,
-      };
-      arrayUsers.push(user);
-    });
-    setAllUsers(systemusers);
+    const data = await getAll();
+    setAllUsers(data);
+    setUpdatedList(data?.data);
   };
 
   const deleteUserById = async (user_id) => {
@@ -94,17 +84,8 @@ export const AdminPage = () => {
     setUserIsProfessional(userIsProfessional ? "yes" : "no");
     setLocation(location);
     setEmail(email);
-    setuserIsAdmin(userIsAdmin ? "yes" : "no")
+    setuserIsAdmin(userIsAdmin ? "yes" : "no");
   };
-
-  // id
-  // Name
-  // Email
-  // Password
-  // location
-  // pn
-  // isProfessional
-  // isAdmin
 
   const trySubmit = async () => {
     const user = {
@@ -114,23 +95,35 @@ export const AdminPage = () => {
       password,
       location,
       phone_number: phoneNumber,
-      isProfessional: (userIsProfessional === "yes") ? 1 : 0,
-      isAdmin: (userIsAdmin === "yes") ? 1 : 0,
+      isProfessional: userIsProfessional === "yes" ? 1 : 0,
+      isAdmin: userIsAdmin === "yes" ? 1 : 0,
     };
     updateUserData(user);
     setUserId(singleUserId);
     setOpened(false);
   };
 
-  const rows = allUsers?.data?.length ? (
-    allUsers?.data
+  const filterUserList = (event) => {
+    let newUpdatedList = allUsers?.data;
+    newUpdatedList = newUpdatedList.filter(function (item) {
+      console.log(newUpdatedList);
+      return (
+        item.user_name
+          .toLowerCase()
+          .search(event.target.value.toLowerCase()) !== -1
+      );
+    });
+    setUpdatedList(newUpdatedList);
+  };
+
+  const rows = allUsers?.data ? (
+    updatedList
       ?.slice(
         activePage * numberOfRowsInPaginaton - numberOfRowsInPaginaton,
         activePage * numberOfRowsInPaginaton
       )
       .map((user) => (
         <tr key={user.user_id}>
-          <td>{user.user_id}</td>
           <td>{user.user_name}</td>
           <td>{user.password}</td>
           <td>{user.phone_number}</td>
@@ -178,17 +171,22 @@ export const AdminPage = () => {
   useEffect(() => {
     getUsers();
     setUserId(0);
-    console.log("allUsers");
   }, [userId]);
   return (
     <div style={{ display: "flex" }}>
       <div>
-        <h1>List of Users</h1>
+        <h1 className="admin__users--title">Users({updatedList?.length})</h1>
+        <div className="admin__users--search-input">
+          <Input
+            variant="default"
+            onChange={(event) => filterUserList(event)}
+            placeholder="Search users"
+          />
+        </div>
         <div>
           <Table striped highlightOnHover>
             <thead>
               <tr>
-                <th>ID </th>
                 <th>USER NAME</th>
                 <th>PASSWORD</th>
                 <th>PHONE NUMBER</th>
@@ -201,12 +199,14 @@ export const AdminPage = () => {
               </tr>
             </thead>
             <tbody>{rows}</tbody>
+            {console.log(updatedList)}
+            {!updatedList?.length && <tbody>No users found.</tbody>}
           </Table>
 
           <Pagination
             page={activePage}
             onChange={setPage}
-            total={Math.ceil(allUsers?.data?.length / numberOfRowsInPaginaton)}
+            total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
           />
         </div>
 
@@ -302,7 +302,11 @@ export const AdminPage = () => {
                   <Radio value="no" label="No" />
                 </RadioGroup>
 
-                <button className="button" type="submit" style={{ marginTop: "30px" }}>
+                <button
+                  className="button"
+                  type="submit"
+                  style={{ marginTop: "30px" }}
+                >
                   Update User
                 </button>
               </form>
