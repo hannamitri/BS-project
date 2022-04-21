@@ -59,3 +59,7 @@ a {
 svg {
   color: var(--primary);
 }
+
+.main {
+  display: flex;
+}
