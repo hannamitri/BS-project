@@ -91,10 +91,10 @@ export const AdminPage = () => {
     setUserName(userName);
     setPhoneNumber(phoneNumber);
     setPassword(password);
-    setUserIsProfessional(userIsProfessional);
+    setUserIsProfessional(userIsProfessional ? "yes" : "no");
     setLocation(location);
     setEmail(email);
-    setuserIsAdmin(userIsAdmin);
+    setuserIsAdmin(userIsAdmin ? "yes" : "no")
   };
 
   // id
@@ -114,8 +114,8 @@ export const AdminPage = () => {
       password,
       location,
       phone_number: phoneNumber,
-      isProfessional: userIsProfessional,
-      isAdmin: userIsAdmin,
+      isProfessional: (userIsProfessional === "yes") ? 1 : 0,
+      isAdmin: (userIsAdmin === "yes") ? 1 : 0,
     };
     updateUserData(user);
     setUserId(singleUserId);
@@ -261,15 +261,18 @@ export const AdminPage = () => {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
-                <TextInput
-                  id="project__input--name"
-                  required
-                  icon={<FaUserAlt size={16} />}
+
+                <RadioGroup
                   label="Is Professional"
-                  placeholder="Is Professional"
+                  icon={<FaUserAlt size={16} />}
+                  required
                   value={userIsProfessional}
-                  onChange={(e) => setUserIsProfessional(e.target.value)}
-                />
+                  onClick={(e) => setUserIsProfessional(e.target.value)}
+                >
+                  <Radio value="yes" label="Yes" />
+                  <Radio value="no" label="No" />
+                </RadioGroup>
+
                 <TextInput
                   id="project__input--name"
                   required
@@ -288,27 +291,16 @@ export const AdminPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <TextInput
-                  id="project__input--name"
+                <RadioGroup
+                  label="Is Admin"
                   required
                   icon={<FaUserAlt size={16} />}
-                  label="Is Admin"
-                  placeholder="Is Admin"
                   value={userIsAdmin}
-                  onChange={(e) => setuserIsAdmin(e.target.value)}
-                />
-                {/* <RadioGroup
-                  label="Select User's Role"
-                  description="This is define a User's Role"
-                  required
-                  {...form.getInputProps("role")}
+                  onClick={(e) => setuserIsAdmin(e.target.value)}
                 >
-                  <Radio value="citizen" label="Citizen" />
-
-                  <Radio value="professional" label="Professional" />
-
-                  <Radio value="admin" label="Admin" />
-                </RadioGroup> */}
+                  <Radio value="yes" label="Yes" />
+                  <Radio value="no" label="No" />
+                </RadioGroup>
 
                 <button className="button" type="submit" style={{ marginTop: "30px" }}>
                   Update User
