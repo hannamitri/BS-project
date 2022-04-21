@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import { FiDatabase } from "react-icons/fi";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
+
 export const DataCollected = ({ userLoggedIn }) => {
   const { user, loading, setUser } = useContext(UserContext);
   const [userNotFound, setUserNotFound] = useState(false);
