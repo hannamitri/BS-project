@@ -39,30 +39,15 @@ export const Login = ({ openModal, setOpenModal }) => {
       .min(6, { message: "Your password is at least 6 characters" }),
   });
 
-  const getSpecificUser = users?.data?.find(
-    (user) => user.email === "mitreioi@gmail.com"
-  );
-
   async function trySignin({ email, password }) {
-    setUserNotFound(false);
-    setLoadingState(true);
-
-    let { user, error } = await supabase.auth.signIn({
-      email,
-      password,
-    });
-
-    if (error) {
-      setLoadingState(false);
-      if (error.message !== "Invalid login credentials") {
-        throw new Error(error.message);
-      }
-      setUserNotFound(true);
-    }
+    const getSpecificUser = users?.data?.find((user) => user.email === email);
+    console.log(getSpecificUser);
     setLoadingState(false);
-    if (user) {
-      setUser(user);
+    console.log(getSpecificUser.password === password);
+
+    if (getSpecificUser.password === password) {
       navigate("/");
+      localStorage.setItem("userLogginIn", JSON.stringify(getSpecificUser));
       document.body.classList.remove("login__open");
     }
   }
@@ -82,8 +67,6 @@ export const Login = ({ openModal, setOpenModal }) => {
 
   useEffect(() => {
     getUsers();
-
-    console.log(getSpecificUser);
   }, []);
 
   return (

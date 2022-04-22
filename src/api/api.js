@@ -21,6 +21,7 @@ const getAll = async () => {
     .catch((err) => err.response);
 };
 
+
 const updateUser = async (data) => {
   let url = `${baseUrl}/updateUser`;
   return await axios

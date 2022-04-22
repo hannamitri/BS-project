@@ -9,7 +9,7 @@ import { FiDatabase } from "react-icons/fi";
 import { AiOutlineUserAdd, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
 
-const Sidebar = () => {
+const Sidebar = ({ loggedInUser }) => {
   const [users, setUsers] = useState([]);
   const { user, loading } = useContext(UserContext);
 
@@ -24,7 +24,6 @@ const Sidebar = () => {
 
   useEffect(() => {
     getUsers();
-    console.log(userLoggedIn);
     if (loading) {
       return (
         <div>
@@ -42,8 +41,9 @@ const Sidebar = () => {
             <MdOutlineAssignment /> Projects
           </Link>
         </div>
-        {user &&
-          (userLoggedIn ? (
+
+        {loggedInUser &&
+          (loggedInUser ? (
             <div className="sidebar__links">
               <Link to="/data-collected">
                 <FiDatabase />
@@ -60,8 +60,8 @@ const Sidebar = () => {
             />
           ))}
 
-        {user &&
-          (userLoggedIn?.isAdmin ? (
+        {loggedInUser &&
+          (loggedInUser?.isAdmin ? (
             <>
               <div className="sidebar__links">
                 <Link to="/add-user-project">
@@ -80,8 +80,8 @@ const Sidebar = () => {
             />
           ))}
 
-        {user &&
-          (userLoggedIn?.isProfessional ? (
+        {loggedInUser &&
+          (loggedInUser?.isProfessional ? (
             <>
               <div className="sidebar__links">
                 <Link to="/add-project">
@@ -100,8 +100,8 @@ const Sidebar = () => {
             />
           ))}
 
-        {user &&
-          (userLoggedIn?.isAdmin ? (
+        {loggedInUser &&
+          (loggedInUser?.isAdmin ? (
             <>
               <div className="sidebar__links">
                 <Link to="/signup">

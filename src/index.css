@@ -10,6 +10,7 @@
 
 body {
   margin: 0;
+  background: #eef0f4;
 }
 
 a {
@@ -63,3 +64,7 @@ svg {
 .main {
   display: flex;
 }
+/* 
+.sidebar__open .sidebar__wrapper {
+  width: 0;
+} */
