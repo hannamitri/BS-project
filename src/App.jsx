@@ -60,7 +60,7 @@ function App() {
             path="/data-collected"
             element={<DataCollected userLoggedIn={userLoggedIn} />}
           />
-          {userLoggedIn?.isAdmin && (
+          {loggedInUser?.isAdmin && (
             <Route
               path="/signup"
               element={<Signup userLoggedIn={userLoggedIn} />}
@@ -69,7 +69,7 @@ function App() {
           <Route path="/*" element={<NotFound />} />
           <Route path="/Signout" element={<Signout />} />
           <Route path="/Contact" element={<Contact />} />
-          {userLoggedIn?.isAdmin && (
+          {loggedInUser?.isAdmin && (
             <Route
               path="/add-user-project"
               element={<ProjectForm userLoggedIn={userLoggedIn} />}

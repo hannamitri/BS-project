@@ -15,11 +15,13 @@ import { HiOutlineAtSymbol } from "react-icons/hi";
 import { FaUserAlt } from "react-icons/fa";
 import { useForm } from "@mantine/form";
 import "./AdminPage.scss";
+import { Signup } from "../Signup/Signup";
 
 export const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [activePage, setPage] = useState(1);
   const [opened, setOpened] = useState(false);
+  const [openedSignUp, setOpenedSignUp] = useState(false);
   const [successStatus, setSuccessStatus] = useState(false);
   const [errormessage, setErrorMessage] = useState("");
   const [errorStatus, setErrorStatus] = useState(false);
@@ -132,25 +134,23 @@ export const AdminPage = () => {
           <td>{user.email}</td>
           <td>{user.isAdmin ? "yes" : "no"}</td>
           <td>
-            <Group position="center">
-              <button
-                className="button"
-                onClick={() =>
-                  updateSingleUser(
-                    user.user_id,
-                    user.user_name,
-                    user.password,
-                    user.phone_number,
-                    user.isProfessional,
-                    user.Location,
-                    user.email,
-                    user.isAdmin
-                  )
-                }
-              >
-                Edit user
-              </button>
-            </Group>
+            <button
+              className="button"
+              onClick={() =>
+                updateSingleUser(
+                  user.user_id,
+                  user.user_name,
+                  user.password,
+                  user.phone_number,
+                  user.isProfessional,
+                  user.Location,
+                  user.email,
+                  user.isAdmin
+                )
+              }
+            >
+              Edit user
+            </button>
           </td>
           <td>
             <button
@@ -175,13 +175,24 @@ export const AdminPage = () => {
   return (
     <div style={{ display: "flex" }}>
       <div>
-        <h1 className="admin__users--title">Users({updatedList?.length})</h1>
-        <div className="admin__users--search-input">
-          <Input
-            variant="default"
-            onChange={(event) => filterUserList(event)}
-            placeholder="Search users"
-          />
+        <div className="admin__users--title-wrapper">
+          <div>
+            <h1 className="admin__users--title">
+              Users({updatedList?.length})
+            </h1>
+            <div className="admin__users--search-input">
+              <Input
+                variant="default"
+                onChange={(event) => filterUserList(event)}
+                placeholder="Search users"
+              />
+            </div>
+          </div>
+          <div>
+            <button onClick={() => setOpenedSignUp(true)} className="button">
+              Add user
+            </button>
+          </div>
         </div>
         <div>
           <Table striped highlightOnHover>
@@ -211,11 +222,7 @@ export const AdminPage = () => {
         </div>
 
         <>
-          <Modal
-            opened={opened}
-            onClose={() => setOpened(false)}
-            title="Introduce yourself!"
-          >
+          <Modal opened={opened} onClose={() => setOpened(false)}>
             {errorStatus && (
               <Message
                 bgcolor="#f03e3e"
@@ -311,6 +318,12 @@ export const AdminPage = () => {
                 </button>
               </form>
             </div>
+          </Modal>
+        </>
+
+        <>
+          <Modal opened={openedSignUp} onClose={() => setOpenedSignUp(false)}>
+            <Signup />
           </Modal>
         </>
       </div>

@@ -29,7 +29,7 @@ export const Nav = ({ loggedInUser }) => {
   // );
 
   const openModal = () => {
-    document.body.classList.add(" modal__open");
+    document.body.classList += " login__open";
   };
 
   const openSidebar = () => {

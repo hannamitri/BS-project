@@ -1,7 +1,10 @@
-.admin__users--title {
+.admin__users--title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 7px 10px;
-}
 
-.admin__users--search-input {
-  width: fit-content;
+  .admin__users--search-input {
+    width: fit-content;
+  }
 }
