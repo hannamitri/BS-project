@@ -9,27 +9,42 @@ import Logo from "../../images/intranet.png";
 import { Skeleton } from "@mantine/core";
 import supabase from "../../lib/supabase";
 import { useNavigate } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { GrFormClose } from "react-icons/gr";
 
-export const Nav = () => {
+export const Nav = ({ loggedInUser }) => {
   const [users, setUsers] = useState([]);
   const { user, loading } = useContext(UserContext);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // const loggedInUser = JSON.parse(localStorage.getItem("userLogginIn"));
 
   const getUsers = async () => {
     const data = await getAll();
     setUsers(data);
   };
 
-  const userLoggedIn = users?.data?.find(
-    (item) => item?.email === (user?.email || user?.user?.email)
-  );
+  // const userLoggedIn = users?.data?.find(
+  //   (item) => item?.email === (user?.email || user?.user?.email)
+  // );
 
   const openModal = () => {
-    document.body.classList.add("login__open");
+    document.body.classList.add(" modal__open");
+  };
+
+  const openSidebar = () => {
+    document.body.classList.remove("sidebar__open");
+    setSidebarOpen(false);
+  };
+
+  const closeSidebar = () => {
+    document.body.classList += " sidebar__open";
+    setSidebarOpen(true);
   };
 
   const nav = useNavigate();
   const logout = () => {
-    supabase.auth.signOut();
+    localStorage.removeItem("userLogginIn");
     nav("/");
   };
 
@@ -50,25 +65,34 @@ export const Nav = () => {
   return (
     <>
       <nav className="nav__wrapper">
-        <div className="nav__logo">
-          <img src={Logo} alt="" />
+        <div className="nav__left">
+          <div className="nav__burger">
+            {sidebarOpen ? (
+              <GiHamburgerMenu onClick={() => openSidebar()} />
+            ) : (
+              <GrFormClose onClick={() => closeSidebar()} />
+            )}
+          </div>
+          <div className="nav__logo">
+            <img src={Logo} alt="" />
+          </div>
         </div>
 
-        {!user && (
+        {!loggedInUser && (
           <button className="button" onClick={() => openModal()}>
             Login
           </button>
         )}
 
-        {user &&
-          (userLoggedIn ? (
+        {loggedInUser &&
+          (loggedInUser ? (
             <div className="nav__user--account">
               <Group>
                 <Menu
                   placement="center"
                   control={
                     <div className="nav__profile--letter">
-                      {userLoggedIn?.user_name.split(" ")[0][0].toUpperCase()}
+                      {loggedInUser?.user_name.split(" ")[0][0].toUpperCase()}
                     </div>
                   }
                 >

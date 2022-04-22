@@ -24,6 +24,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const { user } = useContext(UserContext);
+  const loggedInUser = JSON.parse(localStorage.getItem("userLogginIn"));
 
   const getUsers = async () => {
     const data = await getAll();
@@ -42,9 +43,13 @@ function App() {
 
   return (
     <>
-      <Nav openModal={openModal} setOpenModal={setOpenModal} />
+      <Nav
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        loggedInUser={loggedInUser}
+      />
       <div className="main__container">
-        <Sidebar />
+        <Sidebar loggedInUser={loggedInUser} />
         <Routes>
           <Route
             path="/"

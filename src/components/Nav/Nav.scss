@@ -7,11 +7,25 @@
   background-color: #fbfbfd;
   padding: 0 15px;
 
-  .nav__logo {
+  .nav__left {
     display: flex;
-    img {
-      max-width: 200px;
-      height: 100%;
+    gap: 15px;
+    align-items: center;
+
+    > .nav__burger {
+      display: flex;
+      svg {
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+
+    .nav__logo {
+      display: flex;
+      img {
+        max-width: 200px;
+        height: 100%;
+      }
     }
   }
 
