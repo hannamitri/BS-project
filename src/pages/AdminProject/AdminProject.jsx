@@ -1,4 +1,3 @@
-import styles from "./AdminProject.css";
 import {
   Table,
   Pagination,
@@ -6,6 +5,7 @@ import {
   Button,
   Modal,
   Group,
+  Input,
 } from "@mantine/core";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
@@ -38,7 +38,9 @@ export const AdminProject = () => {
   const [singleProjectId, setSingleProjectId] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectCategory, setProjectCategory] = useState("");
+  const [updatedList, setUpdatedList] = useState([]);
   const [projectImage, setProjectImage] = useState("");
+  const [projectId, setProjectId] = useState("");
 
   const numberOfRowsInPaginaton = 10;
   const dtfUS = new Intl.DateTimeFormat("en", {
@@ -46,11 +48,10 @@ export const AdminProject = () => {
     day: "2-digit",
   });
 
-  const [projectId, setProjectId] = useState("");
-
   const getProjects = async () => {
     const data = await getAllProjects();
     setAllProjects(data);
+    setUpdatedList(data?.data);
   };
 
   const getUsers = async () => {
@@ -136,7 +137,7 @@ export const AdminProject = () => {
     }
   };
 
-  const rows = allProjects?.data
+  const rows = updatedList
     ?.slice(
       activePage * numberOfRowsInPaginaton - numberOfRowsInPaginaton,
       activePage * numberOfRowsInPaginaton
@@ -202,21 +203,40 @@ export const AdminProject = () => {
     },
   });
 
+  const filterUserList = (event) => {
+    let newUpdatedList = allProjects?.data;
+    newUpdatedList = newUpdatedList.filter(function (item) {
+      console.log(newUpdatedList);
+      return (
+        item.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1
+      );
+    });
+    setUpdatedList(newUpdatedList);
+  };
+
   useEffect(() => {
     getUsers();
     getProjects();
     getProjectsBetweenTwoDates(dtfUS.format(value[0]), dtfUS.format(value[1]));
-    console.log(projectId);
     setProjectId(0);
   }, [projectId]);
 
   return (
     <div style={{ display: "flex" }}>
-      <div className={styles.container}>
-        <div className={styles.wrapper}></div>
+      <div className="">
+        <div className=""></div>
         <div>
-          <h1 className={styles.title}>List of Projects</h1>
-          <div className={styles.wrapper}>
+          <h1 className="admin__users--title">
+            Projects({updatedList?.length})
+          </h1>
+          <div className="admin__users--search-input">
+            <Input
+              variant="default"
+              onChange={(event) => filterUserList(event)}
+              placeholder="Search users"
+            />
+          </div>
+          <div className="">
             <Table striped highlightOnHover>
               <thead>
                 <tr>
@@ -231,11 +251,10 @@ export const AdminProject = () => {
               <tbody>{rows}</tbody>
             </Table>
             <Pagination
+              color="dark"
               page={activePage}
               onChange={setPage}
-              total={Math.ceil(
-                allProjects?.data?.length / numberOfRowsInPaginaton
-              )}
+              total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
             />
           </div>
         </div>
@@ -264,7 +283,7 @@ export const AdminProject = () => {
             onClose={() => setOpened(false)}
             title="Introduce yourself!"
           >
-            {errorStatus && (
+            {/* {errorStatus && (
               <Message
                 bgcolor="#f03e3e"
                 title={errormessage}
@@ -279,7 +298,7 @@ export const AdminProject = () => {
                 setStatus={setSuccessStatus}
                 NotificationIcon={IoIosCheckbox}
               />
-            )}
+            )} */}
             <div>
               <form
                 className="project__form"

@@ -43,7 +43,7 @@ function App() {
   return (
     <>
       <Nav openModal={openModal} setOpenModal={setOpenModal} />
-      <div className="main">
+      <div className="main__container">
         <Sidebar />
         <Routes>
           <Route
