@@ -38,3 +38,12 @@ exports.getProjectsByUser = (req, res) => {
   });
 };
 
+exports.removeUserFromProject = (req, res) => {
+  const { user_id, project_id } = req.body;
+  let sql = `delete from users_manages_projects where user_id="${user_id}" and project_id="${project_id}"`;
+  console.log(sql);
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200).send(result);
+  });
+}

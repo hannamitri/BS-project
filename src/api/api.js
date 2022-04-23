@@ -206,6 +206,15 @@ const insertUsersProjects = async (data) => {
 };
 
 
+const removeUserFromProject = async (data) => {
+  let url = `${baseUrl}/removeUserFromProject`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+
 /**
  * DataProjects Apis
  */
@@ -262,6 +271,7 @@ export {
   getUsersProjects,
   getProjectsByUser,
   insertUsersProjects,
+  removeUserFromProject,
 
   //getProjectData
   getProjectData,
