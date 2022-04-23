@@ -56,12 +56,6 @@ export const Signup = ({ userLoggedIn }) => {
   const trySubmit = async ({ Password, Email, Name, Location, pn, role }) => {
     setUserExists(false);
     setLoadingState(true);
-    console.log(Password);
-    console.table([Password, Email, Name, Location, pn, role]);
-    let { user, error } = await supabase.auth.signUp({
-      email: Email,
-      password: Password,
-    });
 
     let adminValue = 0;
     let professionalValue = 0;
@@ -83,24 +77,11 @@ export const Signup = ({ userLoggedIn }) => {
       role,
     };
 
-    if (error) {
-      if (error.message === "User already registered") {
-        setUserExists(true);
-        setLoadingState(false);
-      } else {
-        setLoadingState(false);
-        throw new Error(error.message);
-      }
-    } else {
-      setDisabled(true);
-      if (await insertUser(userOBJ)) {
-        setSuccessStatus(true);
-      }
-      if (user) {
-        setUser(userLoggedIn);
-      }
-      setLoadingState(false);
+    setDisabled(true);
+    if (await insertUser(userOBJ)) {
+      setSuccessStatus(true);
     }
+    setLoadingState(false);
   };
 
   const form = useForm({
@@ -169,14 +150,14 @@ export const Signup = ({ userLoggedIn }) => {
           />
         )}
         <div className="sign-up__content--wrapper">
-          <div className="sign-up__img">
+          {/* <div className="sign-up__img">
             <img
               src={LoginIllustration}
               alt="Illustration"
               width={500}
               height={500}
             />
-          </div>
+          </div> */}
 
           <Box sx={{ maxWidth: 350 }} mx="auto" className="sign-up__content">
             <h1>Sign up</h1>

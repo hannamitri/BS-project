@@ -2,12 +2,10 @@ import {
   Table,
   Pagination,
   TextInput,
-  Button,
   Modal,
   Group,
   Input,
 } from "@mantine/core";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
 import { FaUserAlt } from "react-icons/fa";
@@ -21,8 +19,9 @@ import {
   getProjectsBetweenDates,
   getDataBetweenDates,
 } from "../../api/api";
-import { DatePicker, DateRangePicker } from "@mantine/dates";
+import { DateRangePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
+import "./AdminProject.scss";
 
 export const AdminProject = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -144,14 +143,13 @@ export const AdminProject = () => {
     )
     .map((project) => (
       <tr key={project.project_id}>
-        <td>{project.project_id}</td>
         <td>{project.name}</td>
         <td>{project.category}</td>
         <td>{project.date_created}</td>
         <td>
           <Group position="center">
             <button
-              className="button"
+              className="button admin__projects--button"
               onClick={() =>
                 updateSingleProject(
                   project.project_id,
@@ -167,7 +165,7 @@ export const AdminProject = () => {
         </td>
         <td>
           <button
-            className="button"
+            className="button admin__projects--button"
             onClick={() => deleteProjectById(project.project_id)}
           >
             Delete
@@ -222,14 +220,13 @@ export const AdminProject = () => {
   }, [projectId]);
 
   return (
-    <div style={{ display: "flex" }}>
-      <div className="">
-        <div className=""></div>
+    <div className="flex">
+      <div className="admin__projects--wrapper">
         <div>
           <h1 className="admin__users--title">
             Projects({updatedList?.length})
           </h1>
-          <div className="admin__users--search-input">
+          <div className="admin__projects--search-input">
             <Input
               variant="default"
               onChange={(event) => filterUserList(event)}
@@ -240,7 +237,6 @@ export const AdminProject = () => {
             <Table striped highlightOnHover>
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>NAME</th>
                   <th>CATEGORY</th>
                   <th>DATE CREATED</th>

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextInput, Select } from "@mantine/core";
-import { FaUserAlt } from "react-icons/fa";
-import { HiOutlineAtSymbol } from "react-icons/hi";
+import { Select } from "@mantine/core";
 import {
   getAll,
   getAllProjects,
@@ -9,23 +7,16 @@ import {
   getProjectsByUser,
 } from "../../api/api";
 import { useForm } from "@mantine/form";
-import "./UserContribution.css";
-import Message from "../../components/UI/Message/Message";
-import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 import { Skeleton } from "@mantine/core";
-import Project from "../../components/UI/Project/Project"
+import Project from "../../components/UI/Project/Project";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
-import DataCollectedSlide from "../../components/UI/DataCollectedSlide/DataCollectedSlide"
+import DataCollectedSlide from "../../components/UI/DataCollectedSlide/DataCollectedSlide";
+import "./UserContribution.scss";
 
 export const UserContribution = () => {
-  const [dataImage, setDataImage] = useState("");
-  const [errorStatus, setErrorStatus] = useState(false);
-  const [successStatus, setSuccessStatus] = useState(false);
-  const [errormessage, setErrorMessage] = useState("");
-  const [allProjects, setAllProjects] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [projectsOfUser, setProjectsOfUser] = useState([]);
   const [dataOfUser, setDataOfUser] = useState([]);
@@ -35,11 +26,6 @@ export const UserContribution = () => {
   const [displayProjects, setDisplayProjects] = useState(false);
   const [displayData, setDisplayData] = useState(false);
 
-
-  const getProjects = async () => {
-    const data = await getAllProjects();
-    setAllProjects(data);
-  };
   const getUsers = async () => {
     const users_data = await getAll();
     setAllUsers(users_data);
@@ -56,7 +42,6 @@ export const UserContribution = () => {
     });
     return newUsers;
   };
-
 
   const form = useForm({
     initialValues: {
@@ -75,7 +60,7 @@ export const UserContribution = () => {
     }
     const selected = allUsers?.data?.find((item) => item?.email === user.email);
 
-    setUserId(selected?.user_id)
+    setUserId(selected?.user_id);
 
     console.log(selected);
 
@@ -90,7 +75,6 @@ export const UserContribution = () => {
     let type = event?.target?.value;
 
     if (type === "") {
-      // console.log("Type cannot be empty");
       setDisplayProjects(false);
       setDisplayData(false);
     } else {
@@ -102,9 +86,9 @@ export const UserContribution = () => {
         console.log(dataOfUser?.data);
       } else {
         let projects = await getProjectsByUser(user);
-        console.log(projects?.data)
-        setProjectsOfUser(projects)
-        setDisplayProjects(true)
+        console.log(projects?.data);
+        setProjectsOfUser(projects);
+        setDisplayProjects(true);
         setDisplayData(false);
       }
     }
@@ -112,33 +96,16 @@ export const UserContribution = () => {
   const hideData = () => {
     setDisplayProjects(false);
     setDisplayData(false);
-  }
+  };
   useEffect(() => {
-    getProjects();
     getUsers();
-    setUserId(0)
+    setUserId(0);
   }, [userId]);
 
   return (
-    <div>
+    <div className="main__content--wrapper">
       <div className="project__form--wrapper" style={{ marginBottom: "50px" }}>
         <h1>View Contribution of Users</h1>
-        {errorStatus && (
-          <Message
-            bgcolor="#f03e3e"
-            title={errormessage}
-            setStatus={setErrorStatus}
-            NotificationIcon={IoIosCloseCircle}
-          />
-        )}
-        {successStatus && (
-          <Message
-            bgcolor="#38b000"
-            title="Project Added Successufully!!!"
-            setStatus={setSuccessStatus}
-            NotificationIcon={IoIosCheckbox}
-          />
-        )}
         <form className="project__form">
           <Select
             data={formatDataUsers()}
@@ -168,30 +135,41 @@ export const UserContribution = () => {
         </form>
       </div>
       <>
-        {displayProjects &&
-          <div id="#projectsOfUser">
+        {displayProjects && (
+          <div className="content__wrapper">
             <div className="projects__wrapper">
               {projectsOfUser.data ? (
-                projectsOfUser?.data?.slice(0, showMore).map((project, index) => (
-                  <>
-                    <Project
-                      key={index}
-                      name={project.name}
-                      category={project.category}
-                      date_created={project.date_created}
-                      projectImage={project.image}
-                      id={project.project_id}
-                    />
-                  </>
-                ))
-
+                projectsOfUser?.data
+                  ?.slice(0, showMore)
+                  .map((project, index) => (
+                    <>
+                      <Project
+                        key={index}
+                        name={project.name}
+                        category={project.category}
+                        date_created={project.date_created}
+                        projectImage={project.image}
+                        id={project.project_id}
+                      />
+                    </>
+                  ))
               ) : (
                 <>
                   {new Array(8).fill(0).map((_) => (
                     <div>
                       <Skeleton animate={false} height={175} mb="md" />
-                      <Skeleton animate={false} height={20} width={150} mb="md" />
-                      <Skeleton animate={false} height={20} width={100} mb="md" />
+                      <Skeleton
+                        animate={false}
+                        height={20}
+                        width={150}
+                        mb="md"
+                      />
+                      <Skeleton
+                        animate={false}
+                        height={20}
+                        width={100}
+                        mb="md"
+                      />
                       <Skeleton animate={false} height={35} width="85%" />
                     </div>
                   ))}
@@ -217,9 +195,9 @@ export const UserContribution = () => {
                 ))}
             </div>
           </div>
-        }
+        )}
       </>
-      {displayData &&
+      {displayData && (
         <div className="project__detail--wrapper">
           {/* <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1> */}
 
@@ -287,7 +265,7 @@ export const UserContribution = () => {
             </div>
           </Swiper>
         </div>
-      }
-    </div >
+      )}
+    </div>
   );
 };

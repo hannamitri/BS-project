@@ -1,20 +1,16 @@
-import styles from "./ProjectForm.module.scss";
+import "./ProjectForm.scss";
 import React, { useEffect, useState } from "react";
-import { MultiSelect, Box, Button, Group, Select, Loader } from "@mantine/core";
+import { MultiSelect, Box, Button, Group, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
   getAll,
   getAllProjects,
-  getDataBetweenDates,
-  getProjectId,
   getUsersbyProject,
   insertUsersProjects,
 } from "../../api/api";
 import LoginIllustration from "../../images/Login/data.svg";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import Message from "../../components/UI/Message/Message";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
-import e from "cors";
 
 export const ProjectForm = ({ userLoggedIn }) => {
   const [allProjects, setAllProjects] = useState([]);
@@ -135,12 +131,12 @@ export const ProjectForm = ({ userLoggedIn }) => {
   });
 
   return (
-    <div style={{ display: "flex" }}>
-      <div className={styles.mainContent}>
-        <article className={styles.leftview}>
+    <div className="flex">
+      <div className="add__users-project--wrapper">
+        <div className="add__users-project--image">
           <img src={LoginIllustration} alt="Illustration" width={500} />
-        </article>
-        <Box sx={{ maxWidth: 400 }} mx="auto" className={styles.rightview}>
+        </div>
+        <Box sx={{ maxWidth: 400 }} mx="auto">
           {errorStatus && (
             <Message
               bgcolor="#f03e3e"
@@ -179,7 +175,9 @@ export const ProjectForm = ({ userLoggedIn }) => {
               {...form.getInputProps("user")}
             />
             <Group position="left" mt="md" style={{ position: "relative" }}>
-              <Button type="submit">Submit data</Button>
+              <button className="button" type="submit">
+                Submit data
+              </button>
             </Group>
           </form>
         </Box>
