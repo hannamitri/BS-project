@@ -1,9 +1,18 @@
 .sidebar {
-  background-color: #fbfbfd;
+  transition: all 0.3s ease-in-out;
+  @media (max-width: 500px) {
+    position: fixed;
+    z-index: 1000;
+  }
+
+  transition: all 0.3s ease-in-out;
   height: calc(100vh - 60px);
+  transform: translateX(0);
 }
 
 .sidebar__wrapper {
+  transition: all 0.3s ease-in-out;
+  background-color: #fbfbfd;
   width: 200px;
   height: 100%;
 }
@@ -25,4 +34,9 @@
       color: var(--primary);
     }
   }
+}
+
+.sidebar__open .sidebar {
+  transform: translateX(-200px);
+  width: 0;
 }

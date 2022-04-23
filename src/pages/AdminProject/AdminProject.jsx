@@ -251,7 +251,6 @@ export const AdminProject = () => {
               <tbody>{rows}</tbody>
             </Table>
             <Pagination
-              color="dark"
               page={activePage}
               onChange={setPage}
               total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
