@@ -173,121 +173,116 @@ export const DataCollected = ({ userLoggedIn }) => {
 
   return (
     <div className="flex">
-      <div className="container">
-        {userNotFound && (
-          <Notification
-            icon={<X size={18} />}
-            color="red"
-            title="Signin failed"
-            styles={{
-              root: {
-                backgroundColor: "#FB5D64",
-                position: "absolute",
-                zIndex: 3,
-                opacity: 0.95,
-                top: 90,
-              },
-              title: { color: "228BE6", fontWeight: "bold" },
-              description: { color: "white" },
-              icon: {
-                color: "white",
-              },
-              closeButton: { color: "white", ":hover": { color: "black" } },
-            }}
-            onClose={() => setUserNotFound(false)}
-          >
-            A user was not found!
-          </Notification>
-        )}
+      {userNotFound && (
+        <Notification
+          icon={<X size={18} />}
+          color="red"
+          title="Signin failed"
+          styles={{
+            root: {
+              backgroundColor: "#FB5D64",
+              position: "absolute",
+              zIndex: 3,
+              opacity: 0.95,
+              top: 90,
+            },
+            title: { color: "228BE6", fontWeight: "bold" },
+            description: { color: "white" },
+            icon: {
+              color: "white",
+            },
+            closeButton: { color: "white", ":hover": { color: "black" } },
+          }}
+          onClose={() => setUserNotFound(false)}
+        >
+          A user was not found!
+        </Notification>
+      )}
 
-        <section className="view">
-          <div className="divContent">
-            <div className="leftView">
-              <img src={LoginIllustration} alt="Illustration" width={500} />
-              <Link to="/signup">View data</Link>
-            </div>
-            <Box sx={{ maxWidth: 300 }} mx="auto" className="rightview">
-              {errorStatus && (
-                <Message
-                  bgcolor="#f03e3e"
-                  title={errormessage}
-                  setStatus={setErrorStatus}
-                  NotificationIcon={IoIosCloseCircle}
-                />
+      <div className="data-collected__form">
+        <div>
+          <img src={LoginIllustration} alt="Illustration" width={300} />
+        </div>
+        <Box sx={{ maxWidth: 300 }} mx="auto">
+          {errorStatus && (
+            <Message
+              bgcolor="#f03e3e"
+              title={errormessage}
+              setStatus={setErrorStatus}
+              NotificationIcon={IoIosCloseCircle}
+            />
+          )}
+          {successStatus && (
+            <Message
+              bgcolor="#38b000"
+              title="Data Collected Uploaded Successufully!!!"
+              setStatus={setSuccessStatus}
+              NotificationIcon={IoIosCheckbox}
+            />
+          )}
+          <h1>Upload data</h1>
+          <form onSubmit={form.onSubmit(trySubmit)}>
+            <TextInput
+              required
+              label="Location Collected"
+              placeholder="Location"
+              {...form.getInputProps("location_collected")}
+            />
+            <DatePicker
+              placeholder="Pick date"
+              icon={<Calendar size={16} />}
+              label="Date Collected"
+              required
+              {...form.getInputProps("date_collected")}
+            />
+            <TimeInput
+              label="Time Collected"
+              format="12"
+              icon={<Clock size={16} />}
+              required
+              {...form.getInputProps("time_collected")}
+            />
+
+            <Select
+              data={formatDataProjects()}
+              label="Projects"
+              required
+              searchable
+              clearable
+              placeholder={"Select a Project"}
+              {...form.getInputProps("project_name")}
+            />
+            <Textarea
+              required
+              label="Description"
+              placeholder="your data"
+              icon={<FiDatabase size={16} />}
+              minRows={3}
+              autosize
+              maxRows={10}
+              {...form.getInputProps("description")}
+              styles={{
+                icon: {
+                  alignItems: "flex-start",
+                  marginTop: 16,
+                },
+              }}
+            />
+            <input type="file" onChange={uploadImage} />
+
+            <Group position="left" mt="md" style={{ position: "relative" }}>
+              {loadingState ? (
+                <span className="loading">
+                  <Loader />
+                </span>
+              ) : (
+                <button className="button" type="submit">
+                  Submit data
+                </button>
               )}
-              {successStatus && (
-                <Message
-                  bgcolor="#38b000"
-                  title="Data Collected Uploaded Successufully!!!"
-                  setStatus={setSuccessStatus}
-                  NotificationIcon={IoIosCheckbox}
-                />
-              )}
-              <h1>Upload data</h1>
-              <form onSubmit={form.onSubmit(trySubmit)}>
-                <TextInput
-                  required
-                  label="Location Collected"
-                  placeholder="Location"
-                  {...form.getInputProps("location_collected")}
-                />
-                <DatePicker
-                  placeholder="Pick date"
-                  icon={<Calendar size={16} />}
-                  label="Date Collected"
-                  required
-                  {...form.getInputProps("date_collected")}
-                />
-                <TimeInput
-                  label="Time Collected"
-                  format="12"
-                  icon={<Clock size={16} />}
-                  required
-                  {...form.getInputProps("time_collected")}
-                />
-
-                <Select
-                  data={formatDataProjects()}
-                  label="Projects"
-                  required
-                  searchable
-                  clearable
-                  placeholder={"Select a Project"}
-                  {...form.getInputProps("project_name")}
-                />
-                <Textarea
-                  required
-                  label="Description"
-                  placeholder="your data"
-                  icon={<FiDatabase size={16} />}
-                  minRows={3}
-                  autosize
-                  maxRows={10}
-                  {...form.getInputProps("description")}
-                  styles={{
-                    icon: {
-                      alignItems: "flex-start",
-                      marginTop: 16,
-                    },
-                  }}
-                />
-                <input type="file" onChange={uploadImage} />
-
-                <Group position="left" mt="md" style={{ position: "relative" }}>
-                  {loadingState ? (
-                    <span className="loading">
-                      <Loader />
-                    </span>
-                  ) : (
-                    <button className="button" type="submit">
-                      Submit data
-                    </button>
-                  )}
-                </Group>
-              </form>
-            </Box>
-          </div>
-        </section>
+            </Group>
+          </form>
+        </Box>
       </div>
     </div>
   );

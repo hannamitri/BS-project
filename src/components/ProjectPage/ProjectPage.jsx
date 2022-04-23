@@ -6,13 +6,10 @@ import {
   getUsersbyProject,
 } from "../../api/api";
 import "./ProjectPage.scss";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { Navigation } from "swiper";
 import { Skeleton } from "@mantine/core";
-import DataCollectedSlide from "../UI/DataCollectedSlide/DataCollectedSlide";
 import DataCollectedCard from "../UI/DataCollectedCard/DataCollectedCard";
 import deafultAvatar from "../../images/default-avatar.png";
 
