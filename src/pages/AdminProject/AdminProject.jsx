@@ -5,6 +5,7 @@ import {
   Modal,
   Group,
   Input,
+  useMantineTheme,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { HiOutlineAtSymbol } from "react-icons/hi";
@@ -18,6 +19,8 @@ import {
   updateProject,
   getProjectsBetweenDates,
   getDataBetweenDates,
+  getUsersbyProject,
+  removeUserFromProject
 } from "../../api/api";
 import { DateRangePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
@@ -26,6 +29,7 @@ import "./AdminProject.scss";
 export const AdminProject = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
+  const [projectUsers, setProjectUsers] = useState([]);
   const [dateProjects, setDateProjects] = useState([]);
   const [value, setValue] = useState([new Date(), new Date()]);
   const [activePage, setPage] = useState(1);
@@ -40,6 +44,10 @@ export const AdminProject = () => {
   const [updatedList, setUpdatedList] = useState([]);
   const [projectImage, setProjectImage] = useState("");
   const [projectId, setProjectId] = useState("");
+  const [viewUsers, setViewUsers] = useState(false);
+  const [selectedName, setSelectedName] = useState("");
+
+  const theme = useMantineTheme();
 
   const numberOfRowsInPaginaton = 10;
   const dtfUS = new Intl.DateTimeFormat("en", {
@@ -47,12 +55,28 @@ export const AdminProject = () => {
     day: "2-digit",
   });
 
+  const getUsersProject = async (id_project) => {
+    let project = {
+      project_id: id_project
+    }
+    const usersP = await getUsersbyProject(project);
+    setProjectUsers(usersP);
+  };
+
   const getProjects = async () => {
     const data = await getAllProjects();
     setAllProjects(data);
     setUpdatedList(data?.data);
   };
 
+  const removeUserFromChosenProject = async (idUser, idProject) => {
+    let information = {
+      user_id: idUser,
+      project_id: idProject,
+    }
+
+    await removeUserFromProject(information);
+  }
   const getUsers = async () => {
     const systemusers = await getAll();
     setAllUsers(systemusers);
@@ -171,6 +195,14 @@ export const AdminProject = () => {
             Delete
           </button>
         </td>
+        <td>
+          <button
+            className="button admin__projects--button"
+            onClick={() => viewListOfUsers(project?.project_id)}
+          >
+            View Users
+          </button>
+        </td>
       </tr>
     ));
 
@@ -193,6 +225,17 @@ export const AdminProject = () => {
     setProjectId(singleProjectId);
     setOpened(false);
   };
+
+  const viewListOfUsers = (project_id) => {
+    setViewUsers(true);
+    getUsersProject(project_id);
+    setSingleProjectId(project_id);
+    const selectedProject = allProjects?.data?.find(
+      (item) => item?.project_id === project_id
+    );
+    setSelectedName(selectedProject?.name)
+  };
+
 
   const form = useForm({
     initialValues: {
@@ -217,6 +260,7 @@ export const AdminProject = () => {
     getProjects();
     getProjectsBetweenTwoDates(dtfUS.format(value[0]), dtfUS.format(value[1]));
     setProjectId(0);
+    getUsersProject();
   }, [projectId]);
 
   return (
@@ -242,6 +286,7 @@ export const AdminProject = () => {
                   <th>DATE CREATED</th>
                   <th>EDIT</th>
                   <th>DELETE</th>
+                  <th>View Users</th>
                 </tr>
               </thead>
               <tbody>{rows}</tbody>
@@ -327,6 +372,36 @@ export const AdminProject = () => {
                   Update Project
                 </button>
               </form>
+            </div>
+          </Modal>
+          <Modal opened={viewUsers} onClose={() => setViewUsers(false)} size={650}
+            overlayOpacity={0.85} overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
+            transition="fade"
+            transitionDuration={600}
+            transitionTimingFunction="ease"
+          >
+            <h3>List of Users belonging to project :  {selectedName}</h3>
+            <div>
+              <Table striped highlightOnHover>
+                <thead>
+                  <tr>
+                    <th>USER NAME</th>
+                    <th>EMAIL</th>
+                    <th>REMOVE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {projectUsers?.data?.map((usersData, index) => (
+                    <tr key={index}>
+                      <td>{usersData.user_name}</td>
+                      <td>{usersData.email}</td>
+                      <td>
+                        <button className="button" onClick={() => removeUserFromChosenProject(usersData?.user_id, singleProjectId)} >Remove</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
             </div>
           </Modal>
         </>

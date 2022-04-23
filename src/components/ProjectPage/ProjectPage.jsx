@@ -18,6 +18,7 @@ const ProjectPage = () => {
   const [projectData, setProjectData] = useState([]);
   const [users, setUsers] = useState([]);
 
+
   const id = useParams().id;
   const original_project = allProjects?.data?.find(
     (project) => project.name.replace(/ /g, "-").toLowerCase() === id
@@ -44,15 +45,18 @@ const ProjectPage = () => {
     const projectUsers = await getUsersbyProject(project);
     setUsers(projectUsers);
   };
-
-  console.log(original_project?.project_id);
-
+  const getUserName = (id) => {
+    const username = users?.data?.find(
+      (item) => item?.user_id === id
+    );
+    return username?.user_name
+  }
   useEffect(() => {
     getProjects();
     getDataByProjectId();
     getUsersByProjectID();
   }, [original_project?.project_id]);
-
+  console.log(projectData?.data)
   return (
     <div className="main__content--wrapper">
       <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1>
@@ -70,6 +74,8 @@ const ProjectPage = () => {
                       dataCollectedLocation={item.location_collected}
                       dataCollectedTime={item.time_collected}
                       dataCollectedDescription={item.description}
+                      dataCollectedUser={getUserName(item.user_id)}
+                      dataCollectedTitle={item.Title}
                     />
                   </>
                 )
@@ -92,7 +98,11 @@ const ProjectPage = () => {
             users?.data?.map((usersData, index) => (
               <div key={index} className="data-collected__users--list">
                 <div className="data-collected__users--image">
-                  <img src={deafultAvatar} alt="" />
+                  {usersData?.profile ? (
+                    < img src={usersData?.profile} alt="" />
+                  )
+                    : < img src={deafultAvatar} alt="" />
+                  }
                 </div>
                 <div>
                   <div>{usersData.user_name}</div>

@@ -6,8 +6,10 @@ const DataCollectedCard = ({
   dataCollectedImage,
   dataCollectedDate,
   dataCollectedLocation,
+  dataCollectedTitle,
   dataCollectedTime,
   dataCollectedDescription,
+  dataCollectedUser,
 }) => {
   return (
     <div className="data-collected__card">
@@ -23,14 +25,14 @@ const DataCollectedCard = ({
             </div>
             <div className="data-collected__date">08:10 am</div>
           </div>
-          <h2 className="data-collected__title">Nights in Koura</h2>
+          <h2 className="data-collected__title">{dataCollectedTitle}</h2>
           <div className="data-collected__description">
             {dataCollectedDescription}
           </div>
         </div>
       </div>
       <div className="data-collected__name">
-        Posted by <span>Hanna Mitri</span>
+        Posted by <span>{dataCollectedUser}</span>
       </div>
     </div>
   );

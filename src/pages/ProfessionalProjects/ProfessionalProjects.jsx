@@ -42,6 +42,8 @@ export const ProfessionalProjects = ({ userLoggedIn }) => {
     const [projectImage, setProjectImage] = useState("");
     const [projectId, setProjectId] = useState("");
     const [viewUsers, setViewUsers] = useState(false);
+    const [selectedName, setSelectedName] = useState("");
+
     const theme = useMantineTheme();
 
     const numberOfRowsInPaginaton = 10;
@@ -211,6 +213,10 @@ export const ProfessionalProjects = ({ userLoggedIn }) => {
         setViewUsers(true);
         getUsers(project_id);
         setSingleProjectId(project_id);
+        const selectedProject = allProjects?.data?.find(
+            (item) => item?.project_id === project_id
+        );
+        setSelectedName(selectedProject?.name)
     };
 
     const trySubmit = async () => {
@@ -351,6 +357,8 @@ export const ProfessionalProjects = ({ userLoggedIn }) => {
                     transitionTimingFunction="ease"
 
                 >
+                    <h3>List of Users belonging to project :  {selectedName}</h3>
+                    <br />
                     <div>
                         <Table striped highlightOnHover>
                             <thead>
@@ -363,11 +371,11 @@ export const ProfessionalProjects = ({ userLoggedIn }) => {
                             <tbody>
                                 {allUsers?.data?.map((usersData, index) => (
                                     <tr key={index}>
-                                        <th>{usersData.user_name}</th>
-                                        <th>{usersData.email}</th>
-                                        <th>
+                                        <td>{usersData.user_name}</td>
+                                        <td>{usersData.email}</td>
+                                        <td>
                                             <button className="button" onClick={() => removeUserFromChosenProject(usersData?.user_id, singleProjectId)} >Remove</button>
-                                        </th>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -75,4 +75,16 @@ exports.insertUser = async (req, res) => {
     console.log(result);
     res.status(200).send(result);
   });
-};
+}
+
+exports.setProfile = async (req, res) => {
+  const { profile, user_id } = req.body;
+  let saveSql = `UPDATE Users set profile="${profile}" WHERE user_id="${user_id}"`;
+  console.log(saveSql);
+  connection.query(saveSql, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    res.status(200).send(result);
+  });
+}
+

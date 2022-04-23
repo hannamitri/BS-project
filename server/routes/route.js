@@ -19,6 +19,7 @@ router.post("/insertUser", UsersController.insertUser);
 router.post("/deleteUser", UsersController.deleteUser);
 router.post("/getUserByEmail", UsersController.getUserByEmail);
 router.get("/getAll", UsersController.getAll);
+router.post("/setProfile", UsersController.setProfile);
 
 /*
  * Data Collected Routes

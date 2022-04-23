@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import { Group, Menu } from "@mantine/core";
-import { getAll } from "../../api/api";
+import { Group, Menu, Modal, useMantineTheme } from "@mantine/core";
+import { getAll, setProfile } from "../../api/api";
 import { FiLogOut } from "react-icons/fi";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import "./Nav.scss";
 import { Login } from "../../pages/Login/Login";
 import Logo from "../../images/intranet.png";
@@ -11,12 +12,18 @@ import supabase from "../../lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GrFormClose } from "react-icons/gr";
+import { Button, TextInput } from "@mantine/core";
+import { FaUserAlt } from "react-icons/fa";
+import { HiOutlineAtSymbol } from "react-icons/hi";
+import { useForm } from "@mantine/form";
 
 export const Nav = ({ loggedInUser }) => {
   const [users, setUsers] = useState([]);
   const { user, loading } = useContext(UserContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [viewProfile, setViewProfile] = useState(false);
+  const [dataImage, setDataImage] = useState("");
+  const theme = useMantineTheme();
   // const loggedInUser = JSON.parse(localStorage.getItem("userLogginIn"));
 
   const getUsers = async () => {
@@ -47,10 +54,58 @@ export const Nav = ({ loggedInUser }) => {
     localStorage.removeItem("userLogginIn");
     nav("/");
   };
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    if (file.size / 1024 > 1000) {
+      // setErrorStatus(true);
+      // setErrorMessage("Image size should be less than 1MB.");
+      console.log("noooo")
+    } else {
+      // setErrorStatus(false);
+      const base64 = await convertBase64(file);
+      console.log(base64)
+      setDataImage(base64);
+    }
+  };
+
+  const trySubmit = async () => {
+    const user = {
+      profile: dataImage,
+      user_id: loggedInUser?.user_id
+    }
+    console.log(user)
+    try {
+      if (await setProfile(user)) {
+        setDataImage("");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const form = useForm({
+    initialValues: {
+      category: "",
+      name: "",
+    },
+  });
 
   useEffect(() => {
     getUsers();
-
     if (loading) {
       return (
         <div>
@@ -60,7 +115,6 @@ export const Nav = ({ loggedInUser }) => {
     }
   }, []);
 
-  console.log(user);
 
   return (
     <>
@@ -102,6 +156,12 @@ export const Nav = ({ loggedInUser }) => {
                   >
                     Logout
                   </Menu.Item>
+                  <Menu.Item
+                    onClick={() => setViewProfile(true)}
+                    icon={<IoIosAddCircleOutline size={18} />}
+                  >
+                    Upload Profile
+                  </Menu.Item>
                 </Menu>
               </Group>
             </div>
@@ -112,6 +172,25 @@ export const Nav = ({ loggedInUser }) => {
             </div>
           ))}
       </nav>
+      <Modal opened={viewProfile} onClose={() => setViewProfile(false)} size={650}
+        overlayOpacity={0.85} overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
+        transition="fade"
+        transitionDuration={600}
+        transitionTimingFunction="ease"
+
+      >
+        <div>
+          <h3> Upload Profile Picture</h3>
+          <form className="project__form" onSubmit={form.onSubmit(trySubmit)} >
+            <input type="file" onChange={uploadImage} />
+            <br />
+            <img src={dataImage} alt="" />
+            <Button type="submit" style={{ marginTop: 15 }}>
+              Save
+            </Button>
+          </form>
+        </ div>
+      </Modal >
       <Login />
     </>
   );
