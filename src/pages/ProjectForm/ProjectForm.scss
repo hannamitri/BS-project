@@ -1,0 +1,14 @@
+.add__users-project--wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 8px;
+  width: 100%;
+
+  .add__users-project--image {
+    img {
+      max-width: 300px;
+    }
+  }
+}

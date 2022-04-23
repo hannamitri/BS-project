@@ -1,0 +1,13 @@
+.admin__projects--wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: 20px auto;
+
+  .admin__projects--button {
+    width: 100%;
+  }
+
+  .admin__projects--search-input {
+    width: fit-content;
+  }
+}

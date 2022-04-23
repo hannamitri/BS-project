@@ -7,7 +7,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 
 export const Contact = () => {
   return (
-    <div className="main__container">
+    <div className="flex">
       <div className="contact__container">
         <h1 className="contact__title">GET IN TOUCH!</h1>
         <div className="contact__wrapper">

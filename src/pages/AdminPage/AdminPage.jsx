@@ -15,11 +15,13 @@ import { HiOutlineAtSymbol } from "react-icons/hi";
 import { FaUserAlt } from "react-icons/fa";
 import { useForm } from "@mantine/form";
 import "./AdminPage.scss";
+import { Signup } from "../Signup/Signup";
 
 export const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [activePage, setPage] = useState(1);
   const [opened, setOpened] = useState(false);
+  const [openedSignUp, setOpenedSignUp] = useState(false);
   const [successStatus, setSuccessStatus] = useState(false);
   const [errormessage, setErrorMessage] = useState("");
   const [errorStatus, setErrorStatus] = useState(false);
@@ -123,38 +125,46 @@ export const AdminPage = () => {
         activePage * numberOfRowsInPaginaton
       )
       .map((user) => (
-        <tr key={user.user_id}>
-          <td>{user.user_name}</td>
+        <tr className="admin__users--table" key={user.user_id}>
+          <td className="admin__users--name-title">{user.user_name}</td>
           <td>{user.password}</td>
           <td>{user.phone_number}</td>
-          <td>{user.isProfessional ? "yes" : "no"}</td>
+          <td
+            className={`admin__users--status-${
+              user.isProfessional ? "green" : "red"
+            }`}
+          >
+            {user.isProfessional ? "yes" : "no"}
+          </td>
           <td>{user.Location}</td>
           <td>{user.email}</td>
-          <td>{user.isAdmin ? "yes" : "no"}</td>
-          <td>
-            <Group position="center">
-              <button
-                className="button"
-                onClick={() =>
-                  updateSingleUser(
-                    user.user_id,
-                    user.user_name,
-                    user.password,
-                    user.phone_number,
-                    user.isProfessional,
-                    user.Location,
-                    user.email,
-                    user.isAdmin
-                  )
-                }
-              >
-                Edit user
-              </button>
-            </Group>
+          <td
+            className={`admin__users--status-${user.isAdmin ? "green" : "red"}`}
+          >
+            {user.isAdmin ? "yes" : "no"}
           </td>
           <td>
             <button
-              className="button"
+              className="button admin__users--button"
+              onClick={() =>
+                updateSingleUser(
+                  user.user_id,
+                  user.user_name,
+                  user.password,
+                  user.phone_number,
+                  user.isProfessional,
+                  user.Location,
+                  user.email,
+                  user.isAdmin
+                )
+              }
+            >
+              Edit user
+            </button>
+          </td>
+          <td>
+            <button
+              className="button admin__users--button"
               onClick={() => deleteUserById(user.user_id)}
             >
               Delete
@@ -173,15 +183,26 @@ export const AdminPage = () => {
     setUserId(0);
   }, [userId]);
   return (
-    <div style={{ display: "flex" }}>
-      <div>
-        <h1 className="admin__users--title">Users({updatedList?.length})</h1>
-        <div className="admin__users--search-input">
-          <Input
-            variant="default"
-            onChange={(event) => filterUserList(event)}
-            placeholder="Search users"
-          />
+    <div className="flex">
+      <div className="admin__users--wrapper">
+        <div className="admin__users--title-wrapper">
+          <div>
+            <h1 className="admin__users--title">
+              Users({updatedList?.length})
+            </h1>
+            <div className="admin__users--search-input">
+              <Input
+                variant="default"
+                onChange={(event) => filterUserList(event)}
+                placeholder="Search users"
+              />
+            </div>
+          </div>
+          <div>
+            <button onClick={() => setOpenedSignUp(true)} className="button">
+              Add user
+            </button>
+          </div>
         </div>
         <div>
           <Table striped highlightOnHover>
@@ -211,11 +232,7 @@ export const AdminPage = () => {
         </div>
 
         <>
-          <Modal
-            opened={opened}
-            onClose={() => setOpened(false)}
-            title="Introduce yourself!"
-          >
+          <Modal opened={opened} onClose={() => setOpened(false)}>
             {errorStatus && (
               <Message
                 bgcolor="#f03e3e"
@@ -311,6 +328,12 @@ export const AdminPage = () => {
                 </button>
               </form>
             </div>
+          </Modal>
+        </>
+
+        <>
+          <Modal opened={openedSignUp} onClose={() => setOpenedSignUp(false)}>
+            <Signup />
           </Modal>
         </>
       </div>

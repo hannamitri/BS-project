@@ -172,7 +172,7 @@ export const DataCollected = ({ userLoggedIn }) => {
   }, [userLoggedIn?.user_id]);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="flex">
       <div className="container">
         {userNotFound && (
           <Notification

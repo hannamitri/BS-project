@@ -13,6 +13,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import { Skeleton } from "@mantine/core";
 import DataCollectedSlide from "../UI/DataCollectedSlide/DataCollectedSlide";
+import DataCollectedCard from "../UI/DataCollectedCard/DataCollectedCard";
 
 const ProjectPage = () => {
   const [allProjects, setAllProjects] = useState([]);
@@ -55,72 +56,37 @@ const ProjectPage = () => {
   }, [original_project?.project_id]);
 
   return (
-    <div className="project__detail--wrapper">
+    <div className="main__content--wrapper">
       <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1>
 
-      <Swiper
-        slidesPerView={1}
-        navigation={!!projectData?.data?.length}
-        modules={[Navigation]}
-        className="data-collected__slider"
-      >
-        <div className="projects__detail">
-          {projectData?.data?.length ? (
-            projectData?.data?.map(
-              (projectdata, index) =>
-                projectdata.image && (
-                  <SwiperSlide>
-                    <DataCollectedSlide
-                      dataCollectedImage={projectdata.image}
-                      dataCollectedDate={projectdata.date_collected}
-                      dataCollectedLocation={projectdata.location_collected}
-                      dataCollectedTime={projectdata.time_collected}
-                      dataCollectedDescription={projectdata.description}
-                    />
-                  </SwiperSlide>
-                )
-            )
-          ) : (
-            <SwiperSlide>
-              <Skeleton
-                animate={false}
-                height={700}
-                width="90%"
-                mb="md"
-                mx="auto"
-              />
-              <Skeleton
-                animate={false}
-                height={20}
-                width="80%"
-                mb="md"
-                mx="auto"
-              />
-              <Skeleton
-                animate={false}
-                height={20}
-                width="80%"
-                mb="md"
-                mx="auto"
-              />
-              <Skeleton
-                animate={false}
-                height={20}
-                width="60%"
-                mb="md"
-                mx="auto"
-              />
-              <Skeleton
-                animate={false}
-                height={20}
-                width="80%"
-                mb="md"
-                mx="auto"
-              />
-            </SwiperSlide>
-          )}
-        </div>
-      </Swiper>
+      <div className="data-collected__card--wrapper">
+        {projectData?.data?.length ? (
+          projectData?.data.map(
+            (item, index) =>
+              item.image && (
+                <DataCollectedCard
+                  key={index}
+                  dataCollectedImage={item.image}
+                  dataCollectedDate={item.date_collected}
+                  dataCollectedLocation={item.location_collected}
+                  dataCollectedTime={item.time_collected}
+                  dataCollectedDescription={item.description}
+                />
+              )
+          )
+        ) : (
+          <>
+            {new Array(8).fill(0).map((_) => (
+              <div>
+                <Skeleton animate={false} height={175} mb="md" />
+                <Skeleton animate={false} height={20} width={150} mb="md" />
+                <Skeleton animate={false} height={20} width={100} mb="md" />
+                <Skeleton animate={false} height={35} width="85%" />
+              </div>
+            ))}
+          </>
+        )}
+      </div>
 
       <div>
         <h1>LIST OF USERS BELONGS TO PROJECT: {original_project?.name}</h1>
