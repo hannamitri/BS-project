@@ -1,20 +1,5 @@
-.project__detail--wrapper {
-  .swiper {
-    max-width: 1200px;
-    margin: 0 auto;
-
-    .data-collected__content--wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .data__collected--image {
-        img {
-          margin: 0 auto;
-          display: flex;
-          height: 600px;
-        }
-      }
-    }
-  }
+.data-collected__card--wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
 }

@@ -1,10 +1,41 @@
-.admin__users--title-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 7px 10px;
+.admin__users--wrapper {
+  max-width: 1400px;
+  width: 100%;
+  margin: 20px auto;
 
-  .admin__users--search-input {
-    width: fit-content;
+  .admin__users--title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+
+    .admin__users--search-input {
+      width: fit-content;
+    }
+  }
+
+  .admin__users--name-title {
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .admin__users--status-green {
+    color: green;
+    font-weight: 600;
+  }
+
+  .admin__users--status-red {
+    font-weight: 600;
+    color: red;
+  }
+
+  .admin__users--table {
+    td {
+      font-weight: 600;
+    }
+
+    .admin__users--button {
+      width: 100%;
+    }
   }
 }

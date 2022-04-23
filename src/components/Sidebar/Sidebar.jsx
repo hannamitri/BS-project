@@ -41,6 +41,11 @@ const Sidebar = ({ loggedInUser }) => {
             <MdOutlineAssignment /> Projects
           </Link>
         </div>
+        <div className="sidebar__links">
+          <Link to="/user-contribution">
+            <AiOutlineUserAdd /> User Contribution
+          </Link>
+        </div>
 
         {loggedInUser &&
           (loggedInUser ? (
@@ -103,12 +108,12 @@ const Sidebar = ({ loggedInUser }) => {
         {loggedInUser &&
           (loggedInUser?.isAdmin ? (
             <>
-              <div className="sidebar__links">
+              {/* <div className="sidebar__links">
                 <Link to="/signup">
                   <AiOutlineUserAdd />
                   Create User
                 </Link>
-              </div>
+              </div> */}
               <div className="sidebar__links">
                 <Link to="/admin-page">
                   <AiOutlineUserAdd />
