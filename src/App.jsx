@@ -11,6 +11,7 @@ import {
   AdminPage,
   AdminProject,
   UserContribution,
+  ProfessionalProjects,
 } from "./pages";
 import { Nav } from "./components";
 import ProjectPage from "./components/ProjectPage/ProjectPage";
@@ -58,7 +59,7 @@ function App() {
           <Route path="/signin" element={<Login />} />
           <Route
             path="/data-collected"
-            element={<DataCollected userLoggedIn={userLoggedIn} />}
+            element={<DataCollected userLoggedIn={loggedInUser} />}
           />
           {loggedInUser?.isAdmin && (
             <Route
@@ -80,6 +81,7 @@ function App() {
           <Route path="/admin-page" element={<AdminPage />} />
           <Route path="/manage-projects" element={<AdminProject />} />
           <Route path="/user-contribution" element={<UserContribution />} />
+          <Route path="/my-projects" element={<ProfessionalProjects userLoggedIn={loggedInUser} />} />
         </Routes>
       </div>
     </>

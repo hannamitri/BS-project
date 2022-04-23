@@ -117,6 +117,7 @@ export const DataCollected = ({ userLoggedIn }) => {
       setErrorStatus(false);
       const dataCollected = {
         description: values.description,
+        title: values.title,
         location_collected: values.location_collected,
         time_collected: values.time_collected,
         date_collected: values.date_collected,
@@ -125,10 +126,11 @@ export const DataCollected = ({ userLoggedIn }) => {
         user_id: +userLoggedIn?.user_id,
       };
       try {
-        if (insertDataCollected(dataCollected)) {
+        if (await insertDataCollected(dataCollected)) {
           setSuccessStatus(true);
           setErrorStatus(false);
           values.description = "";
+          values.title = "";
           values.location_collected = "";
           values.time_collected = null;
           values.date_collected = null;
@@ -146,6 +148,7 @@ export const DataCollected = ({ userLoggedIn }) => {
 
   const form = useForm({
     initialValues: {
+      title: "",
       description: "",
       location_collected: "",
       time_collected: "",
@@ -224,6 +227,12 @@ export const DataCollected = ({ userLoggedIn }) => {
           <form onSubmit={form.onSubmit(trySubmit)}>
             <TextInput
               required
+              label="Title"
+              placeholder="Subject"
+              {...form.getInputProps("title")}
+            />
+            <TextInput
+              required
               label="Location Collected"
               placeholder="Location"
               {...form.getInputProps("location_collected")}
@@ -237,6 +246,7 @@ export const DataCollected = ({ userLoggedIn }) => {
             />
             <TimeInput
               label="Time Collected"
+              hoursLabel="Hours" minutesLabel="Minutes" seconds="Seconds"
               format="12"
               icon={<Clock size={16} />}
               required

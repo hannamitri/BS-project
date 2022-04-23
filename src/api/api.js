@@ -53,7 +53,13 @@ const getUserByEmail = async (data) => {
     .then((response) => response)
     .catch((err) => err.response);
 };
-
+const setProfile = async (data) => {
+  let url = `${baseUrl}/setProfile`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
 /*
  * Data Collected Apis
  */
@@ -206,6 +212,15 @@ const insertUsersProjects = async (data) => {
 };
 
 
+const removeUserFromProject = async (data) => {
+  let url = `${baseUrl}/removeUserFromProject`;
+  return await axios
+    .post(url, data)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
+
 /**
  * DataProjects Apis
  */
@@ -235,6 +250,7 @@ export {
   //users
   getAll,
   updateUser,
+  setProfile,
   insertUser,
   deleteUser,
   getUserByEmail,
@@ -262,6 +278,7 @@ export {
   getUsersProjects,
   getProjectsByUser,
   insertUsersProjects,
+  removeUserFromProject,
 
   //getProjectData
   getProjectData,

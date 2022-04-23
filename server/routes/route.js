@@ -19,6 +19,7 @@ router.post("/insertUser", UsersController.insertUser);
 router.post("/deleteUser", UsersController.deleteUser);
 router.post("/getUserByEmail", UsersController.getUserByEmail);
 router.get("/getAll", UsersController.getAll);
+router.post("/setProfile", UsersController.setProfile);
 
 /*
  * Data Collected Routes
@@ -68,6 +69,7 @@ router.post("/isProfessional", SupabaseController.isHeAuth);
 router.post("/insertUsersProjects", UserProjectController.insert_Users_Projects);
 router.post("/getUsersbyProject", UserProjectController.getUsersbyProject);
 router.post("/getProjectsByUser", UserProjectController.getProjectsByUser)
+router.post("/removeUserFromProject", UserProjectController.removeUserFromProject)
 
 /**
  * DataProjectsController
