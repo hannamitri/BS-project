@@ -6,7 +6,6 @@ import { insertProject } from "../../api/api";
 import { useForm } from "@mantine/form";
 import "./AddProject.scss";
 import Message from "../../components/UI/Message/Message";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import { getAllProjects } from "../../api/api";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 
