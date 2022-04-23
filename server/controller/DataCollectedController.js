@@ -59,6 +59,7 @@ exports.updateDataCollected = (req, res) => {
 exports.insertDataCollected = (req, res) => {
   const {
     description,
+    title,
     location_collected,
     time_collected,
     date_collected,
@@ -66,8 +67,8 @@ exports.insertDataCollected = (req, res) => {
     project_id,
     user_id,
   } = req.body;
-  let saveSql = `INSERT INTO datacollected(description, location_collected, time_collected ,date_collected, image, project_id, user_id) VALUES\
-    ("${description}","${location_collected}", "${time_collected}", "${date_collected}", "${image}", "${project_id}" , "${user_id}")`;
+  let saveSql = `INSERT INTO datacollected(description,Title, location_collected, time_collected ,date_collected, image, project_id, user_id) VALUES\
+    ("${description}","${title}","${location_collected}", "${time_collected}", "${date_collected}", "${image}", "${project_id}" , "${user_id}")`;
 
   console.log(saveSql);
 
