@@ -1,5 +1,54 @@
-.data-collected__card--wrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+.data-collected__wrapper {
+  display: flex;
+  gap: 20px;
+
+  .data-collected__card--wrapper {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+
+    > div {
+      width: 275px;
+    }
+  }
+
+  .data-collected__users--list-wrapper {
+    background-color: white;
+    width: 225px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+
+    .data-collected__users--list {
+      display: flex;
+      gap: 10px;
+      color: #111111;
+      font-weight: 500;
+      font-size: 14px;
+      align-items: center;
+      letter-spacing: 0.3px;
+      line-height: 18px;
+      padding: 10px;
+
+      &:nth-of-type(odd) {
+        background-color: #ececec;
+
+        &:first-child {
+          border-radius: 12px 12px 0 0;
+        }
+      }
+
+      .data-collected__users--image {
+        display: flex;
+
+        img {
+          width: 50px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
 }
