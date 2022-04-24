@@ -62,6 +62,7 @@ export const Signup = ({ userLoggedIn }) => {
 
     if (role === "admin") {
       adminValue = 1;
+      professionalValue = 1;
     } else if (role === "professional") {
       professionalValue = 1;
     }

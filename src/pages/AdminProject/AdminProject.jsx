@@ -20,7 +20,7 @@ import {
   getProjectsBetweenDates,
   getDataBetweenDates,
   getUsersbyProject,
-  removeUserFromProject
+  removeUserFromProject,
 } from "../../api/api";
 import { DateRangePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
@@ -46,6 +46,7 @@ export const AdminProject = () => {
   const [projectId, setProjectId] = useState("");
   const [viewUsers, setViewUsers] = useState(false);
   const [selectedName, setSelectedName] = useState("");
+  const [removeProjectId, setRemoveProjectId] = useState("");
 
   const theme = useMantineTheme();
 
@@ -57,8 +58,8 @@ export const AdminProject = () => {
 
   const getUsersProject = async (id_project) => {
     let project = {
-      project_id: id_project
-    }
+      project_id: id_project,
+    };
     const usersP = await getUsersbyProject(project);
     setProjectUsers(usersP);
   };
@@ -70,13 +71,15 @@ export const AdminProject = () => {
   };
 
   const removeUserFromChosenProject = async (idUser, idProject) => {
+    setRemoveProjectId(idProject);
     let information = {
       user_id: idUser,
       project_id: idProject,
-    }
+    };
 
     await removeUserFromProject(information);
-  }
+  };
+
   const getUsers = async () => {
     const systemusers = await getAll();
     setAllUsers(systemusers);
@@ -233,9 +236,8 @@ export const AdminProject = () => {
     const selectedProject = allProjects?.data?.find(
       (item) => item?.project_id === project_id
     );
-    setSelectedName(selectedProject?.name)
+    setSelectedName(selectedProject?.name);
   };
-
 
   const form = useForm({
     initialValues: {
@@ -256,12 +258,15 @@ export const AdminProject = () => {
   };
 
   useEffect(() => {
+    setProjectId(0);
     getUsers();
     getProjects();
     getProjectsBetweenTwoDates(dtfUS.format(value[0]), dtfUS.format(value[1]));
-    setProjectId(0);
-    getUsersProject();
   }, [projectId]);
+
+  useEffect(() => {
+    getUsersProject();
+  }, [removeProjectId]);
 
   return (
     <div className="flex">
@@ -374,13 +379,16 @@ export const AdminProject = () => {
               </form>
             </div>
           </Modal>
-          <Modal opened={viewUsers} onClose={() => setViewUsers(false)} size={650}
-            overlayOpacity={0.85} overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
+          <Modal
+            opened={viewUsers}
+            onClose={() => setViewUsers(false)}
+            size={650}
+            overlayOpacity={0.85}
             transition="fade"
-            transitionDuration={600}
+            transitionDuration={300}
             transitionTimingFunction="ease"
           >
-            <h3>List of Users belonging to project :  {selectedName}</h3>
+            <h3>List of Users belonging to project : {selectedName}</h3>
             <div>
               <Table striped highlightOnHover>
                 <thead>
@@ -391,15 +399,29 @@ export const AdminProject = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {projectUsers?.data?.map((usersData, index) => (
-                    <tr key={index}>
-                      <td>{usersData.user_name}</td>
-                      <td>{usersData.email}</td>
-                      <td>
-                        <button className="button" onClick={() => removeUserFromChosenProject(usersData?.user_id, singleProjectId)} >Remove</button>
-                      </td>
-                    </tr>
-                  ))}
+                  {projectUsers?.data?.length ? (
+                    projectUsers?.data?.map((usersData, index) => (
+                      <tr key={index}>
+                        <td>{usersData.user_name}</td>
+                        <td>{usersData.email}</td>
+                        <td>
+                          <button
+                            className="button"
+                            onClick={() =>
+                              removeUserFromChosenProject(
+                                usersData?.user_id,
+                                singleProjectId
+                              )
+                            }
+                          >
+                            Remove
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <div>nothing</div>
+                  )}
                 </tbody>
               </Table>
             </div>

@@ -34,7 +34,7 @@ export const AdminPage = () => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [singleUserId, setSingleUserId] = useState("");
-  const [userIsAdmin, setuserIsAdmin] = useState("");
+  const [userIsAdmin, setUserIsAdmin] = useState("");
   const numberOfRowsInPaginaton = 10;
   const [userId, setUserId] = useState("");
   const [updatedList, setUpdatedList] = useState([]);
@@ -85,9 +85,12 @@ export const AdminPage = () => {
     setPhoneNumber(phoneNumber);
     setPassword(password);
     setUserIsProfessional(userIsProfessional ? "yes" : "no");
+    setRole(
+      userIsAdmin ? "Admin" : userIsProfessional ? "Professional" : "Citizen"
+    );
     setLocation(location);
     setEmail(email);
-    setuserIsAdmin(userIsAdmin ? "yes" : "no");
+    setUserIsAdmin(userIsAdmin ? "yes" : "no");
   };
 
   const trySubmit = async () => {
@@ -98,8 +101,8 @@ export const AdminPage = () => {
       password,
       location,
       phone_number: phoneNumber,
-      isProfessional: userIsProfessional === "yes" ? 1 : 0,
-      isAdmin: userIsAdmin === "yes" ? 1 : 0,
+      isProfessional: role === "Citizen" ? 0 : 1,
+      isAdmin: role === "Admin" ? 1 : 0,
     };
     updateUserData(user);
     setUserId(singleUserId);
@@ -119,6 +122,8 @@ export const AdminPage = () => {
     setUpdatedList(newUpdatedList);
   };
 
+  console.log(role, userIsAdmin);
+
   const rows = allUsers?.data ? (
     updatedList
       ?.slice(
@@ -130,27 +135,34 @@ export const AdminPage = () => {
           <td>
             <div className="users--image">
               {user?.profile ? (
-                < img src={user?.profile} alt="" />
-              )
-                : < img src={deafultAvatar} alt="" />
-              }
-            </div></td>
+                <img src={user?.profile} alt="" />
+              ) : (
+                <img src={deafultAvatar} alt="" />
+              )}
+            </div>
+          </td>
           <td className="admin__users--name-title">{user.user_name}</td>
           <td>{user.password}</td>
           <td>{user.phone_number}</td>
-          <td
-            className={`admin__users--status-${user.isProfessional ? "green" : "red"
-              }`}
+          {/* <td
+            className={`admin__users--status-${
+              user.isProfessional ? "green" : "red"
+            }`}
           >
             {user.isProfessional ? "yes" : "no"}
+          </td> */}
+          <td>
+            {user.isProfessional && user.isAdmin ? "Admin" : ""}
+            {user.isProfessional && !user.isAdmin ? "Professional" : ""}
+            {!user.isProfessional && !user.isAdmin ? "Citizen" : ""}
           </td>
           <td>{user.Location}</td>
           <td>{user.email}</td>
-          <td
+          {/* <td
             className={`admin__users--status-${user.isAdmin ? "green" : "red"}`}
           >
             {user.isAdmin ? "yes" : "no"}
-          </td>
+          </td> */}
           <td>
             <button
               className="button admin__users--button"
@@ -220,10 +232,11 @@ export const AdminPage = () => {
                 <th>USER NAME</th>
                 <th>PASSWORD</th>
                 <th>PHONE NUMBER</th>
-                <th>IS PROFESSIONAL</th>
+                {/* <th>IS PROFESSIONAL</th> */}
+                <th>ROLE</th>
                 <th>LOCATION</th>
                 <th>EMAIL</th>
-                <th>ISADMIN</th>
+                {/* <th>ISADMIN</th> */}
                 <th>EDIT</th>
                 <th>DELETE</th>
               </tr>
@@ -287,7 +300,7 @@ export const AdminPage = () => {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
 
-                <RadioGroup
+                {/* <RadioGroup
                   label="Is Professional"
                   icon={<FaUserAlt size={16} />}
                   required
@@ -296,7 +309,7 @@ export const AdminPage = () => {
                 >
                   <Radio value="yes" label="Yes" />
                   <Radio value="no" label="No" />
-                </RadioGroup>
+                </RadioGroup> */}
 
                 <TextInput
                   id="project__input--name"
@@ -316,15 +329,27 @@ export const AdminPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <RadioGroup
+                {/* <RadioGroup
                   label="Is Admin"
                   required
                   icon={<FaUserAlt size={16} />}
                   value={userIsAdmin}
-                  onClick={(e) => setuserIsAdmin(e.target.value)}
+                  onClick={(e) => setUserIsAdmin(e.target.value)}
                 >
                   <Radio value="yes" label="Yes" />
                   <Radio value="no" label="No" />
+                </RadioGroup> */}
+
+                <RadioGroup
+                  label="Role"
+                  required
+                  icon={<FaUserAlt size={16} />}
+                  value={role}
+                  onClick={(e) => setRole(e.target.value)}
+                >
+                  <Radio value="Citizen" label="Citizen" />
+                  <Radio value="Professional" label="Professional" />
+                  <Radio value="Admin" label="Admin" />
                 </RadioGroup>
 
                 <button
