@@ -73,11 +73,11 @@ export const Nav = ({ loggedInUser }) => {
     if (file.size / 1024 > 1000) {
       // setErrorStatus(true);
       // setErrorMessage("Image size should be less than 1MB.");
-      console.log("noooo")
+      console.log("noooo");
     } else {
       // setErrorStatus(false);
       const base64 = await convertBase64(file);
-      console.log(base64)
+      console.log(base64);
       setProfileImage(base64);
     }
   };
@@ -85,9 +85,9 @@ export const Nav = ({ loggedInUser }) => {
   const trySubmit = async () => {
     const user = {
       profile: profileImage,
-      user_id: loggedInUser?.user_id
-    }
-    console.log(user)
+      user_id: loggedInUser?.user_id,
+    };
+    console.log(user);
     try {
       if (await setProfile(user)) {
         setProfileImage("");
@@ -115,7 +115,6 @@ export const Nav = ({ loggedInUser }) => {
     }
   }, []);
 
-
   return (
     <>
       <nav className="nav__wrapper">
@@ -124,7 +123,8 @@ export const Nav = ({ loggedInUser }) => {
             {sidebarOpen ? (
               <GiHamburgerMenu onClick={() => openSidebar()} />
             ) : (
-              <GrFormClose onClick={() => closeSidebar()} />
+              <GiHamburgerMenu onClick={() => closeSidebar()} />
+              // <GrFormClose onClick={() => closeSidebar()} />
             )}
           </div>
           <div className="nav__logo">
@@ -172,16 +172,23 @@ export const Nav = ({ loggedInUser }) => {
             </div>
           ))}
       </nav>
-      <Modal opened={viewProfile} onClose={() => setViewProfile(false)} size={650}
-        overlayOpacity={0.85} overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
+      <Modal
+        opened={viewProfile}
+        onClose={() => setViewProfile(false)}
+        size={650}
+        overlayOpacity={0.85}
+        overlayColor={
+          theme.colorScheme === "dark"
+            ? theme.colors.dark[9]
+            : theme.colors.gray[2]
+        }
         transition="fade"
         transitionDuration={600}
         transitionTimingFunction="ease"
-
       >
         <div>
           <h3> Upload Profile Picture</h3>
-          <form className="project__form" onSubmit={form.onSubmit(trySubmit)} >
+          <form className="project__form" onSubmit={form.onSubmit(trySubmit)}>
             <input type="file" onChange={uploadImage} />
             <br />
             <img src={profileImage} alt="" className="user__profile" />
@@ -189,8 +196,8 @@ export const Nav = ({ loggedInUser }) => {
               Save
             </Button>
           </form>
-        </ div>
-      </Modal >
+        </div>
+      </Modal>
       <Login />
     </>
   );

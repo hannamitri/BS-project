@@ -18,7 +18,6 @@ const ProjectPage = () => {
   const [projectData, setProjectData] = useState([]);
   const [users, setUsers] = useState([]);
 
-
   const id = useParams().id;
   const original_project = allProjects?.data?.find(
     (project) => project.name.replace(/ /g, "-").toLowerCase() === id
@@ -45,17 +44,15 @@ const ProjectPage = () => {
     setUsers(projectUsers);
   };
   const getUserName = (id) => {
-    const username = users?.data?.find(
-      (item) => item?.user_id === id
-    );
-    return username?.user_name
-  }
+    const username = users?.data?.find((item) => item?.user_id === id);
+    return username?.user_name;
+  };
   useEffect(() => {
     getProjects();
     getDataByProjectId();
     getUsersByProjectID();
   }, [original_project?.project_id]);
-  console.log(projectData?.data)
+  console.log(projectData?.data);
   return (
     <div className="main__content--wrapper">
       <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1>
@@ -98,30 +95,25 @@ const ProjectPage = () => {
             {users?.data ? (
               users?.data?.map((usersData, index) => (
                 <div>
-
                   {usersData?.isProfessional ? (
-                    <div key={index} className="data-collected__users--list" >
+                    <div key={index} className="data-collected__users--list">
                       <div className="data-collected__users--image">
                         {usersData?.profile ? (
-                          < img src={usersData?.profile} alt="" />
-                        )
-                          : < img src={deafultAvatar} alt="" />
-                        }
+                          <img src={usersData?.profile} alt="" />
+                        ) : (
+                          <img src={deafultAvatar} alt="" />
+                        )}
                       </div>
                       <div>
                         <div>{usersData.user_name}</div>
                         <div>{usersData.Location}</div>
                       </div>
                     </div>
-                  ) :
-                    <div>
-                    </div>
-                  }
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
-
-
-              )
-              )
+              ))
             ) : (
               <div>
                 {/* <Skeleton
@@ -163,30 +155,25 @@ const ProjectPage = () => {
             {users?.data ? (
               users?.data?.map((usersData, index) => (
                 <div>
-
                   {!usersData?.isProfessional && !usersData?.isAdmin ? (
-                    <div key={index} className="data-collected__users--list" >
+                    <div key={index} className="data-collected__users--list">
                       <div className="data-collected__users--image">
                         {usersData?.profile ? (
-                          < img src={usersData?.profile} alt="" />
-                        )
-                          : < img src={deafultAvatar} alt="" />
-                        }
+                          <img src={usersData?.profile} alt="" />
+                        ) : (
+                          <img src={deafultAvatar} alt="" />
+                        )}
                       </div>
                       <div>
                         <div>{usersData.user_name}</div>
                         <div>{usersData.Location}</div>
                       </div>
                     </div>
-                  ) :
-                    <div>
-                    </div>
-                  }
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
-
-
-              )
-              )
+              ))
             ) : (
               <div>
                 {/* <Skeleton
