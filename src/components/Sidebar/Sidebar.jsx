@@ -81,6 +81,12 @@ const Sidebar = ({ loggedInUser }) => {
                   Include Users
                 </Link>
               </div>
+              <div className="sidebar__links">
+                <Link to="/my-projects">
+                  <AiOutlineUsergroupAdd />
+                  View Projects
+                </Link>
+              </div>
             </>
           ) : (
             <Skeleton
