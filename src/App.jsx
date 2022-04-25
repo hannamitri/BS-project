@@ -78,10 +78,17 @@ function App() {
           )}
           <Route path="/add-project" element={<AddProject />} />
           <Route path="/project/:id" element={<ProjectPage />} />
+          <Route
+            path="user-contribution/project/:id"
+            element={<ProjectPage />}
+          />
           <Route path="/admin-page" element={<AdminPage />} />
           <Route path="/manage-projects" element={<AdminProject />} />
           <Route path="/user-contribution" element={<UserContribution />} />
-          <Route path="/my-projects" element={<ProfessionalProjects userLoggedIn={loggedInUser} />} />
+          <Route
+            path="/my-projects"
+            element={<ProfessionalProjects userLoggedIn={loggedInUser} />}
+          />
         </Routes>
       </div>
     </>
