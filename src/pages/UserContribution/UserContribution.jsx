@@ -13,7 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
-import DataCollectedCard from '../../components/UI/DataCollectedCard/DataCollectedCard'
+import DataCollectedCard from "../../components/UI/DataCollectedCard/DataCollectedCard";
 import "./UserContribution.scss";
 import e from "cors";
 
@@ -33,11 +33,9 @@ export const UserContribution = () => {
     setAllUsers(data);
   };
   const getUserName = (id) => {
-    const username = allUsers?.data?.find(
-      (item) => item?.user_id === id
-    );
-    return username?.user_name
-  }
+    const username = allUsers?.data?.find((item) => item?.user_id === id);
+    return username?.user_name;
+  };
 
   const formatDataUsers = () => {
     let newUsers = [];
@@ -88,14 +86,9 @@ export const UserContribution = () => {
     } else {
       if (type === "Data Collected") {
         let data = await getDataCollectedByUser(user);
-        if (data?.data.length !== 0) {
-          setDataOfUser(data);
-          setDisplayData(true);
-          setDisplayProjects(false);
-        }
-        else {
-          setDisplayData(false);
-        }
+        setDataOfUser(data);
+        setDisplayData(true);
+        setDisplayProjects(false);
       } else {
         let projects = await getProjectsByUser(user);
         console.log(projects?.data);
@@ -157,7 +150,7 @@ export const UserContribution = () => {
         {displayProjects && (
           <div className="content__wrapper">
             <div className="projects__wrapper">
-              {projectsOfUser.data ? (
+              {projectsOfUser?.data?.length ? (
                 projectsOfUser?.data
                   ?.slice(0, showMore)
                   .map((project, index) => (
@@ -174,24 +167,7 @@ export const UserContribution = () => {
                   ))
               ) : (
                 <>
-                  {new Array(8).fill(0).map((_) => (
-                    <div>
-                      <Skeleton animate={false} height={175} mb="md" />
-                      <Skeleton
-                        animate={false}
-                        height={20}
-                        width={150}
-                        mb="md"
-                      />
-                      <Skeleton
-                        animate={false}
-                        height={20}
-                        width={100}
-                        mb="md"
-                      />
-                      <Skeleton animate={false} height={35} width="85%" />
-                    </div>
-                  ))}
+                  <div>No Projects found for this user</div>
                 </>
               )}
             </div>
@@ -216,6 +192,7 @@ export const UserContribution = () => {
           </div>
         )}
       </>
+
       {displayData && (
         <div className="data-collected__wrapper">
           <div className="data-collected__card--wrapper">
@@ -238,16 +215,7 @@ export const UserContribution = () => {
                   )
               )
             ) : (
-              <>
-                {new Array(8).fill(0).map((_) => (
-                  <div>
-                    <Skeleton animate={false} height={175} mb="md" />
-                    <Skeleton animate={false} height={20} width={150} mb="md" />
-                    <Skeleton animate={false} height={20} width={100} mb="md" />
-                    <Skeleton animate={false} height={35} width="85%" />
-                  </div>
-                ))}
-              </>
+              <div>No data collected found for this user</div>
             )}
           </div>
           <div className="data-collected__users--list-wrapper">
@@ -256,10 +224,10 @@ export const UserContribution = () => {
                 <div key={index} className="data-collected__users--list">
                   <div className="data-collected__users--image">
                     {usersData?.profile ? (
-                      < img src={usersData?.profile} alt="" />
-                    )
-                      : < img src={deafultAvatar} alt="" />
-                    }
+                      <img src={usersData?.profile} alt="" />
+                    ) : (
+                      <img src={deafultAvatar} alt="" />
+                    )}
                   </div>
                   <div>
                     <div>{usersData.user_name}</div>

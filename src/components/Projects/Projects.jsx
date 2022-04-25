@@ -21,6 +21,7 @@ const Projects = () => {
     <>
       <div className="projects__wrapper">
         {allProjects.data ? (
+          // allProjects?.data?.length ?
           allProjects?.data
             ?.slice(0, showMore)
             .map((project, index) => (
