@@ -1,6 +1,6 @@
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 var moment = require("moment-timezone");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 
 // MYSQL DATABASE CONNECTION
 const connection = require("../config/database.config.js");
@@ -65,10 +65,10 @@ exports.insertUser = async (req, res) => {
   const { Name, Email, Password, Location, isProfessional, pn, isAdmin } =
     req.body;
 
-  const hashedPassword = await bcrypt.hash(Password, 10);
+  // const hashedPassword = await bcrypt.hash(Password, 10);
 
   let saveSql = `INSERT INTO Users(user_name, phone_number, isProfessional ,Location, email,Password,isAdmin) VALUES\
-    ("${Name}","${pn}", "${isProfessional}", "${Location}", "${Email}", "${hashedPassword}", "${isAdmin}")`;
+    ("${Name}","${pn}", "${isProfessional}", "${Location}", "${Email}", "${Password}", "${isAdmin}")`;
   console.log(saveSql);
   connection.query(saveSql, (err, result) => {
     if (err) throw err;
