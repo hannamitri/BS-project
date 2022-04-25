@@ -163,6 +163,8 @@ export const AdminProject = () => {
     }
   };
 
+  console.log(value)
+
   const rows = updatedList
     ?.slice(
       activePage * numberOfRowsInPaginaton - numberOfRowsInPaginaton,

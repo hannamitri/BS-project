@@ -101,7 +101,7 @@ export const AdminPage = () => {
       password,
       location,
       phone_number: phoneNumber,
-      isProfessional: role === "Citizen" ? 0 : 1,
+      isProfessional: role === "Professional" ? 1 : 0,
       isAdmin: role === "Admin" ? 1 : 0,
     };
     updateUserData(user);
@@ -152,8 +152,8 @@ export const AdminPage = () => {
             {user.isProfessional ? "yes" : "no"}
           </td> */}
           <td>
-            {user.isProfessional && user.isAdmin ? "Admin" : ""}
-            {user.isProfessional && !user.isAdmin ? "Professional" : ""}
+            {user.isAdmin ? "Admin" : ""}
+            {user.isProfessional ? "Professional" : ""}
             {!user.isProfessional && !user.isAdmin ? "Citizen" : ""}
           </td>
           <td>{user.Location}</td>
