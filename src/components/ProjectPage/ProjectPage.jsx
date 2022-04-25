@@ -41,7 +41,6 @@ const ProjectPage = () => {
     let project = {
       project_id: original_project?.project_id,
     };
-
     const projectUsers = await getUsersbyProject(project);
     setUsers(projectUsers);
   };
@@ -157,7 +156,7 @@ const ProjectPage = () => {
             )}
           </div>
           <br />
-       
+
           <br />
           <div className="data-collected__users--list-wrapper">
             <h4>List of Citizens</h4>
