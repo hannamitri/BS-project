@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { MultiSelect, Box, Button, Group, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
-  getAll,
   getAllProjects,
   getUsersbyProject,
   insertUsersProjects,
