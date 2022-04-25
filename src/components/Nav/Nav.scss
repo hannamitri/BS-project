@@ -12,8 +12,9 @@
     gap: 15px;
     align-items: center;
 
-    > .nav__burger {
+    >.nav__burger {
       display: flex;
+
       svg {
         font-size: 24px;
         cursor: pointer;
@@ -22,6 +23,7 @@
 
     .nav__logo {
       display: flex;
+
       img {
         max-width: 200px;
         height: 100%;
@@ -56,4 +58,8 @@
 .nav__skeleton {
   display: flex;
   gap: 15px;
+}
+
+.user__profile {
+  width: 100%;
 }
