@@ -3,7 +3,7 @@ var config = {
   HOST: "localhost",
   USER: "root",
   PASSWORD: "root",
-  DB: "citizenwebportal",
+  DB: "citizenwebportaltest",
   multipleStatements: true,
 };
 
