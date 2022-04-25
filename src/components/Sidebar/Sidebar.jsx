@@ -22,6 +22,8 @@ const Sidebar = ({ loggedInUser }) => {
     (item) => item?.email === (user?.email || user?.user?.email)
   );
 
+  console.log(loggedInUser);
+
   useEffect(() => {
     getUsers();
     if (loading) {
@@ -47,8 +49,10 @@ const Sidebar = ({ loggedInUser }) => {
           </Link>
         </div>
 
-        {loggedInUser &&
-          (loggedInUser ? (
+        {!loggedInUser?.isProfessional &&
+        !loggedInUser?.isAdmin &&
+        loggedInUser ? (
+          !loggedInUser?.isProfessional && !loggedInUser?.isAdmin ? (
             <div className="sidebar__links">
               <Link to="/data-collected">
                 <FiDatabase />
@@ -63,10 +67,13 @@ const Sidebar = ({ loggedInUser }) => {
               mb="md"
               mx="auto"
             />
-          ))}
+          )
+        ) : (
+          <></>
+        )}
 
-        {loggedInUser &&
-          (loggedInUser?.isAdmin ? (
+        {loggedInUser?.isProfessional ? (
+          loggedInUser?.isProfessional ? (
             <>
               <div className="sidebar__links">
                 <Link to="/add-user-project">
@@ -83,10 +90,13 @@ const Sidebar = ({ loggedInUser }) => {
               mb="md"
               mx="auto"
             />
-          ))}
+          )
+        ) : (
+          <></>
+        )}
 
-        {loggedInUser &&
-          (loggedInUser?.isProfessional ? (
+        {loggedInUser?.isProfessional ? (
+          loggedInUser?.isProfessional ? (
             <>
               <div className="sidebar__links">
                 <Link to="/add-project">
@@ -103,17 +113,14 @@ const Sidebar = ({ loggedInUser }) => {
               mb="md"
               mx="auto"
             />
-          ))}
+          )
+        ) : (
+          <></>
+        )}
 
-        {loggedInUser &&
-          (loggedInUser?.isAdmin ? (
+        {loggedInUser?.isAdmin ? (
+          loggedInUser?.isAdmin ? (
             <>
-              {/* <div className="sidebar__links">
-                <Link to="/signup">
-                  <AiOutlineUserAdd />
-                  Create User
-                </Link>
-              </div> */}
               <div className="sidebar__links">
                 <Link to="/admin-page">
                   <AiOutlineUserAdd />
@@ -155,7 +162,10 @@ const Sidebar = ({ loggedInUser }) => {
                 mx="auto"
               />
             </>
-          ))}
+          )
+        ) : (
+          <></>
+        )}
 
         <div className="sidebar__links">
           <Link to="/contact">
