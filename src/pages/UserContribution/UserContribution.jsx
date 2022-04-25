@@ -25,10 +25,11 @@ export const UserContribution = () => {
   const [userId, setUserId] = useState(0);
   const [displayProjects, setDisplayProjects] = useState(false);
   const [displayData, setDisplayData] = useState(false);
+  const [hideProjects, setHideProjects] = useState(false);
 
   const getUsers = async () => {
-    const users_data = await getAll();
-    setAllUsers(users_data);
+    const data = await getAll();
+    setAllUsers(data);
   };
 
   const formatDataUsers = () => {
@@ -93,10 +94,12 @@ export const UserContribution = () => {
       }
     }
   };
+
   const hideData = () => {
     setDisplayProjects(false);
     setDisplayData(false);
   };
+
   useEffect(() => {
     getUsers();
     setUserId(0);
@@ -116,22 +119,27 @@ export const UserContribution = () => {
             placeholder={"Select User"}
             {...form.getInputProps("user")}
             onSelect={getUser}
-            onDropdownClose={() => hideData()}
+            onDropdownClose={() => {
+              hideData();
+              setHideProjects(true);
+            }}
           />
-          <Select
-            data={[
-              { value: "Data Collected", label: "Data Collected" },
-              { value: "Projects", label: "Projects" },
-            ]}
-            label="Contribution"
-            required
-            searchable
-            clearable
-            placeholder={"Select contribution type"}
-            {...form.getInputProps("project")}
-            onSelect={getContributionType}
-            onDropdownClose={() => hideData()}
-          />
+          {hideProjects && (
+            <Select
+              data={[
+                { value: "Data Collected", label: "Data Collected" },
+                { value: "Projects", label: "Projects" },
+              ]}
+              label="Contribution"
+              required
+              searchable
+              clearable
+              placeholder={"Select contribution type"}
+              {...form.getInputProps("project")}
+              onSelect={getContributionType}
+              onDropdownClose={() => hideData()}
+            />
+          )}
         </form>
       </div>
       <>

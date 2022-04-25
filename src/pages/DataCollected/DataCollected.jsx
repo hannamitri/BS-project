@@ -246,7 +246,9 @@ export const DataCollected = ({ userLoggedIn }) => {
             />
             <TimeInput
               label="Time Collected"
-              hoursLabel="Hours" minutesLabel="Minutes" seconds="Seconds"
+              hoursLabel="Hours"
+              minutesLabel="Minutes"
+              seconds="Seconds"
               format="12"
               icon={<Clock size={16} />}
               required

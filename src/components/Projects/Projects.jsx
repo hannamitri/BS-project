@@ -21,8 +21,9 @@ const Projects = () => {
     <>
       <div className="projects__wrapper">
         {allProjects.data ? (
-          allProjects?.data?.slice(0, showMore).map((project, index) => (
-            <>
+          allProjects?.data
+            ?.slice(0, showMore)
+            .map((project, index) => (
               <Project
                 key={index}
                 name={project.name}
@@ -31,8 +32,7 @@ const Projects = () => {
                 projectImage={project.image}
                 id={project.project_id}
               />
-            </>
-          ))
+            ))
         ) : (
           <>
             {new Array(8).fill(0).map((_) => (
