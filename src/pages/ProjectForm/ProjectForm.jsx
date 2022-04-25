@@ -7,12 +7,13 @@ import {
   getAllProjects,
   getUsersbyProject,
   insertUsersProjects,
+  getSystemUsers,
 } from "../../api/api";
 import LoginIllustration from "../../images/Login/data.svg";
 import Message from "../../components/UI/Message/Message";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 
-export const ProjectForm = ({ userLoggedIn }) => {
+export const ProjectForm = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [projectUsers, setProjectUsers] = useState([]);
@@ -25,7 +26,7 @@ export const ProjectForm = ({ userLoggedIn }) => {
     setAllProjects(data);
   };
   const getUsers = async () => {
-    const users_data = await getAll();
+    const users_data = await getSystemUsers();
     setAllUsers(users_data);
   };
 

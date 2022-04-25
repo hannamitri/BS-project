@@ -70,13 +70,13 @@ function App() {
           <Route path="/*" element={<NotFound />} />
           <Route path="/Signout" element={<Signout />} />
           <Route path="/Contact" element={<Contact />} />
-          {loggedInUser?.isAdmin && (
+          {loggedInUser?.isProfessional && (
             <Route
               path="/add-user-project"
-              element={<ProjectForm userLoggedIn={userLoggedIn} />}
+              element={<ProjectForm />}
             />
           )}
-          <Route path="/add-project" element={<AddProject />} />
+          <Route path="/add-project" element={<AddProject userLoggedIn={loggedInUser} />} />
           <Route path="/project/:id" element={<ProjectPage />} />
           <Route
             path="user-contribution/project/:id"
