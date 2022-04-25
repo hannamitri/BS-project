@@ -80,6 +80,14 @@ export const Signup = ({ userLoggedIn }) => {
     setDisabled(true);
     if (await insertUser(userOBJ)) {
       setSuccessStatus(true);
+      console.log(Password);
+      Password = "";
+      Email = "";
+      Name = "";
+      Location = "";
+      pn = "";
+      role = null;
+      console.log(Password);
     }
     setLoadingState(false);
   };
@@ -106,7 +114,7 @@ export const Signup = ({ userLoggedIn }) => {
     );
     return changed;
   }, []);
-  const password = useRef();
+
   return (
     <div style={{ display: "flex" }}>
       <div className="sign-up__wrapper">
