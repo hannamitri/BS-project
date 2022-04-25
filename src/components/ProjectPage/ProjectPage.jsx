@@ -93,26 +93,39 @@ const ProjectPage = () => {
             </>
           )}
         </div>
-        <div className="data-collected__users--list-wrapper">
-          {users?.data ? (
-            users?.data?.map((usersData, index) => (
-              <div key={index} className="data-collected__users--list">
-                <div className="data-collected__users--image">
-                  {usersData?.profile ? (
-                    < img src={usersData?.profile} alt="" />
-                  )
-                    : < img src={deafultAvatar} alt="" />
+        <div className="users__list">
+          <div className="data-collected__users--list-wrapper">
+            <h4>List of Professioals</h4>
+            {users?.data ? (
+              users?.data?.map((usersData, index) => (
+                <div>
+
+                  {usersData?.isProfessional ? (
+                    <div key={index} className="data-collected__users--list" >
+                      <div className="data-collected__users--image">
+                        {usersData?.profile ? (
+                          < img src={usersData?.profile} alt="" />
+                        )
+                          : < img src={deafultAvatar} alt="" />
+                        }
+                      </div>
+                      <div>
+                        <div>{usersData.user_name}</div>
+                        <div>{usersData.Location}</div>
+                      </div>
+                    </div>
+                  ) :
+                    <div>
+                    </div>
                   }
                 </div>
-                <div>
-                  <div>{usersData.user_name}</div>
-                  <div>{usersData.Location}</div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div>
-              {/* <Skeleton
+
+
+              )
+              )
+            ) : (
+              <div>
+                {/* <Skeleton
               animate={false}
               height={20}
               width="80%"
@@ -140,8 +153,74 @@ const ProjectPage = () => {
               mb="md"
               mx="auto"
             /> */}
-            </div>
-          )}
+              </div>
+            )}
+          </div>
+          <br />
+       
+          <br />
+          <div className="data-collected__users--list-wrapper">
+            <h4>List of Citizens</h4>
+            {users?.data ? (
+              users?.data?.map((usersData, index) => (
+                <div>
+
+                  {!usersData?.isProfessional && !usersData?.isAdmin ? (
+                    <div key={index} className="data-collected__users--list" >
+                      <div className="data-collected__users--image">
+                        {usersData?.profile ? (
+                          < img src={usersData?.profile} alt="" />
+                        )
+                          : < img src={deafultAvatar} alt="" />
+                        }
+                      </div>
+                      <div>
+                        <div>{usersData.user_name}</div>
+                        <div>{usersData.Location}</div>
+                      </div>
+                    </div>
+                  ) :
+                    <div>
+                    </div>
+                  }
+                </div>
+
+
+              )
+              )
+            ) : (
+              <div>
+                {/* <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="60%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            /> */}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

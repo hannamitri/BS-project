@@ -50,6 +50,9 @@ export const Login = ({ openModal, setOpenModal }) => {
       localStorage.setItem("userLogginIn", JSON.stringify(getSpecificUser));
       document.body.classList.remove("login__open");
     }
+    else {
+      setUserNotFound(true)
+    }
   }
 
   const closeModal = () => {
@@ -95,7 +98,7 @@ export const Login = ({ openModal, setOpenModal }) => {
             }}
             onClose={() => setUserNotFound(false)}
           >
-            A user was not found!
+            A user was not found with these credentials. Please Try again!!
           </Notification>
         )}
         <div className="mainContent">

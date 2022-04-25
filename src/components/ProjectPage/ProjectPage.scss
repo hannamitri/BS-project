@@ -9,14 +9,13 @@
     justify-content: center;
     gap: 15px;
 
-    > div {
+    >div {
       width: 275px;
       height: 350px;
     }
   }
 
   .data-collected__users--list-wrapper {
-    background-color: white;
     width: 225px;
     height: fit-content;
     display: flex;
@@ -53,4 +52,9 @@
       }
     }
   }
+}
+
+.users__list {
+  display: flex;
+  flex-direction: column;
 }
