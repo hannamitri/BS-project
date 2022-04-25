@@ -109,9 +109,9 @@ const ProjectPage = () => {
                         <div>{usersData.Location}</div>
                       </div>
                     </div>
-                  ) : (
-                    <div></div>
-                  )}
+                  ) :
+                    <></>
+                  }
                 </div>
               ))
             ) : (
@@ -169,9 +169,9 @@ const ProjectPage = () => {
                         <div>{usersData.Location}</div>
                       </div>
                     </div>
-                  ) : (
-                    <div></div>
-                  )}
+                  ) :
+                    <></>
+                  }
                 </div>
               ))
             ) : (
@@ -209,7 +209,7 @@ const ProjectPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
