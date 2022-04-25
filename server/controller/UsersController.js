@@ -14,6 +14,15 @@ exports.getAll = async (req, res) => {
   });
 };
 
+exports.getSystemUsers = async (req, res) => {
+  let tableName = "Users";
+  let sql = `SELECT * FROM ${tableName} where isAdmin="0"`;
+  connection.query(sql, (error, result) => {
+    if (error) throw error;
+    res.status(200).send(result);
+  });
+};
+
 exports.getUserByEmail = async (req, res) => {
   const { email } = req.body;
 

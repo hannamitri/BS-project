@@ -21,6 +21,14 @@ const getAll = async () => {
     .catch((err) => err.response);
 };
 
+const getSystemUsers = async () => {
+  let url = `${baseUrl}/getSystemUsers`;
+  return await axios
+    .get(url)
+    .then((response) => response)
+    .catch((err) => err.response);
+};
+
 
 const updateUser = async (data) => {
   let url = `${baseUrl}/updateUser`;
@@ -255,6 +263,7 @@ export {
   deleteUser,
   getUserByEmail,
   isProfessional,
+  getSystemUsers,
 
   //Data Collected
   getDataCollected,

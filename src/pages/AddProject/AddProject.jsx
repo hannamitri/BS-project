@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Button, TextInput } from "@mantine/core";
 import { FaUserAlt } from "react-icons/fa";
 import { HiOutlineAtSymbol } from "react-icons/hi";
-import { insertProject } from "../../api/api";
+import { insertProject, insertUsersProjects } from "../../api/api";
 import { useForm } from "@mantine/form";
 import "./AddProject.scss";
 import Message from "../../components/UI/Message/Message";
 import { getAllProjects } from "../../api/api";
 import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 
-const AddProject = () => {
+const AddProject = ({ userLoggedIn }) => {
   const [dataImage, setDataImage] = useState("");
   const [errorStatus, setErrorStatus] = useState(false);
   const [successStatus, setSuccessStatus] = useState(false);
@@ -61,7 +61,7 @@ const AddProject = () => {
       name: values.name,
     };
 
-    const selected_project_id = allProjects?.data?.find(
+    const selected_project = allProjects?.data?.find(
       (item) => item?.name === project.name
     );
 
@@ -71,7 +71,7 @@ const AddProject = () => {
     } else if (values.name.length > 45) {
       setErrorStatus(true);
       setErrorMessage("Project's Name cannot exceed 45 characters.");
-    } else if (selected_project_id) {
+    } else if (selected_project) {
       setErrorStatus(true);
       setErrorMessage(
         "Project's Name already exists. Please enter a different One."
@@ -88,6 +88,16 @@ const AddProject = () => {
       try {
         if (insertProject(project)) {
           setSuccessStatus(true);
+          // getProjects();
+          // const insertedProject = allProjects?.data?.find(
+          //   (item) => item?.name === project.name
+          // );
+          // console.log(insertedProject?.project_id)
+          // const user_projects = {
+          //   project_id: insertedProject?.project_id,
+          //   user_id: userLoggedIn?.user_id,
+          // };
+          // await insertUsersProjects(user_projects)
           values.category = "";
           values.name = "";
           setDataImage("");
