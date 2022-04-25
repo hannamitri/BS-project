@@ -22,7 +22,7 @@ export const Nav = ({ loggedInUser }) => {
   const { user, loading } = useContext(UserContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [viewProfile, setViewProfile] = useState(false);
-  const [dataImage, setDataImage] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const theme = useMantineTheme();
   // const loggedInUser = JSON.parse(localStorage.getItem("userLogginIn"));
 
@@ -78,19 +78,19 @@ export const Nav = ({ loggedInUser }) => {
       // setErrorStatus(false);
       const base64 = await convertBase64(file);
       console.log(base64)
-      setDataImage(base64);
+      setProfileImage(base64);
     }
   };
 
   const trySubmit = async () => {
     const user = {
-      profile: dataImage,
+      profile: profileImage,
       user_id: loggedInUser?.user_id
     }
     console.log(user)
     try {
       if (await setProfile(user)) {
-        setDataImage("");
+        setProfileImage("");
       }
     } catch (err) {
       console.log(err);
@@ -184,7 +184,7 @@ export const Nav = ({ loggedInUser }) => {
           <form className="project__form" onSubmit={form.onSubmit(trySubmit)} >
             <input type="file" onChange={uploadImage} />
             <br />
-            <img src={dataImage} alt="" />
+            <img src={profileImage} alt="" className="user__profile" />
             <Button type="submit" style={{ marginTop: 15 }}>
               Save
             </Button>

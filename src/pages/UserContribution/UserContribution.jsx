@@ -13,8 +13,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
-import DataCollectedSlide from "../../components/UI/DataCollectedSlide/DataCollectedSlide";
+import DataCollectedCard from '../../components/UI/DataCollectedCard/DataCollectedCard'
 import "./UserContribution.scss";
+import e from "cors";
 
 export const UserContribution = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -31,6 +32,12 @@ export const UserContribution = () => {
     const data = await getAll();
     setAllUsers(data);
   };
+  const getUserName = (id) => {
+    const username = allUsers?.data?.find(
+      (item) => item?.user_id === id
+    );
+    return username?.user_name
+  }
 
   const formatDataUsers = () => {
     let newUsers = [];
@@ -80,11 +87,15 @@ export const UserContribution = () => {
       setDisplayData(false);
     } else {
       if (type === "Data Collected") {
-        let datas = await getDataCollectedByUser(user);
-        setDataOfUser(datas);
-        setDisplayData(true);
-        setDisplayProjects(false);
-        console.log(dataOfUser?.data);
+        let data = await getDataCollectedByUser(user);
+        if (data?.data.length !== 0) {
+          setDataOfUser(data);
+          setDisplayData(true);
+          setDisplayProjects(false);
+        }
+        else {
+          setDisplayData(false);
+        }
       } else {
         let projects = await getProjectsByUser(user);
         console.log(projects?.data);
@@ -206,72 +217,89 @@ export const UserContribution = () => {
         )}
       </>
       {displayData && (
-        <div className="project__detail--wrapper">
-          {/* <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1> */}
-
-          <Swiper
-            slidesPerView={1}
-            navigation={!!dataOfUser?.data?.length}
-            modules={[Navigation]}
-            className="data-collected__slider"
-          >
-            <div className="projects__detail">
-              {dataOfUser?.data?.length ? (
-                dataOfUser?.data?.map(
-                  (projectdata, index) =>
-                    projectdata.image && (
-                      <SwiperSlide>
-                        <DataCollectedSlide
-                          dataCollectedImage={projectdata.image}
-                          dataCollectedDate={projectdata.date_collected}
-                          dataCollectedLocation={projectdata.location_collected}
-                          dataCollectedTime={projectdata.time_collected}
-                          dataCollectedDescription={projectdata.description}
-                        />
-                      </SwiperSlide>
+        <div className="data-collected__wrapper">
+          <div className="data-collected__card--wrapper">
+            {dataOfUser?.data?.length ? (
+              dataOfUser?.data.map(
+                (item, index) =>
+                  item.image && (
+                    <>
+                      <DataCollectedCard
+                        key={index}
+                        dataCollectedImage={item.image}
+                        dataCollectedDate={item.date_collected}
+                        dataCollectedLocation={item.location_collected}
+                        dataCollectedTime={item.time_collected}
+                        dataCollectedDescription={item.description}
+                        dataCollectedUser={getUserName(item.user_id)}
+                        dataCollectedTitle={item.Title}
+                      />
+                    </>
+                  )
+              )
+            ) : (
+              <>
+                {new Array(8).fill(0).map((_) => (
+                  <div>
+                    <Skeleton animate={false} height={175} mb="md" />
+                    <Skeleton animate={false} height={20} width={150} mb="md" />
+                    <Skeleton animate={false} height={20} width={100} mb="md" />
+                    <Skeleton animate={false} height={35} width="85%" />
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+          <div className="data-collected__users--list-wrapper">
+            {user?.data ? (
+              user?.data?.map((usersData, index) => (
+                <div key={index} className="data-collected__users--list">
+                  <div className="data-collected__users--image">
+                    {usersData?.profile ? (
+                      < img src={usersData?.profile} alt="" />
                     )
-                )
-              ) : (
-                <SwiperSlide>
-                  <Skeleton
-                    animate={false}
-                    height={700}
-                    width="90%"
-                    mb="md"
-                    mx="auto"
-                  />
-                  <Skeleton
-                    animate={false}
-                    height={20}
-                    width="80%"
-                    mb="md"
-                    mx="auto"
-                  />
-                  <Skeleton
-                    animate={false}
-                    height={20}
-                    width="80%"
-                    mb="md"
-                    mx="auto"
-                  />
-                  <Skeleton
-                    animate={false}
-                    height={20}
-                    width="60%"
-                    mb="md"
-                    mx="auto"
-                  />
-                  <Skeleton
-                    animate={false}
-                    height={20}
-                    width="80%"
-                    mb="md"
-                    mx="auto"
-                  />
-                </SwiperSlide>
-              )}
-            </div>
-          </Swiper>
+                      : < img src={deafultAvatar} alt="" />
+                    }
+                  </div>
+                  <div>
+                    <div>{usersData.user_name}</div>
+                    <div>{usersData.Location}</div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div>
+                {/* <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="60%"
+              mb="md"
+              mx="auto"
+            />
+            <Skeleton
+              animate={false}
+              height={20}
+              width="80%"
+              mb="md"
+              mx="auto"
+            /> */}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

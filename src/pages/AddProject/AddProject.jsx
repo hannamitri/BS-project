@@ -155,7 +155,7 @@ const AddProject = () => {
           <input type="file" onChange={uploadImage} />
           <br />
 
-          <img src={dataImage} alt="" />
+          <img src={dataImage} alt="" className="project__picture" />
 
           <Button type="submit" style={{ marginTop: 15 }}>
             Add Project
