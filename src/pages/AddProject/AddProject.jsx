@@ -167,9 +167,9 @@ const AddProject = ({ userLoggedIn }) => {
 
           <img src={dataImage} alt="" className="project__picture" />
 
-          <Button type="submit" style={{ marginTop: 15 }}>
+          <button className="button" type="submit" style={{ marginTop: 15 }}>
             Add Project
-          </Button>
+          </button>
         </form>
       </div>
     </div>
