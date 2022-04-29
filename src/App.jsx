@@ -20,6 +20,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./context/UserContext";
 import { getAll } from "./api/api";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Account from "./pages/Account/Account";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -71,12 +72,12 @@ function App() {
           <Route path="/Signout" element={<Signout />} />
           <Route path="/Contact" element={<Contact />} />
           {loggedInUser?.isProfessional && (
-            <Route
-              path="/add-user-project"
-              element={<ProjectForm />}
-            />
+            <Route path="/add-user-project" element={<ProjectForm />} />
           )}
-          <Route path="/add-project" element={<AddProject userLoggedIn={loggedInUser} />} />
+          <Route
+            path="/add-project"
+            element={<AddProject userLoggedIn={loggedInUser} />}
+          />
           <Route path="/project/:id" element={<ProjectPage />} />
           <Route
             path="user-contribution/project/:id"
@@ -85,6 +86,7 @@ function App() {
           <Route path="/admin-page" element={<AdminPage />} />
           <Route path="/manage-projects" element={<AdminProject />} />
           <Route path="/user-contribution" element={<UserContribution />} />
+          <Route path="/account" element={<Account users={users} />} />
           <Route
             path="/my-projects"
             element={<ProfessionalProjects userLoggedIn={loggedInUser} />}

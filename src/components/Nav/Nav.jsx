@@ -8,13 +8,10 @@ import "./Nav.scss";
 import { Login } from "../../pages/Login/Login";
 import Logo from "../../images/intranet.png";
 import { Skeleton } from "@mantine/core";
-import supabase from "../../lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { GrFormClose } from "react-icons/gr";
-import { Button, TextInput } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { FaUserAlt } from "react-icons/fa";
-import { HiOutlineAtSymbol } from "react-icons/hi";
 import { useForm } from "@mantine/form";
 
 export const Nav = ({ loggedInUser }) => {
@@ -49,10 +46,10 @@ export const Nav = ({ loggedInUser }) => {
     setSidebarOpen(true);
   };
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("userLogginIn");
-    nav("/");
+    navigate("/");
   };
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -150,6 +147,12 @@ export const Nav = ({ loggedInUser }) => {
                     </div>
                   }
                 >
+                  <Menu.Item
+                    onClick={() => navigate("/account")}
+                    icon={<FaUserAlt size={18} />}
+                  >
+                    Account
+                  </Menu.Item>
                   <Menu.Item
                     onClick={() => logout()}
                     icon={<FiLogOut size={18} />}
