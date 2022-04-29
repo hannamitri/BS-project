@@ -328,7 +328,7 @@ export const AdminProject = () => {
           <Modal
             opened={opened}
             onClose={() => setOpened(false)}
-            title="Introduce yourself!"
+            title="Project Configuration"
           >
             {/* {errorStatus && (
               <Message
@@ -348,7 +348,7 @@ export const AdminProject = () => {
             )} */}
             <div>
               <form
-                className="project__form"
+                className="project__model__form"
                 onSubmit={form.onSubmit(trySubmit)}
               >
                 <TextInput
@@ -373,7 +373,7 @@ export const AdminProject = () => {
                 <input type="file" onChange={uploadImage} />
                 <br />
 
-                <img src={dataImage} alt="" />
+                <img src={dataImage} alt="" className="project__image" />
 
                 <button className="button" type="submit">
                   Update Project

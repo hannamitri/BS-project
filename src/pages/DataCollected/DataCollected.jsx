@@ -15,6 +15,7 @@ import {
   Loader,
   Textarea,
   Select,
+  InputWrapper,
 } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
@@ -206,7 +207,7 @@ export const DataCollected = ({ userLoggedIn }) => {
         <div>
           <img src={LoginIllustration} alt="Illustration" width={300} />
         </div>
-        <Box sx={{ maxWidth: 300 }} mx="auto">
+        <Box sx={{ maxWidth: 300 }} mx="auto" >
           {errorStatus && (
             <Message
               bgcolor="#f03e3e"
@@ -223,29 +224,27 @@ export const DataCollected = ({ userLoggedIn }) => {
               NotificationIcon={IoIosCheckbox}
             />
           )}
+
           <h1>Upload data</h1>
           <form onSubmit={form.onSubmit(trySubmit)}>
             <TextInput
               required
-              label="Title"
-              placeholder="Subject"
+              placeholder="Title"
               {...form.getInputProps("title")}
             />
             <TextInput
               required
-              label="Location Collected"
-              placeholder="Location"
+              placeholder="Location Collected"
               {...form.getInputProps("location_collected")}
             />
             <DatePicker
-              placeholder="Pick date"
+              placeholder="Date Collected"
               icon={<Calendar size={16} />}
-              label="Date Collected"
               required
               {...form.getInputProps("date_collected")}
             />
             <TimeInput
-              label="Time Collected"
+              placeholder="Time Collected"
               hoursLabel="Hours"
               minutesLabel="Minutes"
               seconds="Seconds"
@@ -257,7 +256,6 @@ export const DataCollected = ({ userLoggedIn }) => {
 
             <Select
               data={formatDataProjects()}
-              label="Projects"
               required
               searchable
               clearable
@@ -266,8 +264,7 @@ export const DataCollected = ({ userLoggedIn }) => {
             />
             <Textarea
               required
-              label="Description"
-              placeholder="your data"
+              placeholder="Description of data"
               icon={<FiDatabase size={16} />}
               minRows={3}
               autosize
@@ -280,7 +277,14 @@ export const DataCollected = ({ userLoggedIn }) => {
                 },
               }}
             />
-            <input type="file" onChange={uploadImage} />
+
+            <InputWrapper id="data-file" label="Upload Data Image">
+              <div class="btn">
+                <input type="file" onChange={uploadImage} className="file__upload_button" name="data-file" />
+              </div>
+            </InputWrapper>
+
+            {/* <input type="file" onChange={uploadImage} className="file__upload_button" /> */}
 
             <Group position="left" mt="md" style={{ position: "relative" }}>
               {loadingState ? (
@@ -296,6 +300,6 @@ export const DataCollected = ({ userLoggedIn }) => {
           </form>
         </Box>
       </div>
-    </div>
+    </div >
   );
 };
