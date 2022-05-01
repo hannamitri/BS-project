@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextInput } from "@mantine/core";
+import { Button, TextInput, InputWrapper } from "@mantine/core";
 import { FaUserAlt } from "react-icons/fa";
 import { HiOutlineAtSymbol } from "react-icons/hi";
 import { insertProject, insertUsersProjects } from "../../api/api";
@@ -151,18 +151,22 @@ const AddProject = ({ userLoggedIn }) => {
           <TextInput
             required
             icon={<HiOutlineAtSymbol size={16} />}
-            label="Project Category"
             placeholder="Project Category"
+            className="add__project--input"
             {...form.getInputProps("category")}
           />
           <TextInput
             required
             icon={<FaUserAlt size={16} />}
-            label="Project name"
+            className="add__project--input"
             placeholder="Project name"
             {...form.getInputProps("name")}
           />
-          <input type="file" onChange={uploadImage} />
+          <InputWrapper id="data-file" label="Upload Project's Image">
+            <div class="btn">
+              <input type="file" onChange={uploadImage} className="file__upload_button" name="data-file" />
+            </div>
+          </InputWrapper>
           <br />
 
           <img src={dataImage} alt="" className="project__picture" />

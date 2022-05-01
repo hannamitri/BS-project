@@ -133,10 +133,12 @@ export const ProjectForm = () => {
   return (
     <div className="flex">
       <div className="add__users-project--wrapper">
+
         <div className="add__users-project--image">
           <img src={LoginIllustration} alt="Illustration" width={500} />
         </div>
-        <Box sx={{ maxWidth: 400 }} mx="auto">
+        <Box sx={{ maxWidth: 400 }} mx="auto" className="add__users-project--form">
+          <h2>Add Users to Projects</h2>
           {errorStatus && (
             <Message
               bgcolor="#f03e3e"
@@ -153,26 +155,26 @@ export const ProjectForm = () => {
               NotificationIcon={IoIosCheckbox}
             />
           )}
-          <h1>Add Users to Projects</h1>
+
           <form onSubmit={form.onSubmit(trySubmit)}>
             <Select
               data={formatDataProjects()}
-              label="Projects"
               required
-              searchable
+              searchablei
               clearable
               placeholder={"Select project/projects"}
               {...form.getInputProps("project")}
               onSelect={getDataofproj}
+              className="add__users-project--select"
             />
             <MultiSelect
               data={formatDataUsers()}
-              label="Users"
               required
               searchable
               clearable
               placeholder={"Select user/users"}
               {...form.getInputProps("user")}
+              className="add__users-project--select"
             />
             <Group position="left" mt="md" style={{ position: "relative" }}>
               <button className="button" type="submit">
