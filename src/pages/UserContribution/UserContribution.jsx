@@ -16,6 +16,8 @@ import { Navigation } from "swiper";
 import DataCollectedCard from "../../components/UI/DataCollectedCard/DataCollectedCard";
 import "./UserContribution.scss";
 import e from "cors";
+import { Alert } from '@mantine/core';
+import { AlertCircle } from 'tabler-icons-react';
 
 export const UserContribution = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -112,7 +114,7 @@ export const UserContribution = () => {
   return (
     <div className="main__content--wrapper">
       <div className="project__form--wrapper" style={{ marginBottom: "50px" }}>
-        <h1>View Contribution of Users</h1>
+        <h2>View Contribution of Users</h2>
         <form className="project__form">
           <Select
             data={formatDataUsers()}
@@ -167,7 +169,9 @@ export const UserContribution = () => {
                   ))
               ) : (
                 <>
-                  <div>No Projects found for this user</div>
+                  <Alert icon={<AlertCircle size={16} />} title="Alert!" radius="lg" closeButtonLabel="Close alert">
+                    No Projects exist for this user!!
+                  </Alert>
                 </>
               )}
             </div>
@@ -215,7 +219,9 @@ export const UserContribution = () => {
                   )
               )
             ) : (
-              <div>No data collected found for this user</div>
+              <Alert icon={<AlertCircle size={16} />} title="Alert!" radius="lg" closeButtonLabel="Close alert">
+                No data collected found for this user!!
+              </Alert>
             )}
           </div>
           <div className="data-collected__users--list-wrapper">
