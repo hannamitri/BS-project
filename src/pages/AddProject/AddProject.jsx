@@ -127,7 +127,7 @@ const AddProject = ({ userLoggedIn }) => {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="main__content--wrapper">
       <div className="project__form--wrapper">
         <h1>Create Project</h1>
         {errorStatus && (
@@ -163,17 +163,27 @@ const AddProject = ({ userLoggedIn }) => {
             {...form.getInputProps("name")}
           />
           <InputWrapper id="data-file" label="Upload Project's Image">
-            <div class="btn">
-              <input type="file" onChange={uploadImage} className="file__upload_button" name="data-file" />
+            <div class="">
+              <input
+                type="file"
+                onChange={uploadImage}
+                className="file__upload_button"
+                name="data-file"
+              />
             </div>
           </InputWrapper>
-          <br />
 
-          <img src={dataImage} alt="" className="project__picture" />
+          {dataImage && (
+            <div className="project__picture">
+              <img src={dataImage} alt="" />
+            </div>
+          )}
 
-          <button className="button" type="submit" style={{ marginTop: 15 }}>
-            Add Project
-          </button>
+          <div>
+            <button className="button" type="submit">
+              Add Project
+            </button>
+          </div>
         </form>
       </div>
     </div>

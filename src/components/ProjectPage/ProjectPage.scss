@@ -9,7 +9,7 @@
     justify-content: center;
     gap: 15px;
 
-    >div {
+    > div {
       width: 275px;
       height: 420px;
     }
@@ -17,7 +17,8 @@
 
   .data-collected__users--list-wrapper {
     width: 225px;
-    height: fit-content;
+    max-height: 600px;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     border-radius: 12px;

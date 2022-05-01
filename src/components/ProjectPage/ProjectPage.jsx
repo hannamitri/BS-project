@@ -54,7 +54,7 @@ const ProjectPage = () => {
   }, [original_project?.project_id]);
   console.log(projectData?.data);
   return (
-    <div className="main__content--wrapper">
+    <div>
       <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1>
       <div className="data-collected__wrapper">
         <div className="data-collected__card--wrapper">
@@ -109,9 +109,9 @@ const ProjectPage = () => {
                         <div>{usersData.Location}</div>
                       </div>
                     </div>
-                  ) :
+                  ) : (
                     <></>
-                  }
+                  )}
                 </div>
               ))
             ) : (
@@ -154,7 +154,7 @@ const ProjectPage = () => {
             <h4>List of Citizens</h4>
             {users?.data ? (
               users?.data?.map((usersData, index) => (
-                <div>
+                <>
                   {!usersData?.isProfessional && !usersData?.isAdmin ? (
                     <div key={index} className="data-collected__users--list">
                       <div className="data-collected__users--image">
@@ -169,10 +169,10 @@ const ProjectPage = () => {
                         <div>{usersData.Location}</div>
                       </div>
                     </div>
-                  ) :
+                  ) : (
                     <></>
-                  }
-                </div>
+                  )}
+                </>
               ))
             ) : (
               <div>
@@ -209,7 +209,7 @@ const ProjectPage = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

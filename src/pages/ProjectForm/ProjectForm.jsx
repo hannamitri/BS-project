@@ -131,13 +131,12 @@ export const ProjectForm = () => {
   });
 
   return (
-    <div className="flex">
+    <div className="main__content--wrapper">
       <div className="add__users-project--wrapper">
-
         <div className="add__users-project--image">
           <img src={LoginIllustration} alt="Illustration" width={500} />
         </div>
-        <Box sx={{ maxWidth: 400 }} mx="auto" className="add__users-project--form">
+        <div>
           <h2>Add Users to Projects</h2>
           {errorStatus && (
             <Message
@@ -156,7 +155,10 @@ export const ProjectForm = () => {
             />
           )}
 
-          <form onSubmit={form.onSubmit(trySubmit)}>
+          <form
+            className="add__users-project--form"
+            onSubmit={form.onSubmit(trySubmit)}
+          >
             <Select
               data={formatDataProjects()}
               required
@@ -176,13 +178,13 @@ export const ProjectForm = () => {
               {...form.getInputProps("user")}
               className="add__users-project--select"
             />
-            <Group position="left" mt="md" style={{ position: "relative" }}>
+            <div>
               <button className="button" type="submit">
                 Submit data
               </button>
-            </Group>
+            </div>
           </form>
-        </Box>
+        </div>
       </div>
     </div>
   );

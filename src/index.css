@@ -65,7 +65,11 @@ svg {
 .main {
   display: flex;
 }
-/* 
-.sidebar__open .sidebar__wrapper {
-  width: 0;
-} */
+
+.input__image img {
+  width: 100%;
+}
+
+h1 {
+  color: var(--primary);
+}

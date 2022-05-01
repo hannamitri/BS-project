@@ -2,22 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Select } from "@mantine/core";
 import {
   getAll,
-  getAllProjects,
   getDataCollectedByUser,
   getProjectsByUser,
 } from "../../api/api";
 import { useForm } from "@mantine/form";
-import { Skeleton } from "@mantine/core";
 import Project from "../../components/UI/Project/Project";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper";
 import DataCollectedCard from "../../components/UI/DataCollectedCard/DataCollectedCard";
 import "./UserContribution.scss";
-import e from "cors";
-import { Alert } from '@mantine/core';
-import { AlertCircle } from 'tabler-icons-react';
+import Message from "../../components/UI/Message/Message";
+import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 
 export const UserContribution = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -113,169 +108,146 @@ export const UserContribution = () => {
 
   return (
     <div className="main__content--wrapper">
-      <div className="project__form--wrapper" style={{ marginBottom: "50px" }}>
-        <h2>View Contribution of Users</h2>
-        <form className="project__form">
-          <Select
-            data={formatDataUsers()}
-            label="User"
-            required
-            searchable
-            clearable
-            placeholder={"Select User"}
-            {...form.getInputProps("user")}
-            onSelect={getUser}
-            onDropdownClose={() => {
-              hideData();
-              setHideProjects(true);
-            }}
-          />
-          {hideProjects && (
+      <div>
+        <div className="project__form--wrapper">
+          <h2>View Contribution of Users</h2>
+          <form className="project__form">
             <Select
-              data={[
-                { value: "Data Collected", label: "Data Collected" },
-                { value: "Projects", label: "Projects" },
-              ]}
-              label="Contribution"
+              data={formatDataUsers()}
+              label="User"
               required
               searchable
               clearable
-              placeholder={"Select contribution type"}
-              {...form.getInputProps("project")}
-              onSelect={getContributionType}
-              onDropdownClose={() => hideData()}
+              placeholder={"Select User"}
+              {...form.getInputProps("user")}
+              onSelect={getUser}
+              onDropdownClose={() => {
+                hideData();
+                setHideProjects(true);
+              }}
             />
+            {hideProjects && (
+              <Select
+                data={[
+                  { value: "Data Collected", label: "Data Collected" },
+                  { value: "Projects", label: "Projects" },
+                ]}
+                label="Contribution"
+                required
+                searchable
+                clearable
+                placeholder={"Select contribution type"}
+                {...form.getInputProps("project")}
+                onSelect={getContributionType}
+                onDropdownClose={() => hideData()}
+              />
+            )}
+          </form>
+        </div>
+        <>
+          {displayProjects && (
+            <div className="content__wrapper">
+              <div className="projects__wrapper">
+                {projectsOfUser?.data?.length ? (
+                  projectsOfUser?.data
+                    ?.slice(0, showMore)
+                    .map((project, index) => (
+                      <>
+                        <Project
+                          key={index}
+                          name={project.name}
+                          category={project.category}
+                          date_created={project.date_created}
+                          projectImage={project.image}
+                          id={project.project_id}
+                        />
+                      </>
+                    ))
+                ) : (
+                  <Message
+                    bgcolor="#f03e3e"
+                    title="No Data Collected Found"
+                    setStatus={true}
+                    NotificationIcon={IoIosCloseCircle}
+                  />
+                )}
+              </div>
+              <div className="project__show-more--button">
+                {console.log(projectsOfUser?.data)}
+                {projectsOfUser.data?.length > 8 &&
+                  (showMore === 8 ? (
+                    projectsOfUser.data && (
+                      <button
+                        className="button"
+                        onClick={() => setShowMore(projectsOfUser.data?.length)}
+                      >
+                        Show All
+                      </button>
+                    )
+                  ) : (
+                    <button className="button" onClick={() => setShowMore(8)}>
+                      Show Less
+                    </button>
+                  ))}
+              </div>
+            </div>
           )}
-        </form>
-      </div>
-      <>
-        {displayProjects && (
-          <div className="content__wrapper">
-            <div className="projects__wrapper">
-              {projectsOfUser?.data?.length ? (
-                projectsOfUser?.data
-                  ?.slice(0, showMore)
-                  .map((project, index) => (
-                    <>
-                      <Project
-                        key={index}
-                        name={project.name}
-                        category={project.category}
-                        date_created={project.date_created}
-                        projectImage={project.image}
-                        id={project.project_id}
-                      />
-                    </>
-                  ))
+        </>
+
+        {displayData && (
+          <div className="data-collected__wrapper">
+            <div className="data-collected__card--wrapper">
+              {dataOfUser?.data?.length ? (
+                dataOfUser?.data.map(
+                  (item, index) =>
+                    item.image && (
+                      <>
+                        <DataCollectedCard
+                          key={index}
+                          dataCollectedImage={item.image}
+                          dataCollectedDate={item.date_collected}
+                          dataCollectedLocation={item.location_collected}
+                          dataCollectedTime={item.time_collected}
+                          dataCollectedDescription={item.description}
+                          dataCollectedUser={getUserName(item.user_id)}
+                          dataCollectedTitle={item.Title}
+                        />
+                      </>
+                    )
+                )
               ) : (
-                <>
-                  <Alert icon={<AlertCircle size={16} />} title="Alert!" radius="lg" closeButtonLabel="Close alert">
-                    No Projects exist for this user!!
-                  </Alert>
-                </>
+                <Message
+                  bgcolor="#f03e3e"
+                  title="No Data Collected Found"
+                  setStatus={true}
+                  NotificationIcon={IoIosCloseCircle}
+                />
               )}
             </div>
-            <div className="project__show-more--button">
-              {console.log(projectsOfUser?.data)}
-              {projectsOfUser.data?.length > 8 &&
-                (showMore === 8 ? (
-                  projectsOfUser.data && (
-                    <button
-                      className="button"
-                      onClick={() => setShowMore(projectsOfUser.data?.length)}
-                    >
-                      Show All
-                    </button>
-                  )
-                ) : (
-                  <button className="button" onClick={() => setShowMore(8)}>
-                    Show Less
-                  </button>
-                ))}
-            </div>
+            {/* <div className="data-collected__users--list-wrapper">
+              {user?.data ? (
+                user?.data?.map((usersData, index) => (
+                  <div key={index} className="data-collected__users--list">
+                    <div className="data-collected__users--image">
+                      {usersData?.profile ? (
+                        <img src={usersData?.profile} alt="" />
+                      ) : (
+                        <img src={deafultAvatar} alt="" />
+                      )}
+                    </div>
+                    <div>
+                      <div>{usersData.user_name}</div>
+                      <div>{usersData.Location}</div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div></div>
+              )}
+            </div> */}
           </div>
         )}
-      </>
-
-      {displayData && (
-        <div className="data-collected__wrapper">
-          <div className="data-collected__card--wrapper">
-            {dataOfUser?.data?.length ? (
-              dataOfUser?.data.map(
-                (item, index) =>
-                  item.image && (
-                    <>
-                      <DataCollectedCard
-                        key={index}
-                        dataCollectedImage={item.image}
-                        dataCollectedDate={item.date_collected}
-                        dataCollectedLocation={item.location_collected}
-                        dataCollectedTime={item.time_collected}
-                        dataCollectedDescription={item.description}
-                        dataCollectedUser={getUserName(item.user_id)}
-                        dataCollectedTitle={item.Title}
-                      />
-                    </>
-                  )
-              )
-            ) : (
-              <Alert icon={<AlertCircle size={16} />} title="Alert!" radius="lg" closeButtonLabel="Close alert">
-                No data collected found for this user!!
-              </Alert>
-            )}
-          </div>
-          <div className="data-collected__users--list-wrapper">
-            {user?.data ? (
-              user?.data?.map((usersData, index) => (
-                <div key={index} className="data-collected__users--list">
-                  <div className="data-collected__users--image">
-                    {usersData?.profile ? (
-                      <img src={usersData?.profile} alt="" />
-                    ) : (
-                      <img src={deafultAvatar} alt="" />
-                    )}
-                  </div>
-                  <div>
-                    <div>{usersData.user_name}</div>
-                    <div>{usersData.Location}</div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div>
-                {/* <Skeleton
-              animate={false}
-              height={20}
-              width="80%"
-              mb="md"
-              mx="auto"
-            />
-            <Skeleton
-              animate={false}
-              height={20}
-              width="80%"
-              mb="md"
-              mx="auto"
-            />
-            <Skeleton
-              animate={false}
-              height={20}
-              width="60%"
-              mb="md"
-              mx="auto"
-            />
-            <Skeleton
-              animate={false}
-              height={20}
-              width="80%"
-              mb="md"
-              mx="auto"
-            /> */}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
