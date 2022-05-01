@@ -1,18 +1,7 @@
-.flex {
-  background: linear-gradient(#eeefff, #fff);
-}
-
 .contact__container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: fit-content;
-  max-width: 1200px;
-  background-color: #fff;
-  box-shadow: 0 16px 32px #e4e4e48f;
-  margin: auto;
-  border-radius: 3%;
+  margin: 0 auto;
 
   .contact__wrapper {
     @media (max-width: 1150px) {
@@ -20,30 +9,20 @@
     }
 
     display: flex;
-    align-items: center;
+    max-width: 1200px;
+    background-color: #fff;
+    border-radius: 12px;
     padding: 60px;
 
-    .contact__content {
-      svg {
-        color: var(--primary);
-      }
-
-      h1 {
-        color: var(--primary);
-      }
-
-      .contact__button {
-        margin-top: 16px;
-      }
-
-      .mantine-pgqebq,
-      .mantine-wcnwz0 {
-        margin: 20px 0;
-        background-color: #eeefff;
+    .contact__form {
+      > div {
+        margin-bottom: 10px;
       }
     }
 
     img {
+      height: 100%;
+
       @media (max-width: 700px) {
         display: none;
       }
