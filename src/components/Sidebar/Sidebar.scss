@@ -1,12 +1,11 @@
 .sidebar {
-  transition: all 0.3s ease-in-out;
   @media (max-width: 500px) {
     position: fixed;
     z-index: 1000;
   }
 
   transition: all 0.3s ease-in-out;
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   transform: translateX(0);
 }
 

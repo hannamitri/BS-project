@@ -163,7 +163,7 @@ export const AdminProject = () => {
     }
   };
 
-  console.log(value)
+  console.log(value);
 
   const rows = updatedList
     ?.slice(
@@ -271,66 +271,63 @@ export const AdminProject = () => {
   }, [removeProjectId]);
 
   return (
-    <div className="flex">
-      <div className="admin__projects--wrapper">
-        <div>
-          <h1 className="admin__users--title">
-            Projects({updatedList?.length})
-          </h1>
-          <div className="admin__projects--search-input">
-            <Input
-              variant="default"
-              onChange={(event) => filterUserList(event)}
-              placeholder="Search users"
-            />
-          </div>
-          <div className="">
-            <Table striped highlightOnHover>
-              <thead>
-                <tr>
-                  <th>NAME</th>
-                  <th>CATEGORY</th>
-                  <th>DATE CREATED</th>
-                  <th>EDIT</th>
-                  <th>DELETE</th>
-                  <th>View Users</th>
-                </tr>
-              </thead>
-              <tbody>{rows}</tbody>
-            </Table>
-            <Pagination
-              page={activePage}
-              onChange={setPage}
-              total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
-            />
-          </div>
-        </div>
-        <div>
-          <DateRangePicker
-            label="Book hotel"
-            placeholder="Pick dates range"
-            value={value}
-            onChange={setValue}
-            onDropdownOpen={() => setValue([])}
-            onDropdownClose={() =>
-              getProjectsBetweenTwoDates(
-                dtfUS.format(value[0]),
-                dtfUS.format(value[1])
-              )
-            }
+    <div className="admin__projects--wrapper">
+      <div>
+        <h1 className="admin__users--title">Projects({updatedList?.length})</h1>
+        <div className="admin__projects--search-input">
+          <Input
+            variant="default"
+            onChange={(event) => filterUserList(event)}
+            placeholder="Search Projects"
           />
         </div>
-        {dateProjects?.data?.map((project, index) => (
-          <div key={index}>{project.name}</div>
-        ))}
+        <div className="">
+          <Table striped highlightOnHover>
+            <thead>
+              <tr>
+                <th>NAME</th>
+                <th>CATEGORY</th>
+                <th>DATE CREATED</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
+                <th>View Users</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+          <Pagination
+            page={activePage}
+            onChange={setPage}
+            total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
+          />
+        </div>
+      </div>
+      <div>
+        <DateRangePicker
+          label="Book hotel"
+          placeholder="Pick dates range"
+          value={value}
+          onChange={setValue}
+          onDropdownOpen={() => setValue([])}
+          onDropdownClose={() =>
+            getProjectsBetweenTwoDates(
+              dtfUS.format(value[0]),
+              dtfUS.format(value[1])
+            )
+          }
+        />
+      </div>
+      {dateProjects?.data?.map((project, index) => (
+        <div key={index}>{project.name}</div>
+      ))}
 
-        <>
-          <Modal
-            opened={opened}
-            onClose={() => setOpened(false)}
-            title="Project Configuration"
-          >
-            {/* {errorStatus && (
+      <>
+        <Modal
+          opened={opened}
+          onClose={() => setOpened(false)}
+          title="Project Configuration"
+        >
+          {/* {errorStatus && (
               <Message
                 bgcolor="#f03e3e"
                 title={errormessage}
@@ -346,90 +343,89 @@ export const AdminProject = () => {
                 NotificationIcon={IoIosCheckbox}
               />
             )} */}
-            <div>
-              <form
-                className="project__model__form"
-                onSubmit={form.onSubmit(trySubmit)}
-              >
-                <TextInput
-                  required
-                  icon={<HiOutlineAtSymbol size={16} />}
-                  label="Project Category"
-                  placeholder="Project Category"
-                  {...form.getInputProps("category")}
-                  value={projectCategory}
-                  onChange={(e) => setProjectCategory(e.target.value)}
-                />
-                <TextInput
-                  id="project__input--name"
-                  required
-                  icon={<FaUserAlt size={16} />}
-                  label="Project name"
-                  placeholder="Project name"
-                  {...form.getInputProps("name")}
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                />
-                <input type="file" onChange={uploadImage} />
-                <br />
+          <div>
+            <form
+              className="project__model__form"
+              onSubmit={form.onSubmit(trySubmit)}
+            >
+              <TextInput
+                required
+                icon={<HiOutlineAtSymbol size={16} />}
+                label="Project Category"
+                placeholder="Project Category"
+                {...form.getInputProps("category")}
+                value={projectCategory}
+                onChange={(e) => setProjectCategory(e.target.value)}
+              />
+              <TextInput
+                id="project__input--name"
+                required
+                icon={<FaUserAlt size={16} />}
+                label="Project name"
+                placeholder="Project name"
+                {...form.getInputProps("name")}
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+              />
+              <input type="file" onChange={uploadImage} />
+              <br />
 
-                <img src={dataImage} alt="" className="project__image" />
+              <img src={dataImage} alt="" className="project__image" />
 
-                <button className="button" type="submit">
-                  Update Project
-                </button>
-              </form>
-            </div>
-          </Modal>
-          <Modal
-            opened={viewUsers}
-            onClose={() => setViewUsers(false)}
-            size={650}
-            overlayOpacity={0.85}
-            transition="fade"
-            transitionDuration={300}
-            transitionTimingFunction="ease"
-          >
-            <h3>List of Users belonging to project : {selectedName}</h3>
-            <div>
-              <Table striped highlightOnHover>
-                <thead>
-                  <tr>
-                    <th>USER NAME</th>
-                    <th>EMAIL</th>
-                    <th>REMOVE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {projectUsers?.data?.length ? (
-                    projectUsers?.data?.map((usersData, index) => (
-                      <tr key={index}>
-                        <td>{usersData.user_name}</td>
-                        <td>{usersData.email}</td>
-                        <td>
-                          <button
-                            className="button"
-                            onClick={() =>
-                              removeUserFromChosenProject(
-                                usersData?.user_id,
-                                singleProjectId
-                              )
-                            }
-                          >
-                            Remove
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <div>nothing</div>
-                  )}
-                </tbody>
-              </Table>
-            </div>
-          </Modal>
-        </>
-      </div>
+              <button className="button" type="submit">
+                Update Project
+              </button>
+            </form>
+          </div>
+        </Modal>
+        <Modal
+          opened={viewUsers}
+          onClose={() => setViewUsers(false)}
+          size={650}
+          overlayOpacity={0.85}
+          transition="fade"
+          transitionDuration={300}
+          transitionTimingFunction="ease"
+        >
+          <h3>List of Users belonging to project : {selectedName}</h3>
+          <div>
+            <Table striped highlightOnHover>
+              <thead>
+                <tr>
+                  <th>USER NAME</th>
+                  <th>EMAIL</th>
+                  <th>REMOVE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {projectUsers?.data?.length ? (
+                  projectUsers?.data?.map((usersData, index) => (
+                    <tr key={index}>
+                      <td>{usersData.user_name}</td>
+                      <td>{usersData.email}</td>
+                      <td>
+                        <button
+                          className="button"
+                          onClick={() =>
+                            removeUserFromChosenProject(
+                              usersData?.user_id,
+                              singleProjectId
+                            )
+                          }
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <div>nothing</div>
+                )}
+              </tbody>
+            </Table>
+          </div>
+        </Modal>
+      </>
     </div>
   );
 };
