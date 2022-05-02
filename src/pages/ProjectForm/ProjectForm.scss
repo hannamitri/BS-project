@@ -2,33 +2,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-  padding: 60px;
-  margin: auto;
-  max-width: 1200px;
+  padding: 30px;
   background-color: #fff;
-  box-shadow: 0 16px 32px #e4e4e48f;
-  border-radius: 3%;
-  
+  border-radius: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+  gap: 50px;
+
+  > div {
+    flex: 1;
+  }
+
   .add__users-project--form {
-    padding: 40px;
-  
-    h2 {
-      padding: 30px 0;
-    }
-  
-    .add__users-project--select input,
-    .mantine-wehybc {
-      margin: 10px 0;
-      background-color: #eeefff;
-    }
-  
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .add__users-project--image {
     img {
-      max-width: 300px;
-      padding-right: 20px;
+      width: 100%;
     }
   }
 }

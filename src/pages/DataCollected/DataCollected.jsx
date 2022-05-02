@@ -176,7 +176,7 @@ export const DataCollected = ({ userLoggedIn }) => {
   }, [userLoggedIn?.user_id]);
 
   return (
-    <div className="flex">
+    <div className="main__content--wrapper">
       {userNotFound && (
         <Notification
           icon={<X size={18} />}
@@ -203,11 +203,11 @@ export const DataCollected = ({ userLoggedIn }) => {
         </Notification>
       )}
 
-      <div className="data-collected__form">
-        <div>
+      <div className="data__collected--wrapper">
+        <div className="data__collected--image-wrapper">
           <img src={LoginIllustration} alt="Illustration" width={300} />
         </div>
-        <Box sx={{ maxWidth: 300 }} mx="auto" >
+        <div>
           {errorStatus && (
             <Message
               bgcolor="#f03e3e"
@@ -226,7 +226,10 @@ export const DataCollected = ({ userLoggedIn }) => {
           )}
 
           <h1>Upload data</h1>
-          <form onSubmit={form.onSubmit(trySubmit)}>
+          <form
+            className="data__collected--form"
+            onSubmit={form.onSubmit(trySubmit)}
+          >
             <TextInput
               required
               placeholder="Title"
@@ -279,27 +282,34 @@ export const DataCollected = ({ userLoggedIn }) => {
             />
 
             <InputWrapper id="data-file" label="Upload Data Image">
-              <div class="btn">
-                <input type="file" onChange={uploadImage} className="file__upload_button" name="data-file" />
+              <div>
+                <input
+                  type="file"
+                  onChange={uploadImage}
+                  className="file__upload_button"
+                  name="data-file"
+                />
               </div>
             </InputWrapper>
 
-            {/* <input type="file" onChange={uploadImage} className="file__upload_button" /> */}
+            {dataImage && (
+              <div className="input__image">
+                <img src={dataImage} alt="" />
+              </div>
+            )}
 
-            <Group position="left" mt="md" style={{ position: "relative" }}>
-              {loadingState ? (
-                <span className="loading">
-                  <Loader />
-                </span>
-              ) : (
-                <button className="button" type="submit">
-                  Submit data
-                </button>
-              )}
-            </Group>
+            {loadingState ? (
+              <span className="loading">
+                <Loader />
+              </span>
+            ) : (
+              <button className="button data__collected--button" type="submit">
+                Submit data
+              </button>
+            )}
           </form>
-        </Box>
+        </div>
       </div>
-    </div >
+    </div>
   );
 };

@@ -203,7 +203,7 @@ export const AdminPage = () => {
     setUserId(0);
   }, [userId]);
   return (
-    <div className="flex">
+    <div className="main__content--wrapper">
       <div className="admin__users--wrapper">
         <div className="admin__users--title-wrapper">
           <div>
