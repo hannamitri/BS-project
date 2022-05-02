@@ -14,14 +14,19 @@ exports.getAll = async (req, res) => {
 };
 
 exports.insertProject = (req, res) => {
-  const { category, name, image, date_created } = req.body;
-  let saveSql = `INSERT INTO Projects(category,name,date_created,image) VALUES\
-        ("${category}","${name}","${date_created}","${image}")`;
+  const { category, name, image, date_created, user_id } = req.body;
+  let saveSql = `INSERT IGNORE INTO Projects(category,name,date_created,image) VALUES\
+        ("${category}","${name}","${date_created}","${image}");\
+        INSERT IGNORE INTO Users_manages_Projects(user_id,project_id) VALUES("${user_id}", LAST_INSERT_ID())`;
   console.log(saveSql);
   connection.query(saveSql, (err, result) => {
     if (err) throw err;
     res.status(200).send(result);
   });
+  // connection.query(linkSql, (err, result) => {
+  //   if (err) throw err;
+  //   res.status(200).send(result);
+  // });
 };
 
 exports.updateProject = (req, res) => {

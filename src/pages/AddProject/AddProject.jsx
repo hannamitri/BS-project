@@ -84,20 +84,11 @@ const AddProject = ({ userLoggedIn }) => {
         name: values.name,
         image: dataImage,
         date_created: dtfUS.format(specialDate),
+        user_id: userLoggedIn?.user_id,
       };
       try {
         if (insertProject(project)) {
           setSuccessStatus(true);
-          // getProjects();
-          // const insertedProject = allProjects?.data?.find(
-          //   (item) => item?.name === project.name
-          // );
-          // console.log(insertedProject?.project_id)
-          // const user_projects = {
-          //   project_id: insertedProject?.project_id,
-          //   user_id: userLoggedIn?.user_id,
-          // };
-          // await insertUsersProjects(user_projects)
           values.category = "";
           values.name = "";
           setDataImage("");
