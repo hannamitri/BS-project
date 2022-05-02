@@ -50,8 +50,8 @@ const Sidebar = ({ loggedInUser }) => {
         </div>
 
         {!loggedInUser?.isProfessional &&
-        !loggedInUser?.isAdmin &&
-        loggedInUser ? (
+          !loggedInUser?.isAdmin &&
+          loggedInUser ? (
           !loggedInUser?.isProfessional && !loggedInUser?.isAdmin ? (
             <div className="sidebar__links">
               <Link to="/data-collected">
@@ -84,7 +84,7 @@ const Sidebar = ({ loggedInUser }) => {
               <div className="sidebar__links">
                 <Link to="/my-projects">
                   <AiOutlineUsergroupAdd />
-                  View Projects
+                  My Projects
                 </Link>
               </div>
             </>
