@@ -6,7 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import "./Nav.scss";
 import { Login } from "../../pages/Login/Login";
-import Logo from "../../images/intranet.png";
+import Logo from "../../images/logo.png";
 import { Skeleton } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";

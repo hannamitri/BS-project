@@ -24,6 +24,8 @@ export const UserContribution = () => {
   const [displayProjects, setDisplayProjects] = useState(false);
   const [displayData, setDisplayData] = useState(false);
   const [hideProjects, setHideProjects] = useState(false);
+  const [messageStatus, setMessageStatus] = useState(true);
+
 
   const getUsers = async () => {
     const data = await getAll();
@@ -103,6 +105,7 @@ export const UserContribution = () => {
 
   useEffect(() => {
     getUsers();
+    setMessageStatus(true);
     setUserId(0);
   }, [userId]);
 
@@ -166,8 +169,8 @@ export const UserContribution = () => {
                 ) : (
                   <Message
                     bgcolor="#f03e3e"
-                    title="No Data Collected Found"
-                    setStatus={true}
+                    title="No Projects Found"
+                    setStatus={setMessageStatus}
                     NotificationIcon={IoIosCloseCircle}
                   />
                 )}
@@ -219,7 +222,7 @@ export const UserContribution = () => {
                 <Message
                   bgcolor="#f03e3e"
                   title="No Data Collected Found"
-                  setStatus={true}
+                  setStatus={setMessageStatus}
                   NotificationIcon={IoIosCloseCircle}
                 />
               )}
