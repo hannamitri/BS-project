@@ -91,7 +91,7 @@ const AddProject = ({ userLoggedIn }) => {
           setSuccessStatus(true);
           values.category = "";
           values.name = "";
-          setDataImage("");
+          setDataImage(null);
         }
       } catch (err) {
         console.log(err);

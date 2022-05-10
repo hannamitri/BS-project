@@ -55,14 +55,18 @@ const ProjectPage = () => {
   console.log(projectData?.data);
   return (
     <div>
-      <h1>DATA COLLECTED BELONGS TO PROJECT: {original_project?.name}</h1>
+
       <div className="data-collected__wrapper">
         <div className="data-collected__card--wrapper">
+          <h1>DATA COLLECTED BELONGS TO PROJECT :
+            <span>{original_project?.name}</span>
+          </h1>
           {projectData?.data?.length ? (
             projectData?.data.map(
               (item, index) =>
                 item.image && (
                   <>
+
                     <DataCollectedCard
                       key={index}
                       dataCollectedImage={item.image}
