@@ -9,7 +9,22 @@
     justify-content: center;
     gap: 15px;
 
-    > div {
+    h1 {
+      background-color: white;
+      box-shadow: 1px 1px 34px -5px rgb(0 0 0 / 40%);
+      border-radius: 12px;
+      margin: 30px 76px;
+      text-align: center;
+      padding: 13px;
+      color: #000;
+
+      span {
+        color: var(--primary);
+        padding: 0 10px;
+      }
+    }
+
+    >div {
       width: 275px;
       height: 420px;
     }
