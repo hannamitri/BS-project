@@ -132,7 +132,7 @@ export const AdminPage = () => {
       )
       .map((user) => (
         <tr className="admin__users--table" key={user.user_id}>
-          <td>
+          <td className="admin__users--hide-mobile">
             <div className="users--image">
               {user?.profile ? (
                 <img src={user?.profile} alt="" />
@@ -142,27 +142,17 @@ export const AdminPage = () => {
             </div>
           </td>
           <td className="admin__users--name-title">{user.user_name}</td>
-          <td>{user.password}</td>
-          <td>{user.phone_number}</td>
-          {/* <td
-            className={`admin__users--status-${
-              user.isProfessional ? "green" : "red"
-            }`}
-          >
-            {user.isProfessional ? "yes" : "no"}
-          </td> */}
-          <td>
+
+          <td className="admin__users--hide-mobile">{user.phone_number}</td>
+
+          <td className="admin__users--hide-mobile">
             {user.isAdmin ? "Admin" : ""}
             {user.isProfessional ? "Professional" : ""}
             {!user.isProfessional && !user.isAdmin ? "Citizen" : ""}
           </td>
-          <td>{user.Location}</td>
-          <td>{user.email}</td>
-          {/* <td
-            className={`admin__users--status-${user.isAdmin ? "green" : "red"}`}
-          >
-            {user.isAdmin ? "yes" : "no"}
-          </td> */}
+          <td className="admin__users--hide-mobile">{user.Location}</td>
+          <td className="admin__users--hide-mobile-700">{user.email}</td>
+
           <td>
             <button
               className="button admin__users--button"
@@ -228,15 +218,12 @@ export const AdminPage = () => {
           <Table striped highlightOnHover>
             <thead>
               <tr>
-                <th>Image</th>
+                <th className="admin__users--hide-mobile">Image</th>
                 <th>USER NAME</th>
-                <th>PASSWORD</th>
-                <th>PHONE NUMBER</th>
-                {/* <th>IS PROFESSIONAL</th> */}
-                <th>ROLE</th>
-                <th>LOCATION</th>
-                <th>EMAIL</th>
-                {/* <th>ISADMIN</th> */}
+                <th className="admin__users--hide-mobile">PHONE NUMBER</th>
+                <th className="admin__users--hide-mobile">ROLE</th>
+                <th className="admin__users--hide-mobile">LOCATION</th>
+                <th className="admin__users--hide-mobile-700">EMAIL</th>
                 <th>EDIT</th>
                 <th>DELETE</th>
               </tr>
@@ -244,12 +231,13 @@ export const AdminPage = () => {
             <tbody>{rows}</tbody>
             {!updatedList?.length && <tbody>No users found.</tbody>}
           </Table>
-
-          <Pagination
-            page={activePage}
-            onChange={setPage}
-            total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
-          />
+          <div className="admin__users--pagination">
+            <Pagination
+              page={activePage}
+              onChange={setPage}
+              total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
+            />
+          </div>
         </div>
 
         <>

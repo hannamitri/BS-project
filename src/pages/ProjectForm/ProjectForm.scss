@@ -1,4 +1,8 @@
 .add__users-project--wrapper {
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +20,12 @@
   .add__users-project--form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+  }
+
+  .add__users--title {
+    color: var(--primary);
+    margin-bottom: 5px;
   }
 
   .add__users-project--image {

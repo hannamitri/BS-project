@@ -173,8 +173,8 @@ export const AdminProject = () => {
     .map((project) => (
       <tr key={project.project_id}>
         <td>{project.name}</td>
-        <td>{project.category}</td>
-        <td>{project.date_created}</td>
+        <td className="admin__users--hide-mobile">{project.category}</td>
+        <td className="admin__users--hide-mobile">{project.date_created}</td>
         <td>
           <Group position="center">
             <button
@@ -286,8 +286,8 @@ export const AdminProject = () => {
             <thead>
               <tr>
                 <th>NAME</th>
-                <th>CATEGORY</th>
-                <th>DATE CREATED</th>
+                <th className="admin__users--hide-mobile">CATEGORY</th>
+                <th className="admin__users--hide-mobile">DATE CREATED</th>
                 <th>EDIT</th>
                 <th>DELETE</th>
                 <th>View Users</th>
@@ -295,14 +295,16 @@ export const AdminProject = () => {
             </thead>
             <tbody>{rows}</tbody>
           </Table>
-          <Pagination
-            page={activePage}
-            onChange={setPage}
-            total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
-          />
+          <div className="admin__users--pagination">
+            <Pagination
+              page={activePage}
+              onChange={setPage}
+              total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
+            />
+          </div>
         </div>
       </div>
-      <div>
+      {/* <div>
         <DateRangePicker
           label="Book hotel"
           placeholder="Pick dates range"
@@ -316,7 +318,7 @@ export const AdminProject = () => {
             )
           }
         />
-      </div>
+      </div> */}
       {dateProjects?.data?.map((project, index) => (
         <div key={index}>{project.name}</div>
       ))}
@@ -345,7 +347,7 @@ export const AdminProject = () => {
             )} */}
           <div>
             <form
-              className="project__model__form"
+              className="project__model--form"
               onSubmit={form.onSubmit(trySubmit)}
             >
               <TextInput
@@ -367,14 +369,20 @@ export const AdminProject = () => {
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
               />
-              <input type="file" onChange={uploadImage} />
-              <br />
 
-              <img src={dataImage} alt="" className="project__image" />
+              <div>
+                <input type="file" onChange={uploadImage} />
+              </div>
 
-              <button className="button" type="submit">
-                Update Project
-              </button>
+              <div className="project__image--wrapper">
+                <img src={dataImage} alt="" className="project__image" />
+              </div>
+
+              <div>
+                <button className="button" type="submit">
+                  Update Project
+                </button>
+              </div>
             </form>
           </div>
         </Modal>

@@ -13,8 +13,15 @@
   }
 }
 
-.project__model__form {
-  .project__image {
-    width: 100%;
+.project__model--form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .project__image--wrapper {
+    display: flex;
+    .project__image {
+      width: 100%;
+    }
   }
 }

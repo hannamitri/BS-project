@@ -271,7 +271,7 @@ export const ProfessionalProjects = ({ userLoggedIn }) => {
             <thead>
               <tr>
                 <th>NAME</th>
-                <th>CATEGORY</th>
+                <th className="admin__users--hide-mobile">CATEGORY</th>
                 <th>DATE CREATED</th>
                 <th>EDIT</th>
                 <th>DELETE</th>

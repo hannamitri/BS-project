@@ -137,7 +137,7 @@ export const ProjectForm = () => {
           <img src={LoginIllustration} alt="Illustration" width={500} />
         </div>
         <div>
-          <h2>Add Users to Projects</h2>
+          <h2 className="add__users--title">Add Users to Projects</h2>
           {errorStatus && (
             <Message
               bgcolor="#f03e3e"
