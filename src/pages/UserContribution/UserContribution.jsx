@@ -112,7 +112,7 @@ export const UserContribution = () => {
     <div className="main__content--wrapper">
       <div className="content__wrapper">
         <div className="project__form--wrapper">
-          <h2>View Contribution of Users</h2>
+          <h2 className="user__contribution--title">View Contribution of Users</h2>
           <form className="project__form">
             <Select
               data={formatDataUsers()}
@@ -149,7 +149,11 @@ export const UserContribution = () => {
         <>
           {displayProjects && (
             <div className="content__wrapper">
-              <div className="projects__wrapper">
+              <div
+                className={`projects__wrapper projects__wrapper--user-contribution ${
+                  messageStatus ? "" : "projects__wrapper--hide"
+                }`}
+              >
                 {projectsOfUser?.data?.length
                   ? projectsOfUser?.data
                       ?.slice(0, showMore)

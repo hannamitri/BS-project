@@ -6,3 +6,11 @@
     width: 100%;
   }
 }
+
+.admin__users--pagination {
+  margin-top: 10px;
+
+  > div {
+    justify-content: flex-end;
+  }
+}
