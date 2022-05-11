@@ -136,7 +136,8 @@ export const DataCollected = ({ userLoggedIn }) => {
           values.time_collected = null;
           values.date_collected = null;
           values.project_name = "";
-          setDataImage("");
+          setDataImage(null);
+          document.getElementById("image__input--field").value = null;
         } else {
           // setErrorStatus(true)
           // setErrorMessage("An error occured! Try uploading data again.")
@@ -281,9 +282,10 @@ export const DataCollected = ({ userLoggedIn }) => {
               }}
             />
 
-            <InputWrapper id="data-file" label="Upload Data Image">
+            <InputWrapper id="data-file" label="Upload Image">
               <div>
                 <input
+                  id="image__input--field"
                   type="file"
                   onChange={uploadImage}
                   className="file__upload_button"

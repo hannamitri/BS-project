@@ -73,3 +73,11 @@ svg {
 h1 {
   color: var(--primary);
 }
+
+/* input:focus:not([type="password"]) {
+  border: 1px solid var(--primary) !important;
+} */
+
+.admin__users--pagination button:nth-of-type(2) {
+  background-color: var(--primary) !important;
+}
