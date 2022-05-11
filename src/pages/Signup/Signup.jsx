@@ -53,41 +53,41 @@ export const Signup = ({ userLoggedIn }) => {
       .min(4, { message: "Phone number should be 4 digits or more" }),
   });
 
-  const trySubmit = async ({ Password, Email, Name, Location, pn, role }) => {
+  const trySubmit = async (values) => {
     setUserExists(false);
     setLoadingState(true);
 
     let adminValue = 0;
     let professionalValue = 0;
 
-    if (role === "admin") {
+    if (values.role === "admin") {
       adminValue = 1;
-    } else if (role === "professional") {
+    } else if (values.role === "professional") {
       professionalValue = 1;
     }
 
     let userOBJ = {
-      Name,
-      Email,
-      Password,
-      pn,
+      Name: values.Name,
+      Email: values.Email,
+      Password: values.Password,
+      pn: values.pn,
       isProfessional: professionalValue,
-      Location,
+      Location: values.Location,
       isAdmin: adminValue,
-      role,
+      role: values.role,
     };
 
     setDisabled(true);
     if (await insertUser(userOBJ)) {
       setSuccessStatus(true);
-      console.log(Password);
-      Password = "";
-      Email = "";
-      Name = "";
-      Location = "";
-      pn = "";
-      role = null;
-      console.log(Password);
+      console.log(values.Password);
+      values.Password = "";
+      values.Email = "";
+      values.Name = "";
+      values.Location = "";
+      values.pn = "";
+      values.role = null;
+      console.log(values.Password);
     }
     setLoadingState(false);
   };
@@ -226,7 +226,7 @@ export const Signup = ({ userLoggedIn }) => {
                     <Loader />
                   </span>
                 ) : (
-                  <Button type="submit">Sign up</Button>
+                  <button className="button" type="submit">Sign up</button>
                 )}
               </Group>
             </form>
