@@ -2,8 +2,8 @@ var config = {
   PORT: 3306,
   HOST: "localhost",
   USER: "root",
-  PASSWORD: "rootroot",
-  DB: "test",
+  PASSWORD: "root",
+  DB: "citizenwebportal",
   multipleStatements: true,
 };
 

@@ -39,19 +39,21 @@ export const Login = ({ openModal, setOpenModal }) => {
       .min(6, { message: "Your password is at least 6 characters" }),
   });
 
-  async function trySignin({ email, password }) {
-    const getSpecificUser = users?.data?.find((user) => user.email === email);
+  async function trySignin(values) {
+    console.log(values)
+    const getSpecificUser = users?.data?.find((user) => user.email === values.email);
     console.log(getSpecificUser);
     setLoadingState(false);
-    console.log(getSpecificUser.password === password);
+    console.log(getSpecificUser.password === values.password);
 
-    if (getSpecificUser.password === password) {
+    if (getSpecificUser.password === values.password) {
       navigate("/");
       localStorage.setItem("userLogginIn", JSON.stringify(getSpecificUser));
       document.body.classList.remove("login__open");
-    }
-    else {
-      setUserNotFound(true)
+      values.email = "";
+      values.password = "";
+    } else {
+      setUserNotFound(true);
     }
   }
 
@@ -105,9 +107,6 @@ export const Login = ({ openModal, setOpenModal }) => {
           <div className="leftview">
             <div>
               <img src={LoginIllustration} alt="Illustration" width={600} />
-            </div>
-            <div>
-              <Link to="/signup">Create an account</Link>
             </div>
           </div>
           <Box sx={{ maxWidth: 400 }} mx="auto" className="rightview">

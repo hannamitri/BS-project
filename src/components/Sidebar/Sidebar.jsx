@@ -50,8 +50,8 @@ const Sidebar = ({ loggedInUser }) => {
         </div>
 
         {!loggedInUser?.isProfessional &&
-          !loggedInUser?.isAdmin &&
-          loggedInUser ? (
+        !loggedInUser?.isAdmin &&
+        loggedInUser ? (
           !loggedInUser?.isProfessional && !loggedInUser?.isAdmin ? (
             <div className="sidebar__links">
               <Link to="/data-collected">
@@ -75,6 +75,12 @@ const Sidebar = ({ loggedInUser }) => {
         {loggedInUser?.isProfessional ? (
           loggedInUser?.isProfessional ? (
             <>
+              <div className="sidebar__links">
+                <Link to="/add-project">
+                  <AiOutlineUsergroupAdd />
+                  Add Project
+                </Link>
+              </div>
               <div className="sidebar__links">
                 <Link to="/add-user-project">
                   <AiOutlineUsergroupAdd />
@@ -101,7 +107,7 @@ const Sidebar = ({ loggedInUser }) => {
           <></>
         )}
 
-        {loggedInUser?.isProfessional ? (
+        {/* {loggedInUser?.isProfessional ? (
           loggedInUser?.isProfessional ? (
             <>
               <div className="sidebar__links">
@@ -122,7 +128,7 @@ const Sidebar = ({ loggedInUser }) => {
           )
         ) : (
           <></>
-        )}
+        )} */}
 
         {loggedInUser?.isAdmin ? (
           loggedInUser?.isAdmin ? (

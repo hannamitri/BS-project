@@ -280,11 +280,13 @@ export const ProfessionalProjects = ({ userLoggedIn }) => {
             </thead>
             <tbody>{rows}</tbody>
           </Table>
-          <Pagination
-            page={activePage}
-            onChange={setPage}
-            total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
-          />
+          <div className="admin__users--pagination">
+            <Pagination
+              page={activePage}
+              onChange={setPage}
+              total={Math.ceil(updatedList?.length / numberOfRowsInPaginaton)}
+            />
+          </div>
         </div>
       </div>
       <>
@@ -333,7 +335,9 @@ export const ProfessionalProjects = ({ userLoggedIn }) => {
               <input type="file" onChange={uploadImage} />
               <br />
 
-              <img src={dataImage} alt="" />
+              <div className="professional__image">
+                <img src={dataImage} alt="" />
+              </div>
 
               <button className="button" type="submit">
                 Update Project

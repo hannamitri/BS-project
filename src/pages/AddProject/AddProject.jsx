@@ -92,6 +92,7 @@ const AddProject = ({ userLoggedIn }) => {
           values.category = "";
           values.name = "";
           setDataImage(null);
+          document.getElementById("image__input--field").value = null;
         }
       } catch (err) {
         console.log(err);
@@ -156,6 +157,7 @@ const AddProject = ({ userLoggedIn }) => {
           <InputWrapper id="data-file" label="Upload Project's Image">
             <div class="">
               <input
+                id="image__input--field"
                 type="file"
                 onChange={uploadImage}
                 className="file__upload_button"

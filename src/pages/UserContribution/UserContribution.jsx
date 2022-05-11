@@ -26,7 +26,6 @@ export const UserContribution = () => {
   const [hideProjects, setHideProjects] = useState(false);
   const [messageStatus, setMessageStatus] = useState(true);
 
-
   const getUsers = async () => {
     const data = await getAll();
     setAllUsers(data);
@@ -111,7 +110,7 @@ export const UserContribution = () => {
 
   return (
     <div className="main__content--wrapper">
-      <div>
+      <div className="content__wrapper">
         <div className="project__form--wrapper">
           <h2>View Contribution of Users</h2>
           <form className="project__form">
@@ -151,29 +150,29 @@ export const UserContribution = () => {
           {displayProjects && (
             <div className="content__wrapper">
               <div className="projects__wrapper">
-                {projectsOfUser?.data?.length ? (
-                  projectsOfUser?.data
-                    ?.slice(0, showMore)
-                    .map((project, index) => (
-                      <>
-                        <Project
-                          key={index}
-                          name={project.name}
-                          category={project.category}
-                          date_created={project.date_created}
-                          projectImage={project.image}
-                          id={project.project_id}
-                        />
-                      </>
-                    ))
-                ) : (
-                  <Message
-                    bgcolor="#f03e3e"
-                    title="No Projects Found"
-                    setStatus={setMessageStatus}
-                    NotificationIcon={IoIosCloseCircle}
-                  />
-                )}
+                {projectsOfUser?.data?.length
+                  ? projectsOfUser?.data
+                      ?.slice(0, showMore)
+                      .map((project, index) => (
+                        <>
+                          <Project
+                            key={index}
+                            name={project.name}
+                            category={project.category}
+                            date_created={project.date_created}
+                            projectImage={project.image}
+                            id={project.project_id}
+                          />
+                        </>
+                      ))
+                  : messageStatus && (
+                      <Message
+                        bgcolor="#f03e3e"
+                        title="No Projects Found"
+                        setStatus={setMessageStatus}
+                        NotificationIcon={IoIosCloseCircle}
+                      />
+                    )}
               </div>
               <div className="project__show-more--button">
                 {console.log(projectsOfUser?.data)}
@@ -200,32 +199,32 @@ export const UserContribution = () => {
         {displayData && (
           <div className="data-collected__wrapper">
             <div className="data-collected__card--wrapper">
-              {dataOfUser?.data?.length ? (
-                dataOfUser?.data.map(
-                  (item, index) =>
-                    item.image && (
-                      <>
-                        <DataCollectedCard
-                          key={index}
-                          dataCollectedImage={item.image}
-                          dataCollectedDate={item.date_collected}
-                          dataCollectedLocation={item.location_collected}
-                          dataCollectedTime={item.time_collected}
-                          dataCollectedDescription={item.description}
-                          dataCollectedUser={getUserName(item.user_id)}
-                          dataCollectedTitle={item.Title}
-                        />
-                      </>
-                    )
-                )
-              ) : (
-                <Message
-                  bgcolor="#f03e3e"
-                  title="No Data Collected Found"
-                  setStatus={setMessageStatus}
-                  NotificationIcon={IoIosCloseCircle}
-                />
-              )}
+              {dataOfUser?.data?.length
+                ? dataOfUser?.data.map(
+                    (item, index) =>
+                      item.image && (
+                        <>
+                          <DataCollectedCard
+                            key={index}
+                            dataCollectedImage={item.image}
+                            dataCollectedDate={item.date_collected}
+                            dataCollectedLocation={item.location_collected}
+                            dataCollectedTime={item.time_collected}
+                            dataCollectedDescription={item.description}
+                            dataCollectedUser={getUserName(item.user_id)}
+                            dataCollectedTitle={item.Title}
+                          />
+                        </>
+                      )
+                  )
+                : messageStatus && (
+                    <Message
+                      bgcolor="#f03e3e"
+                      title="No Data Collected Found"
+                      setStatus={setMessageStatus}
+                      NotificationIcon={IoIosCloseCircle}
+                    />
+                  )}
             </div>
             {/* <div className="data-collected__users--list-wrapper">
               {user?.data ? (
