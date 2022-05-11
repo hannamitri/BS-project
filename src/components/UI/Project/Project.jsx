@@ -3,7 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Project.scss";
 
-const Project = ({ name, category, date_created, projectImage, id }) => {
+const Project = ({
+  name,
+  category,
+  date_created,
+  projectImage,
+  id,
+  setMessageStatus,
+}) => {
   const [img, setImg] = useState();
 
   const mountedRef = useRef(true);

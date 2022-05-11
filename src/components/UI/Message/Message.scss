@@ -10,9 +10,11 @@
     rgb(0 0 0 / 4%) 0px 12px 12px -7px;
   border: 1px solid #e9ecef;
   font-size: 15px;
+  height: fit-content !important;
+  width: fit-content !important;
+  margin-top: 15px;
 
   svg {
-    
     font-size: 34px;
   }
   .project__close--icon {
