@@ -190,14 +190,17 @@ export const Nav = ({ loggedInUser }) => {
         transitionTimingFunction="ease"
       >
         <div>
-          <h3> Upload Profile Picture</h3>
+          <h1 className="profile__title"> Upload Profile Picture</h1>
           <form className="project__form" onSubmit={form.onSubmit(trySubmit)}>
             <input type="file" onChange={uploadImage} />
-            <br />
-            <img src={profileImage} alt="" className="user__profile" />
-            <Button type="submit" style={{ marginTop: 15 }}>
+
+            <div className="profile__image">
+              <img src={profileImage} alt="" className="user__profile" />
+            </div>
+
+            <button className="button" type="submit" style={{ marginTop: 15 }}>
               Save
-            </Button>
+            </button>
           </form>
         </div>
       </Modal>

@@ -201,7 +201,7 @@ export const UserContribution = () => {
         </>
 
         {displayData && (
-          <div className="data-collected__wrapper">
+          <div className="data-collected__wrapper user__contribution--wrapper">
             <div className="data-collected__card--wrapper">
               {dataOfUser?.data?.length
                 ? dataOfUser?.data.map(
