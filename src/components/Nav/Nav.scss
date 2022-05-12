@@ -12,7 +12,7 @@
     gap: 15px;
     align-items: center;
 
-    >.nav__burger {
+    > .nav__burger {
       display: flex;
 
       svg {
@@ -62,4 +62,12 @@
 
 .user__profile {
   width: 100%;
+}
+
+.profile__image {
+  margin-top: 10px;
+}
+
+.profile__title {
+  margin-bottom: 10px;
 }

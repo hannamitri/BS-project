@@ -1,3 +1,7 @@
+.data-collected__cardd {
+  width: 100%;
+}
+
 .data-collected__wrapper {
   display: flex;
   gap: 20px;
@@ -8,6 +12,8 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
 
     h1 {
       background-color: white;
@@ -24,7 +30,7 @@
       }
     }
 
-    >div {
+    > div {
       width: 275px;
       height: 420px;
     }
@@ -73,4 +79,10 @@
 .users__list {
   display: flex;
   flex-direction: column;
+  margin: 20px;
+}
+
+.data__collected--title {
+  text-align: center;
+  margin: 10px 0;
 }
