@@ -28,7 +28,7 @@ export const AdminPage = () => {
   const [errorStatus, setErrorStatus] = useState(false);
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [userIsProfessional, setUserIsProfessional] = useState("");
   const [location, setLocation] = useState("");
   const [email, setEmail] = useState("");
@@ -72,7 +72,7 @@ export const AdminPage = () => {
   const updateSingleUser = (
     user_id,
     userName,
-    password,
+    // password,
     phoneNumber,
     userIsProfessional,
     location,
@@ -83,7 +83,7 @@ export const AdminPage = () => {
     setSingleUserId(user_id);
     setUserName(userName);
     setPhoneNumber(phoneNumber);
-    setPassword(password);
+    // setPassword(password);
     setUserIsProfessional(userIsProfessional ? "yes" : "no");
     setRole(
       userIsAdmin ? "Admin" : userIsProfessional ? "Professional" : "Citizen"
@@ -98,7 +98,7 @@ export const AdminPage = () => {
       user_id: singleUserId,
       name: userName,
       email,
-      password,
+      // password,
       location,
       phone_number: phoneNumber,
       isProfessional: role === "Professional" ? 1 : 0,
@@ -160,7 +160,7 @@ export const AdminPage = () => {
                 updateSingleUser(
                   user.user_id,
                   user.user_name,
-                  user.password,
+                  // user.password,
                   user.phone_number,
                   user.isProfessional,
                   user.Location,
@@ -271,14 +271,14 @@ export const AdminPage = () => {
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                 />
-                <TextInput
+                {/* <TextInput
                   required
                   icon={<HiOutlineAtSymbol size={16} />}
                   label="Password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                />
+                /> */}
                 <TextInput
                   required
                   icon={<FaUserAlt size={16} />}
@@ -287,18 +287,6 @@ export const AdminPage = () => {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
-
-                {/* <RadioGroup
-                  label="Is Professional"
-                  icon={<FaUserAlt size={16} />}
-                  required
-                  value={userIsProfessional}
-                  onClick={(e) => setUserIsProfessional(e.target.value)}
-                >
-                  <Radio value="yes" label="Yes" />
-                  <Radio value="no" label="No" />
-                </RadioGroup> */}
-
                 <TextInput
                   id="project__input--name"
                   required
@@ -317,17 +305,6 @@ export const AdminPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {/* <RadioGroup
-                  label="Is Admin"
-                  required
-                  icon={<FaUserAlt size={16} />}
-                  value={userIsAdmin}
-                  onClick={(e) => setUserIsAdmin(e.target.value)}
-                >
-                  <Radio value="yes" label="Yes" />
-                  <Radio value="no" label="No" />
-                </RadioGroup> */}
-
                 <RadioGroup
                   label="Role"
                   required

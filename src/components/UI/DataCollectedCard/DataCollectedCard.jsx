@@ -7,7 +7,7 @@ const DataCollectedCard = ({
   dataCollectedDate,
   dataCollectedLocation,
   dataCollectedTitle,
-  dataCollectedTime,
+  // dataCollectedTime,
   dataCollectedDescription,
   dataCollectedUser,
 }) => {
@@ -23,7 +23,7 @@ const DataCollectedCard = ({
             <div className="data-collected__date">
               {timeago.format(dataCollectedDate, "en_US")}
             </div>
-            <div className="data-collected__date">08:10 am</div>
+            <div className="data-collected__date">{dataCollectedLocation}</div>
           </div>
           <h2 className="data-collected__title">{dataCollectedTitle}</h2>
           <div className="data-collected__description">
