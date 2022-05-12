@@ -13,6 +13,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Button } from "@mantine/core";
 import { FaUserAlt } from "react-icons/fa";
 import { useForm } from "@mantine/form";
+import Message from "../UI/Message/Message";
+import { IoIosCloseCircle, IoIosCheckbox } from "react-icons/io";
 
 export const Nav = ({ loggedInUser }) => {
   const [users, setUsers] = useState([]);
@@ -20,6 +22,9 @@ export const Nav = ({ loggedInUser }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [viewProfile, setViewProfile] = useState(false);
   const [profileImage, setProfileImage] = useState("");
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [errormessage, setErrorMessage] = useState("");
+  const [successStatus, setSuccessStatus] = useState(false);
   const theme = useMantineTheme();
   // const loggedInUser = JSON.parse(localStorage.getItem("userLogginIn"));
 
@@ -68,11 +73,10 @@ export const Nav = ({ loggedInUser }) => {
   const uploadImage = async (event) => {
     const file = event.target.files[0];
     if (file.size / 1024 > 1000) {
-      // setErrorStatus(true);
-      // setErrorMessage("Image size should be less than 1MB.");
-      console.log("noooo");
+      setErrorStatus(true);
+      setErrorMessage("Image size should be less than 1MB.");
     } else {
-      // setErrorStatus(false);
+      setErrorStatus(false);
       const base64 = await convertBase64(file);
       console.log(base64);
       setProfileImage(base64);
@@ -88,6 +92,9 @@ export const Nav = ({ loggedInUser }) => {
     try {
       if (await setProfile(user)) {
         setProfileImage("");
+        setSuccessStatus(true);
+        setErrorStatus(false);
+        document.getElementById("image__input--field").value = null;
       }
     } catch (err) {
       console.log(err);
@@ -190,14 +197,34 @@ export const Nav = ({ loggedInUser }) => {
         transitionTimingFunction="ease"
       >
         <div>
+          {errorStatus && (
+            <Message
+              bgcolor="#f03e3e"
+              title={errormessage}
+              setStatus={setErrorStatus}
+              NotificationIcon={IoIosCloseCircle}
+            />
+          )}
+          {successStatus && (
+            <Message
+              bgcolor="#38b000"
+              title="Profile Uploaded Successufully!!!"
+              setStatus={setSuccessStatus}
+              NotificationIcon={IoIosCheckbox}
+            />
+          )}
           <h1 className="profile__title"> Upload Profile Picture</h1>
           <form className="project__form" onSubmit={form.onSubmit(trySubmit)}>
-            <input type="file" onChange={uploadImage} />
-
+            <input type="file"
+              onChange={uploadImage}
+              id="image__input--field"
+            />
             <div className="profile__image">
-              <img src={profileImage} alt="" className="user__profile" />
+              <img
+                src={profileImage}
+                alt=""
+                className="user__profile" />
             </div>
-
             <button className="button" type="submit" style={{ marginTop: 15 }}>
               Save
             </button>

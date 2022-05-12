@@ -58,8 +58,7 @@ const ProjectPage = () => {
       <div className="data-collected__wrapper">
         <div className="data-collected__cardd">
           <h1 className="data__collected--title">
-            DATA COLLECTED BELONGS TO PROJECT :
-            <span>{original_project?.name}</span>
+            <span> {original_project?.name}</span>
           </h1>
           <div className="data-collected__card--wrapper">
             {projectData?.data?.length ? (
@@ -72,7 +71,7 @@ const ProjectPage = () => {
                         dataCollectedImage={item.image}
                         dataCollectedDate={item.date_collected}
                         dataCollectedLocation={item.location_collected}
-                        dataCollectedTime={item.time_collected}
+                        // dataCollectedTime={item.time_collected}
                         dataCollectedDescription={item.description}
                         dataCollectedUser={getUserName(item.user_id)}
                         dataCollectedTitle={item.Title}

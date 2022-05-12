@@ -51,14 +51,13 @@ exports.updateUser = (req, res) => {
     user_id,
     name,
     email,
-    password,
     location,
     phone_number,
     isProfessional,
     isAdmin,
   } = req.body;
 
-  let updateSql = `UPDATE Users set user_name = "${name}", password = "${password}", \
+  let updateSql = `UPDATE Users set user_name = "${name}", \
     location = "${location}", email = "${email}", phone_number ="${phone_number}", isProfessional ="${isProfessional}",isAdmin ="${isAdmin}"\
         WHERE user_id = ${user_id}`;
 
