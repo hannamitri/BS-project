@@ -88,12 +88,10 @@ export const DataCollected = ({ userLoggedIn }) => {
     if (file.size / 1024 > 1000) {
       setErrorStatus(true);
       setErrorMessage("Image size should be less than 1MB.");
-      console.log("nope nope");
     } else {
       setErrorStatus(false);
       const base64 = await convertBase64(file);
       setDataImage(base64);
-      console.log("yes yes");
     }
   };
 
@@ -120,7 +118,7 @@ export const DataCollected = ({ userLoggedIn }) => {
         description: values.description,
         title: values.title,
         location_collected: values.location_collected,
-        time_collected: values.time_collected,
+        time_collected: "9:00 A.M",
         date_collected: values.date_collected,
         image: dataImage,
         project_id: selected_project_id?.project_id,
@@ -133,7 +131,7 @@ export const DataCollected = ({ userLoggedIn }) => {
           values.description = "";
           values.title = "";
           values.location_collected = "";
-          values.time_collected = null;
+          // values.time_collected = null;
           values.date_collected = null;
           values.project_name = "";
           setDataImage(null);
@@ -153,7 +151,7 @@ export const DataCollected = ({ userLoggedIn }) => {
       title: "",
       description: "",
       location_collected: "",
-      time_collected: "",
+      // time_collected: "",
       date_collected: "",
       image: "",
       project_name: "",
@@ -247,7 +245,7 @@ export const DataCollected = ({ userLoggedIn }) => {
               required
               {...form.getInputProps("date_collected")}
             />
-            <TimeInput
+            {/* <TimeInput
               placeholder="Time Collected"
               hoursLabel="Hours"
               minutesLabel="Minutes"
@@ -256,7 +254,7 @@ export const DataCollected = ({ userLoggedIn }) => {
               icon={<Clock size={16} />}
               required
               {...form.getInputProps("time_collected")}
-            />
+            /> */}
 
             <Select
               data={formatDataProjects()}
