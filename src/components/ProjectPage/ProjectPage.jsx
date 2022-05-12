@@ -54,44 +54,45 @@ const ProjectPage = () => {
   }, [original_project?.project_id]);
   console.log(projectData?.data);
   return (
-    <div>
-
+    <div className="data-collected__cardd">
       <div className="data-collected__wrapper">
-        <div className="data-collected__card--wrapper">
-          <h1>DATA COLLECTED BELONGS TO PROJECT :
+        <div className="data-collected__cardd">
+          <h1 className="data__collected--title">
+            DATA COLLECTED BELONGS TO PROJECT :
             <span>{original_project?.name}</span>
           </h1>
-          {projectData?.data?.length ? (
-            projectData?.data.map(
-              (item, index) =>
-                item.image && (
-                  <>
-
-                    <DataCollectedCard
-                      key={index}
-                      dataCollectedImage={item.image}
-                      dataCollectedDate={item.date_collected}
-                      dataCollectedLocation={item.location_collected}
-                      dataCollectedTime={item.time_collected}
-                      dataCollectedDescription={item.description}
-                      dataCollectedUser={getUserName(item.user_id)}
-                      dataCollectedTitle={item.Title}
-                    />
-                  </>
-                )
-            )
-          ) : (
-            <>
-              {new Array(8).fill(0).map((_) => (
-                <div>
-                  <Skeleton animate={false} height={175} mb="md" />
-                  <Skeleton animate={false} height={20} width={150} mb="md" />
-                  <Skeleton animate={false} height={20} width={100} mb="md" />
-                  <Skeleton animate={false} height={35} width="85%" />
-                </div>
-              ))}
-            </>
-          )}
+          <div className="data-collected__card--wrapper">
+            {projectData?.data?.length ? (
+              projectData?.data.map(
+                (item, index) =>
+                  item.image && (
+                    <>
+                      <DataCollectedCard
+                        key={index}
+                        dataCollectedImage={item.image}
+                        dataCollectedDate={item.date_collected}
+                        dataCollectedLocation={item.location_collected}
+                        dataCollectedTime={item.time_collected}
+                        dataCollectedDescription={item.description}
+                        dataCollectedUser={getUserName(item.user_id)}
+                        dataCollectedTitle={item.Title}
+                      />
+                    </>
+                  )
+              )
+            ) : (
+              <>
+                {new Array(8).fill(0).map((_) => (
+                  <div>
+                    <Skeleton animate={false} height={175} mb="md" />
+                    <Skeleton animate={false} height={20} width={150} mb="md" />
+                    <Skeleton animate={false} height={20} width={100} mb="md" />
+                    <Skeleton animate={false} height={35} width="85%" />
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
         </div>
         <div className="users__list">
           <div className="data-collected__users--list-wrapper">

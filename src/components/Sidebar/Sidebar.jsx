@@ -45,7 +45,7 @@ const Sidebar = ({ loggedInUser }) => {
         </div>
         <div className="sidebar__links">
           <Link to="/user-contribution">
-            <AiOutlineUserAdd /> User Contribution
+            <AiOutlineUserAdd /> Contribution
           </Link>
         </div>
 
